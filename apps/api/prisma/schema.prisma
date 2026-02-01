@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  passwordHash        String
+  fullName            String
+  position            String?
+  role                String    // "ADMIN" or "SC"
+  photoUrl            String?
+  status              String    @default("ACTIVE") // "ACTIVE" or "DISABLED"
+  forcePasswordChange Boolean   @default(true)
+  lastLoginAt         DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  // Relations
+  assignedLeads Lead[]
+
+  @@map("users")
+}
+
+model Lead {
+  id              String    @id @default(cuid())
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  source          String    // "WALK_IN", "REFERRAL", "SOCIAL_MEDIA", "DISPLAY"
+  interestedModel String
+  preferredColor  String
+  interestLevel   String    @default("WARM") // "HOT", "WARM", "COLD"
+  vehicleType     String?   // "BEV", "HEV", "ICE" - for analytics
+  remarks         String?   // General remarks/notes about the lead
+  status          String    @default("NEW") // LeadStatus as string
+  assignedToId    String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime? // Soft delete (not used per requirements, but kept for data integrity)
+
+  // Relations
+  assignedTo   User         @relation(fields: [assignedToId], references: [id])
+  activities   Activity[]
+  closedDeals  ClosedDeal[]
+
+  @@map("leads")
+}
+
+model Activity {
+  id            String    @id @default(cuid())
+  leadId        String
+  type          String    // ActivityType as string
+  notes         String?
+  scheduledDate DateTime?
+  completedDate DateTime?
+  chassisNumber String?
+  vsiNumber     String?
+  dateReleased  DateTime?
+  bankName      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("activities")
+}
+
+model ClosedDeal {
+  id            String   @id @default(cuid())
+  leadId        String   @unique
+  chassisNumber String
+  vsiNumber     String
+  dateReleased  DateTime
+  salePrice     Float    // Changed from Decimal to Float for SQLite
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("closed_deals")
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String
+  action      String   // CREATE, UPDATE, DELETE, LOGIN, LOGOUT, etc.
+  entity      String   // User, Lead, Activity, ClosedDeal
+  entityId    String?
+  changes     String?  // JSON string of changes
+  ipAddress   String?
+  userAgent   String?
+  timestamp   DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity])
+  @@index([timestamp])
+  @@map("audit_logs")
+}

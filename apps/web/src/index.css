@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Apple-inspired color system - Light Mode */
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    
+    --primary: 213 94% 55%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+    
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    
+    --accent: 213 94% 55%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 213 94% 55%;
+    
+    --radius: 1rem;
+    
+    /* Apple-specific tokens */
+    --surface: 0 0% 100%;
+    --surface-secondary: 240 5% 98%;
+    --separator: 240 6% 92%;
+    --glass: 0 0% 100% / 0.7;
+  }
+
+  .dark {
+    --background: 240 10% 8%;
+    --foreground: 0 0% 98%;
+    
+    --card: 240 10% 10%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 240 10% 10%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 213 94% 55%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 64%;
+    
+    --accent: 213 94% 55%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 213 94% 55%;
+    
+    --surface: 240 10% 10%;
+    --surface-secondary: 240 10% 12%;
+    --separator: 240 4% 18%;
+    --glass: 240 10% 10% / 0.7;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Apple-style typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar - Apple style */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.2);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.3);
+  }
+}
+
+@layer utilities {
+  /* Glass morphism effect */
+  .glass {
+    background: hsl(var(--glass));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+  
+  .glass-strong {
+    background: hsl(var(--glass));
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+  }
+  
+  /* Apple-style elevation */
+  .elevation-sm {
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+  
+  .elevation-md {
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 0.04), 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  }
+  
+  .elevation-lg {
+    box-shadow: 0 4px 16px 0 rgb(0 0 0 / 0.04), 0 2px 4px 0 rgb(0 0 0 / 0.06);
+  }
+  
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .transition-bounce {
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  /* iOS-style press effect */
+  .press-effect {
+    @apply active:scale-[0.98] transition-transform duration-100;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Apple-inspired glass morphism */
+.glass-card {
+  @apply bg-white/70 backdrop-blur-md border border-zinc-200/60 rounded-2xl shadow-sm;
+}
+
+.glass-input {
+  @apply bg-white/50 backdrop-blur-sm border border-zinc-200/60 rounded-xl;
+}
+
+/* Grid pattern background */
+.bg-grid-white\/\[0\.05\] {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}

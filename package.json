@@ -1,0 +1,23 @@
+{
+  "name": "lead-management-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "api:dev": "npm run dev -w apps/api",
+    "web:dev": "npm run dev -w apps/web",
+    "shared:build": "npm run build -w packages/shared",
+    "db:migrate": "npm run db:migrate -w apps/api",
+    "db:seed": "npm run db:seed -w apps/api",
+    "db:studio": "npm run db:studio -w apps/api"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  }
+}
