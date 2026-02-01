@@ -23,20 +23,20 @@ The `vercel.json` file is already configured with:
    - Click "Add New Project"
    - Import your GitHub repository: `LorillaJm/-Leads-Managment`
 
-3. **Configure Project Settings**
-   - Framework Preset: `Other`
-   - Root Directory: Leave as `.` (root)
-   - Build Command: `cd apps/web && npm install && npm run build`
-   - Output Directory: `apps/web/dist`
-   - Install Command: `npm install --prefix apps/web`
+3. **Configure Project Settings** ⚠️ IMPORTANT
+   - Framework Preset: `Vite`
+   - **Root Directory: `apps/web`** ← This is critical!
+   - Build Command: `npm run build` (auto-detected)
+   - Output Directory: `dist` (auto-detected)
+   - Install Command: `npm install` (auto-detected)
 
 4. **Environment Variables**
    Add the following environment variable:
    ```
-   VITE_API_URL=https://your-api-url.com/api/v1
+   VITE_API_URL=http://localhost:3001/api/v1
    ```
    
-   **Note:** You'll need to deploy the API separately (see Backend Deployment below)
+   **Note:** Change this to your production API URL after deploying the backend
 
 5. **Deploy**
    - Click "Deploy"
