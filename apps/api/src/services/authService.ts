@@ -41,7 +41,7 @@ export class AuthService {
         passwordHash,
         fullName: data.fullName,
         position: data.position || null,
-        role: data.role,
+        role: data.role || UserRole.SC,
         status: UserStatus.ACTIVE,
         forcePasswordChange: false
       },
