@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { BackupController } from '../controllers/backupController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
-import { UserRole } from '@lead-management/shared';
+import { UserRole } from '../types.js';
 
 const router = Router();
 const backupController = new BackupController();

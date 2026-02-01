@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { ActivityService } from '../services/activityService.js';
 import { AuthRequest } from '../middleware/auth.js';
-import { createActivitySchema } from '@lead-management/shared';
+import { createActivitySchema } from '../schemas.js';
 
 const activityService = new ActivityService();
 

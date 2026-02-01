@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { AppError } from '../middleware/errorHandler.js';
-import { UserRole, PaginationInput } from '@lead-management/shared';
+import { UserRole } from '../types.js';
+import type { PaginationInput } from '../types.js';
 
 const prisma = new PrismaClient();
 
@@ -252,7 +253,7 @@ export class ClosedDealService {
       'Created Date'
     ];
 
-    const rows = closedDeals.map(deal => [
+    const rows = closedDeals.map((deal: any) => [
       `${deal.lead.firstName} ${deal.lead.lastName}`,
       deal.lead.email,
       deal.lead.phone,
@@ -268,7 +269,7 @@ export class ClosedDealService {
 
     const csv = [
       headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+      ...rows.map((row: any[]) => row.map((cell: any) => `"${cell}"`).join(','))
     ].join('\n');
 
     return csv;

@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { AppError } from '../middleware/errorHandler.js';
-import { ActivityType, LeadStatus, CreateActivityInput } from '@lead-management/shared';
+import { ActivityType, LeadStatus } from '../types.js';
+import type { CreateActivityInput } from '../types.js';
 
 const prisma = new PrismaClient();
 

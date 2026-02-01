@@ -94,7 +94,7 @@ export class BackupService {
       }
 
       // Clear existing data (in transaction)
-      await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async (tx: any) => {
         // Delete in correct order (respecting foreign keys)
         await tx.closedDeal.deleteMany();
         await tx.activity.deleteMany();

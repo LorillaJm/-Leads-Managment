@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { AppError } from '../middleware/errorHandler.js';
-import { UserRole, UserStatus } from '@lead-management/shared';
-import type { CreateUserInput, UpdateUserInput, ResetPasswordInput, UserFiltersInput } from '@lead-management/shared';
+import { UserRole, UserStatus } from '../types.js';
+import type { CreateUserInput, UpdateUserInput, ResetPasswordInput, UserFiltersInput } from '../types.js';
 
 const prisma = new PrismaClient();
 

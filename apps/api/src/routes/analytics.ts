@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { AnalyticsController } from '../controllers/analyticsController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
-import { UserRole } from '@lead-management/shared';
+import { UserRole } from '../types.js';
 
 const router = Router();
 const analyticsController = new AnalyticsController();

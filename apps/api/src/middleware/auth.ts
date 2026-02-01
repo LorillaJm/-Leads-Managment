@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
 import { AppError } from './errorHandler.js';
-import { UserRole, UserStatus } from '@lead-management/shared';
+import { UserRole, UserStatus } from '../types.js';
 
 const prisma = new PrismaClient();
 

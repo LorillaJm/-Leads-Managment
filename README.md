@@ -2,8 +2,7 @@
 
 A modern, production-ready Lead Management System built with React, TypeScript, Node.js, and SQLite. Features a beautiful Apple-inspired UI with comprehensive lead tracking, user management, and performance analytics.
 
-![Dashboard Preview](./documentation/3a3d58177152151.64d17765acebe.jpg)
-
+ 
 ## ✨ Features
 
 ### 🎯 Core Functionality

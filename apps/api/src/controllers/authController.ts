@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { AuthService } from '../services/authService.js';
 import { AuthRequest } from '../middleware/auth.js';
-import { loginSchema, registerSchema } from '@lead-management/shared';
+import { loginSchema, registerSchema } from '../schemas.js';
 import { auditService, AuditAction, AuditEntity } from '../services/auditService.js';
 
 const authService = new AuthService();

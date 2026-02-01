@@ -6,8 +6,8 @@ import {
   updateUserSchema, 
   resetPasswordSchema, 
   userFiltersSchema 
-} from '@lead-management/shared';
-import { UserStatus } from '@lead-management/shared';
+} from '../schemas.js';
+import { UserStatus } from '../types.js';
 import { AppError } from '../middleware/errorHandler.js';
 
 const userService = new UserService();

@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { LeadService } from '../services/leadService.js';
 import { AuthRequest } from '../middleware/auth.js';
-import { createLeadSchema, updateLeadSchema, leadFiltersSchema, paginationSchema } from '@lead-management/shared';
+import { createLeadSchema, updateLeadSchema, leadFiltersSchema, paginationSchema } from '../schemas.js';
 
 const leadService = new LeadService();
 

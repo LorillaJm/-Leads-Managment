@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/userController.js';
 import { authenticate, requireRole } from '../middleware/auth.js';
-import { UserRole } from '@lead-management/shared';
+import { UserRole } from '../types.js';
 import rateLimit from 'express-rate-limit';
 
 const router = Router();

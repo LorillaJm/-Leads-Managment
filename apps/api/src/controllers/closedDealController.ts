@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { ClosedDealService } from '../services/closedDealService.js';
 import { AuthRequest } from '../middleware/auth.js';
-import { paginationSchema } from '@lead-management/shared';
+import { paginationSchema } from '../schemas.js';
 import { z } from 'zod';
 
 const closedDealService = new ClosedDealService();

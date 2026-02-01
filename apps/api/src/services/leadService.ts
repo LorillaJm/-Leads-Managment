@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { AppError } from '../middleware/errorHandler.js';
-import { UserRole, LeadStatus, InterestLevel, CreateLeadInput, UpdateLeadInput, LeadFiltersInput, PaginationInput } from '@lead-management/shared';
+import { UserRole, LeadStatus, InterestLevel } from '../types.js';
+import type { CreateLeadInput, UpdateLeadInput, LeadFiltersInput, PaginationInput } from '../types.js';
 
 const prisma = new PrismaClient();
 

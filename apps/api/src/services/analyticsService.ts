@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { UserRole, LeadStatus } from '@lead-management/shared';
+import { UserRole, LeadStatus } from '../types.js';
 
 const prisma = new PrismaClient();
 
