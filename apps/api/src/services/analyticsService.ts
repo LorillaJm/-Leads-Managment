@@ -111,7 +111,7 @@ export class AnalyticsService {
         avgDealSize: revenueData._avg.salePrice || 0
       },
       charts: {
-        leadsByStatus: leadsByStatus.map(item => ({
+        leadsByStatus: leadsByStatus.map((item: any) => ({
           status: item.status,
           count: item._count
         })),

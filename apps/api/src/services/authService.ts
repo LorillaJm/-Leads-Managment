@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
 import { AppError } from '../middleware/errorHandler.js';
-import { UserStatus } from '../types.js';
+import { UserStatus, UserRole } from '../types.js';
 import type { LoginInput, RegisterInput, ChangePasswordInput } from '../types.js';
 
 const prisma = new PrismaClient();

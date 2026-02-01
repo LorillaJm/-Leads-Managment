@@ -46,7 +46,7 @@ export class ActivityService {
     }
 
     // Use transaction to create activity and update lead status
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: any) => {
       // Create activity
       const activity = await tx.activity.create({
         data: {
