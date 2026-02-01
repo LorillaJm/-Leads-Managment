@@ -11,8 +11,18 @@ import { LeadDetails } from './pages/LeadDetails'
 import { ClosedDeals } from './pages/ClosedDeals'
 import { Performance } from './pages/Performance'
 import { Users } from './pages/Users'
+import { DeploymentInfo } from './pages/DeploymentInfo'
+
+// Check if API is available
+const API_URL = import.meta.env.VITE_API_URL;
+const isApiConfigured = API_URL && !API_URL.includes('localhost');
 
 function App() {
+  // Show deployment info if API is not configured
+  if (!isApiConfigured) {
+    return <DeploymentInfo />;
+  }
+
   return (
     <ErrorBoundary>
       <AuthProvider>
