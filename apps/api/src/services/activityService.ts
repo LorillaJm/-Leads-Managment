@@ -7,10 +7,8 @@ const prisma = new PrismaClient();
 
 // Status progression rules based on activity type
 const statusProgressionMap: Record<string, string> = {
-  [ActivityType.TEST_DRIVE]: LeadStatus.TEST_DRIVE,
-  [ActivityType.RESERVATION]: LeadStatus.RESERVATION,
-  [ActivityType.BANK_APPLICATION]: LeadStatus.BANK_APPLICATION,
   [ActivityType.CLOSED_DEAL]: LeadStatus.CLOSED_DEAL,
+  [ActivityType.BANK_APPLICATION]: LeadStatus.BANK_APPLICATION,
 };
 
 export class ActivityService {

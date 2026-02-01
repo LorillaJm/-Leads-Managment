@@ -75,8 +75,8 @@ export class ClosedDealService {
         orderBy: {
           dateReleased: 'desc'
         },
-        skip: (page - 1) * limit,
-        take: limit
+        skip: ((page || 1) - 1) * (limit || 10),
+        take: limit || 10
       }),
       prisma.closedDeal.count({ where })
     ]);
@@ -84,10 +84,10 @@ export class ClosedDealService {
     return {
       closedDeals,
       pagination: {
-        page,
-        limit,
+        page: page || 1,
+        limit: limit || 10,
         total,
-        totalPages: Math.ceil(total / limit)
+        totalPages: Math.ceil(total / (limit || 10))
       }
     };
   }

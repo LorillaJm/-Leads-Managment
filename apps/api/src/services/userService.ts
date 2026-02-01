@@ -52,8 +52,8 @@ export class UserService {
         orderBy: {
           createdAt: 'desc'
         },
-        skip: (page - 1) * pageSize,
-        take: pageSize
+        skip: ((page || 1) - 1) * (pageSize || 10),
+        take: pageSize || 10
       }),
       prisma.user.count({ where })
     ]);
@@ -61,10 +61,10 @@ export class UserService {
     return {
       users,
       pagination: {
-        page,
-        pageSize,
+        page: page || 1,
+        pageSize: pageSize || 10,
         total,
-        totalPages: Math.ceil(total / pageSize)
+        totalPages: Math.ceil(total / (pageSize || 10))
       }
     };
   }
@@ -115,8 +115,9 @@ export class UserService {
       throw new AppError('Email already in use', 409);
     }
 
-    // Hash the temporary password
-    const passwordHash = await bcrypt.hash(data.temporaryPassword, 12);
+    // Hash the temporary password (generate one if not provided)
+    const tempPassword = data.temporaryPassword || Math.random().toString(36).slice(-8);
+    const passwordHash = await bcrypt.hash(tempPassword, 12);
 
     const user = await prisma.user.create({
       data: {
@@ -124,7 +125,7 @@ export class UserService {
         passwordHash,
         fullName: data.fullName,
         position: data.position,
-        role: data.role,
+        role: data.role || UserRole.SC,
         photoUrl: data.photoUrl || null,
         forcePasswordChange: data.forcePasswordChange ?? true,
         status: UserStatus.ACTIVE
@@ -202,7 +203,9 @@ export class UserService {
       throw new AppError('User not found', 404);
     }
 
-    const passwordHash = await bcrypt.hash(data.temporaryPassword, 12);
+    // Hash the new password (generate one if not provided)
+    const tempPassword = data.temporaryPassword || data.newPassword;
+    const passwordHash = await bcrypt.hash(tempPassword, 12);
 
     await prisma.user.update({
       where: { id },

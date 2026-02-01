@@ -9,8 +9,13 @@ export class ActivityController {
   async createActivity(req: AuthRequest, res: Response, next: NextFunction) {
     try {
       const validatedData = createActivitySchema.parse(req.body);
+      // Convert scheduledAt string to Date if present
+      const activityData = {
+        ...validatedData,
+        scheduledAt: validatedData.scheduledAt ? new Date(validatedData.scheduledAt) : undefined
+      };
       const activity = await activityService.createActivity(
-        validatedData,
+        activityData,
         req.user!.id,
         req.user!.role
       );

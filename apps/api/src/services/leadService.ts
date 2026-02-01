@@ -36,13 +36,13 @@ export class LeadService {
 
     const lead = await prisma.lead.create({
       data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
+        firstName: data.firstName || '',
+        lastName: data.lastName || '',
+        email: data.email || '',
         phone: data.phone,
-        source: data.source,
-        interestedModel: data.interestedModel,
-        preferredColor: data.preferredColor,
+        source: data.source || '',
+        interestedModel: data.interestedModel || '',
+        preferredColor: data.preferredColor || '',
         interestLevel: data.interestLevel || 'WARM',
         vehicleType: data.vehicleType,
         remarks: data.remarks,
@@ -114,8 +114,8 @@ export class LeadService {
         orderBy: {
           createdAt: 'desc'
         },
-        skip: (page - 1) * limit,
-        take: limit
+        skip: ((page || 1) - 1) * (limit || 10),
+        take: limit || 10
       }),
       prisma.lead.count({ where })
     ]);
@@ -123,10 +123,10 @@ export class LeadService {
     return {
       leads,
       pagination: {
-        page,
-        limit,
+        page: page || 1,
+        limit: limit || 10,
         total,
-        totalPages: Math.ceil(total / limit)
+        totalPages: Math.ceil(total / (limit || 10))
       }
     };
   }
