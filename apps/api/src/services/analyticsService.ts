@@ -115,15 +115,15 @@ export class AnalyticsService {
           status: item.status,
           count: item._count
         })),
-        leadsBySource: leadsBySource.map(item => ({
+        leadsBySource: leadsBySource.map((item: any) => ({
           source: item.source,
           count: item._count
         })),
-        leadsByModel: leadsByModel.map(item => ({
+        leadsByModel: leadsByModel.map((item: any) => ({
           model: item.interestedModel,
           count: item._count
         })),
-        leadsByColor: leadsByColor.map(item => ({
+        leadsByColor: leadsByColor.map((item: any) => ({
           color: item.preferredColor,
           count: item._count
         }))
@@ -244,7 +244,7 @@ export class AnalyticsService {
     const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
 
     const rankings = await Promise.all(
-      consultants.map(async (consultant) => {
+      consultants.map(async (consultant: any) => {
         // Current period stats
         const [totalLeads, closedDeals, revenue] = await Promise.all([
           prisma.lead.count({

@@ -116,7 +116,7 @@ export class AuditService {
     ]);
 
     return {
-      logs: logs.map(log => ({
+      logs: logs.map((log: any) => ({
         ...log,
         changes: log.changes ? JSON.parse(log.changes) : null,
       })),
@@ -141,7 +141,7 @@ export class AuditService {
       orderBy: { timestamp: 'desc' },
     });
 
-    return logs.map(log => ({
+    return logs.map((log: any) => ({
       ...log,
       changes: log.changes ? JSON.parse(log.changes) : null,
     }));
@@ -165,14 +165,14 @@ export class AuditService {
       totalActions: logs.length,
       actionsByType: {} as Record<string, number>,
       actionsByEntity: {} as Record<string, number>,
-      recentActivity: logs.slice(0, 10).map(log => ({
+      recentActivity: logs.slice(0, 10).map((log: any) => ({
         action: log.action,
         entity: log.entity,
         timestamp: log.timestamp,
       })),
     };
 
-    logs.forEach(log => {
+    logs.forEach((log: any) => {
       summary.actionsByType[log.action] = (summary.actionsByType[log.action] || 0) + 1;
       summary.actionsByEntity[log.entity] = (summary.actionsByEntity[log.entity] || 0) + 1;
     });
