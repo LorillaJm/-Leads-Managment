@@ -50,14 +50,14 @@ export function LeadFormDialog({ open, onOpenChange, lead, onSuccess }: LeadForm
     defaultValues: lead || {},
   });
 
-  // Fetch sales consultants for assignment (Management only)
+  // Fetch sales consultants for assignment (Admin only)
   const { data: salesConsultantsData } = useQuery({
     queryKey: ['salesConsultants'],
     queryFn: async () => {
       const response: any = await apiClient.getSalesConsultants();
       return response.data.salesConsultants;
     },
-    enabled: user?.role === UserRole.MANAGEMENT,
+    enabled: user?.role === UserRole.ADMIN,
   });
 
   const createMutation = useMutation({
@@ -220,7 +220,7 @@ export function LeadFormDialog({ open, onOpenChange, lead, onSuccess }: LeadForm
                 <Label htmlFor="source">Source *</Label>
                 <Select
                   value={selectedSource}
-                  onValueChange={(value) => setValue('source', value)}
+                  onValueChange={(value) => setValue('source', value as any)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a source" />
@@ -238,7 +238,7 @@ export function LeadFormDialog({ open, onOpenChange, lead, onSuccess }: LeadForm
                 )}
               </div>
 
-              {user?.role === UserRole.MANAGEMENT && salesConsultantsData && (
+              {user?.role === UserRole.ADMIN && salesConsultantsData && (
                 <div className="space-y-2">
                   <Label htmlFor="assignedToId">Assign To</Label>
                   <Select

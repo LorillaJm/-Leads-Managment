@@ -137,8 +137,8 @@ export function EditLeadSheet({ open, onOpenChange, lead, onSuccess }: EditLeadS
     updateLeadMutation.mutate(data)
   }
 
-  // Check permissions: SC can only edit own leads, management can edit all
-  const canEdit = user?.role === 'MANAGEMENT' || lead?.assignedToId === user?.id
+  // Check permissions: SC can only edit own leads, ADMIN can edit all
+  const canEdit = user?.role === 'ADMIN' || lead?.assignedToId === user?.id
 
   if (!canEdit) {
     return (

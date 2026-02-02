@@ -8,7 +8,6 @@ import {
   DollarSign,
   Eye,
   MousePointerClick,
-  Phone,
   Car,
   Palette,
   Heart,
@@ -32,17 +31,13 @@ import {
   PieChart,
   Pie,
   Cell,
-  Legend,
-  FunnelChart,
-  Funnel,
-  LabelList,
 } from 'recharts'
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4']
 
 export function Dashboard() {
   const { user, logout } = useAuth()
-  const [dateRange, setDateRange] = useState({ startDate: '', endDate: '' })
+  const [dateRange] = useState({ startDate: '', endDate: '' })
   const [currentTime, setCurrentTime] = useState(new Date())
 
   // Update time every minute
@@ -53,7 +48,7 @@ export function Dashboard() {
     return () => clearInterval(timer)
   }, [])
 
-  const { data: statsData, isLoading } = useQuery({
+  const { data: statsData } = useQuery({
     queryKey: ['dashboard-stats', dateRange],
     queryFn: () => api.getDashboardStats(dateRange),
   })
@@ -388,7 +383,7 @@ export function Dashboard() {
                     <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={80} />
                     <Tooltip />
                     <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                      {funnelData.map((entry, index) => (
+                      {funnelData.map((entry: any, index: number) => (
                         <Cell key={`cell-${index}`} fill={entry.fill} />
                       ))}
                     </Bar>
@@ -521,14 +516,14 @@ export function Dashboard() {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={({ name, percent }) =>
+                      label={({ name, percent }: any) =>
                         `${name}: ${(percent * 100).toFixed(0)}%`
                       }
                       outerRadius={70}
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {sourceData.map((entry, index) => (
+                      {sourceData.map((_entry: any, index: number) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>

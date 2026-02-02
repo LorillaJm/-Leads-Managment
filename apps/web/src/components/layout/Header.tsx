@@ -28,7 +28,7 @@ export function Header() {
           </div>
           <div>
             <p className="font-medium text-zinc-900">
-              {user?.firstName} {user?.lastName}
+              {user?.fullName}
             </p>
             <p className="text-xs text-zinc-500 capitalize">
               {user?.role.toLowerCase().replace('_', ' ')}
