@@ -2,8 +2,16 @@ import { PrismaClient } from '@prisma/client';
 import { AppError } from '../middleware/errorHandler.js';
 import { UserRole } from '../types.js';
 import type { PaginationInput } from '../types.js';
+import { Decimal } from '@prisma/client/runtime/library';
 
 const prisma = new PrismaClient();
+
+// Helper function to convert Decimal to number
+function toNumber(value: number | Decimal | null | undefined): number {
+  if (value === null || value === undefined) return 0;
+  if (typeof value === 'number') return value;
+  return value.toNumber();
+}
 
 export class ClosedDealService {
   async getClosedDeals(
@@ -204,8 +212,8 @@ export class ClosedDealService {
 
     return {
       total,
-      totalRevenue: totalRevenue._sum.salePrice || 0,
-      avgSalePrice: avgSalePrice._avg.salePrice || 0,
+      totalRevenue: toNumber(totalRevenue._sum.salePrice),
+      avgSalePrice: toNumber(avgSalePrice._avg.salePrice),
       recentDeals
     };
   }
@@ -262,7 +270,7 @@ export class ClosedDealService {
       deal.chassisNumber,
       deal.vsiNumber,
       new Date(deal.dateReleased).toLocaleDateString(),
-      deal.salePrice.toString(),
+      toNumber(deal.salePrice).toString(),
       deal.lead.assignedTo.fullName,
       new Date(deal.createdAt).toLocaleDateString()
     ]);

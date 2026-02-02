@@ -1,7 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 import { UserRole, LeadStatus } from '../types.js';
+import { Decimal } from '@prisma/client/runtime/library';
 
 const prisma = new PrismaClient();
+
+// Helper function to convert Decimal to number
+function toNumber(value: number | Decimal | null | undefined): number {
+  if (value === null || value === undefined) return 0;
+  if (typeof value === 'number') return value;
+  return value.toNumber();
+}
 
 export class AnalyticsService {
   async getDashboardStats(userId: string, userRole: string, dateRange?: { startDate?: string; endDate?: string }) {
@@ -107,8 +115,8 @@ export class AnalyticsService {
         closedDeals,
         lostLeads,
         conversionRate: Math.round(conversionRate * 100) / 100,
-        totalRevenue: revenueData._sum.salePrice || 0,
-        avgDealSize: revenueData._avg.salePrice || 0
+        totalRevenue: toNumber(revenueData._sum.salePrice),
+        avgDealSize: toNumber(revenueData._avg.salePrice)
       },
       charts: {
         leadsByStatus: leadsByStatus.map((item: any) => ({
@@ -321,7 +329,7 @@ export class AnalyticsService {
             totalLeads: prevTotalLeads,
             closedDeals: prevClosedDeals,
             conversionRate: Math.round(prevConversionRate * 100) / 100,
-            totalRevenue: prevRevenue._sum.salePrice || 0
+            totalRevenue: toNumber(prevRevenue._sum.salePrice)
           };
         }
 
@@ -335,7 +343,7 @@ export class AnalyticsService {
             totalLeads,
             closedDeals,
             conversionRate: Math.round(conversionRate * 100) / 100,
-            totalRevenue: revenue._sum.salePrice || 0
+            totalRevenue: toNumber(revenue._sum.salePrice)
           },
           ...(previousMetrics && { previousMetrics })
         };
@@ -438,7 +446,7 @@ export class AnalyticsService {
         date: dateLabel,
         leads: leadsCount,
         conversions: conversionsCount,
-        revenue: revenueData._sum.salePrice || 0
+        revenue: toNumber(revenueData._sum.salePrice)
       });
     }
 
