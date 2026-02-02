@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -79,7 +79,7 @@ model ClosedDeal {
   chassisNumber String
   vsiNumber     String
   dateReleased  DateTime
-  salePrice     Float    // Changed from Decimal to Float for SQLite
+  salePrice     Decimal  @db.Decimal(10, 2)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

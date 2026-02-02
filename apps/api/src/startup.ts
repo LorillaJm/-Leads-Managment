@@ -7,15 +7,15 @@ export async function runStartupTasks() {
   console.log('🔧 Running startup tasks...');
 
   try {
-    // Run Prisma migrations
-    console.log('📦 Running database migrations...');
-    const { stdout: migrateOutput, stderr: migrateError } = await execAsync('npx prisma migrate deploy');
+    // Run Prisma db push (creates tables if they don't exist)
+    console.log('📦 Setting up database schema...');
+    const { stdout: pushOutput, stderr: pushError } = await execAsync('npx prisma db push --accept-data-loss');
     
-    if (migrateError) {
-      console.error('⚠️  Migration warnings:', migrateError);
+    if (pushError && !pushError.includes('warnings')) {
+      console.error('⚠️  Database setup warnings:', pushError);
     }
-    console.log('✅ Migrations completed');
-    console.log(migrateOutput);
+    console.log('✅ Database schema ready');
+    if (pushOutput) console.log(pushOutput);
 
     // Check if database needs seeding (only if no users exist)
     console.log('🌱 Checking if database needs seeding...');
