@@ -10,3 +10,5 @@ build
 *.db-journal
 .vscode
 .idea
+.vercel
+.env*.local
