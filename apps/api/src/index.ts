@@ -121,8 +121,10 @@ process.on('SIGINT', () => {
 
 // Run startup tasks then start server
 async function startServer() {
-  // Run migrations and seeding
-  await runStartupTasks();
+  // Only run migrations and seeding in development
+  if (process.env.NODE_ENV !== 'production') {
+    await runStartupTasks();
+  }
 
   app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
@@ -139,8 +141,8 @@ async function startServer() {
       environment: process.env.NODE_ENV || 'development',
     });
 
-    // Schedule automated backups (if enabled)
-    if (process.env.ENABLE_AUTO_BACKUP === 'true') {
+    // Schedule automated backups (if enabled) - only in non-serverless environments
+    if (process.env.ENABLE_AUTO_BACKUP === 'true' && process.env.NODE_ENV !== 'production') {
       const backupInterval = parseInt(process.env.BACKUP_INTERVAL_HOURS || '24') * 60 * 60 * 1000;
       setInterval(() => {
         backupService.createAutomatedBackup();
@@ -150,7 +152,14 @@ async function startServer() {
   });
 }
 
-startServer().catch(error => {
-  console.error('Failed to start server:', error);
-  process.exit(1);
-});
+// Start the server normally for local development
+// For Vercel, it will use the exported app
+if (!process.env.VERCEL) {
+  startServer().catch(error => {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  });
+}
+
+// Export for Vercel serverless
+export default app;
