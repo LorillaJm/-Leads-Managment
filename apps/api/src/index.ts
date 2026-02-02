@@ -16,6 +16,7 @@ import { closedDealsRouter } from './routes/closedDeals.js';
 import { analyticsRouter } from './routes/analytics.js';
 import { auditRouter } from './routes/audit.js';
 import { backupRouter } from './routes/backup.js';
+import { seedRouter } from './routes/seed.js';
 import { errorLoggingService } from './services/errorLoggingService.js';
 import { backupService } from './services/backupService.js';
 import { runStartupTasks } from './startup.js';
@@ -86,6 +87,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Routes
 app.use('/api/v1/health', healthRouter);
+app.use('/api/v1/seed', seedRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/leads', leadsRouter);
