@@ -18,6 +18,7 @@ import { auditRouter } from './routes/audit.js';
 import { backupRouter } from './routes/backup.js';
 import { errorLoggingService } from './services/errorLoggingService.js';
 import { backupService } from './services/backupService.js';
+import { runStartupTasks } from './startup.js';
 
 // Get the directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -116,27 +117,38 @@ process.on('SIGINT', () => {
   process.exit(0);
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/api/v1/health`);
-  console.log(`🔒 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🛡️  Security: Helmet enabled`);
-  console.log(`⏱️  Rate limiting: Active`);
-  console.log(`📝 Audit logging: Enabled`);
-  console.log(`💾 Backup system: Ready`);
-  
-  // Log startup
-  errorLoggingService.logInfo('Server started', {
-    port: PORT,
-    environment: process.env.NODE_ENV || 'development',
-  });
+// Run startup tasks then start server
+async function startServer() {
+  // Run migrations and seeding
+  await runStartupTasks();
 
-  // Schedule automated backups (if enabled)
-  if (process.env.ENABLE_AUTO_BACKUP === 'true') {
-    const backupInterval = parseInt(process.env.BACKUP_INTERVAL_HOURS || '24') * 60 * 60 * 1000;
-    setInterval(() => {
-      backupService.createAutomatedBackup();
-    }, backupInterval);
-    console.log(`🤖 Automated backups: Every ${process.env.BACKUP_INTERVAL_HOURS || '24'} hours`);
-  }
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📊 Health check: http://localhost:${PORT}/api/v1/health`);
+    console.log(`🔒 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🛡️  Security: Helmet enabled`);
+    console.log(`⏱️  Rate limiting: Active`);
+    console.log(`📝 Audit logging: Enabled`);
+    console.log(`💾 Backup system: Ready`);
+    
+    // Log startup
+    errorLoggingService.logInfo('Server started', {
+      port: PORT,
+      environment: process.env.NODE_ENV || 'development',
+    });
+
+    // Schedule automated backups (if enabled)
+    if (process.env.ENABLE_AUTO_BACKUP === 'true') {
+      const backupInterval = parseInt(process.env.BACKUP_INTERVAL_HOURS || '24') * 60 * 60 * 1000;
+      setInterval(() => {
+        backupService.createAutomatedBackup();
+      }, backupInterval);
+      console.log(`🤖 Automated backups: Every ${process.env.BACKUP_INTERVAL_HOURS || '24'} hours`);
+    }
+  });
+}
+
+startServer().catch(error => {
+  console.error('Failed to start server:', error);
+  process.exit(1);
 });
