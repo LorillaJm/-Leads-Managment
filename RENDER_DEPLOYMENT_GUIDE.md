@@ -59,12 +59,13 @@ Fill in these settings:
 - **Branch**: `main`
 - **Root Directory**: `apps/api` ⚠️ **IMPORTANT!**
 - **Runtime**: `Node`
-- **Build Command**: 
-  ```bash
+- **Build Command**: (Copy exactly, no extra spaces)
+  ```
   npm install && npx prisma generate && npm run build
   ```
+  ⚠️ **IMPORTANT**: If you see "bash" before the command, delete it!
 - **Start Command**: 
-  ```bash
+  ```
   npm start
   ```
 
@@ -286,11 +287,14 @@ The API is already configured to accept requests from any origin in production. 
 - Missing dependencies: Run `npm install` locally first
 - TypeScript errors: Run `npm run build` locally
 - Prisma errors: Check `schema.prisma` file
+- **"bash npm" error**: Remove "bash" from build command
 
 **Common fixes:**
 - Make sure Root Directory is set to `apps/api`
 - Verify all environment variables are set
 - Check that DATABASE_URL is the Internal URL (not External)
+- **Build command should NOT have "bash" prefix**
+- Build command: `npm install && npx prisma generate && npm run build`
 
 ### API Not Responding
 1. Check service status (should be "Live")
