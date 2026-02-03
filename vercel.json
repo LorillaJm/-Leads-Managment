@@ -1,4 +1,5 @@
 {
+  "framework": "vite",
   "buildCommand": "npm install && npm run build --workspace=@lead-management/shared && npm run build --workspace=@lead-management/web",
   "outputDirectory": "apps/web/dist",
   "installCommand": "npm install"
