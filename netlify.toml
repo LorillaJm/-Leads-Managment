@@ -1,0 +1,9 @@
+[build]
+  base = "/"
+  command = "npm install && npm run build -w @lead-management/shared && npm run build -w @lead-management/web"
+  publish = "apps/web/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
