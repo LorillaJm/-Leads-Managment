@@ -1,4 +1,4 @@
 {
-  "buildCommand": "npm install && npm run build --workspace=packages/shared && npm run build --workspace=apps/web",
+  "buildCommand": "npm install && npm run build -w @lead-management/shared && npm run build -w @lead-management/web",
   "outputDirectory": "apps/web/dist"
 }
