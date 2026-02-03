@@ -2,10 +2,10 @@
   "version": 2,
   "buildCommand": "npm install && npm run build --workspace=@lead-management/api && npm run db:generate --workspace=@lead-management/api",
   "installCommand": "npm install",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/v1/(.*)",
-      "destination": "/api"
+      "src": "/(.*)",
+      "dest": "/api/index.js"
     }
   ]
 }
