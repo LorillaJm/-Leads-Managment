@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "buildCommand": "npm install && npm run build --workspace=@lead-management/shared && npm run build --workspace=@lead-management/web",
-  "outputDirectory": "apps/web/dist",
+  "buildCommand": "npm install && npm run build --workspace=@lead-management/shared && npm run build --workspace=@lead-management/web && cp -r apps/web/dist ./dist",
+  "outputDirectory": "dist",
   "installCommand": "npm install"
 }
