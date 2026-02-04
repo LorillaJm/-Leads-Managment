@@ -11,17 +11,17 @@ interface KPICardProps {
 function KPICard({ label, value, goal, color, index }: KPICardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className={`${color} rounded-lg p-4 shadow-sm`}
+      className={`${color} rounded-xl p-5 shadow-md hover:shadow-lg transition-all duration-300`}
     >
       <div className="text-center">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: index * 0.05 + 0.2, type: 'spring' }}
-          className="text-4xl font-bold text-white mb-1"
+          transition={{ delay: index * 0.05 + 0.2, type: 'spring', stiffness: 200 }}
+          className="text-5xl font-bold text-white mb-2"
         >
           {value}
         </motion.div>
@@ -29,7 +29,7 @@ function KPICard({ label, value, goal, color, index }: KPICardProps) {
           {label}
         </div>
         {goal && (
-          <div className="text-xs text-white/90 mt-1">
+          <div className="text-xs text-white/90 mt-2 font-medium">
             (Goal: {goal})
           </div>
         )}
@@ -62,43 +62,43 @@ export function KPIPanel({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.1 }}
-      className="space-y-3 p-4"
+      className="space-y-4"
     >
       <KPICard
         label="LEADS"
         value={leads}
         goal={leadsGoal}
-        color="bg-gray-700"
+        color="bg-gradient-to-br from-gray-700 to-gray-800"
         index={0}
       />
       <KPICard
         label="PROSPECTS"
         value={prospects}
-        color="bg-blue-500"
+        color="bg-gradient-to-br from-blue-500 to-blue-600"
         index={1}
       />
       <KPICard
         label="TEST DRIVES"
         value={testDrives}
-        color="bg-blue-400"
+        color="bg-gradient-to-br from-blue-400 to-blue-500"
         index={2}
       />
       <KPICard
         label="RESERVATIONS"
         value={reservations}
-        color="bg-blue-300"
+        color="bg-gradient-to-br from-blue-300 to-blue-400"
         index={3}
       />
       <KPICard
         label="BANK APPLICATIONS"
         value={bankApplications}
-        color="bg-yellow-500"
+        color="bg-gradient-to-br from-yellow-500 to-yellow-600"
         index={4}
       />
       <KPICard
         label="CLOSED DEALS"
         value={closedDeals}
-        color="bg-green-600"
+        color="bg-gradient-to-br from-green-600 to-green-700"
         index={5}
       />
     </motion.div>

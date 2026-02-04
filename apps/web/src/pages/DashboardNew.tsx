@@ -101,23 +101,23 @@ export function DashboardNew() {
   }
 
   return (
-    <div className="bg-gray-50 -mx-6 -my-8 px-6 py-8">
+    <div className="space-y-6">
       {/* Mobile Filter Toggle */}
-      <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3 mb-4 rounded-lg">
+      <div className="lg:hidden">
         <button
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="flex items-center gap-2 text-sm font-medium text-gray-700"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
         >
           {mobileFiltersOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           {mobileFiltersOpen ? 'Close Filters' : 'Open Filters'}
         </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Sidebar - Filters (Desktop & Mobile Drawer) */}
         <div className={`
           ${mobileFiltersOpen ? 'block' : 'hidden'} lg:block
-          w-full lg:w-48 flex-shrink-0
+          lg:col-span-2
         `}>
           <FilterPanel
             selectedYear={selectedYear}
@@ -134,7 +134,7 @@ export function DashboardNew() {
         </div>
 
         {/* Left KPI Panel */}
-        <div className="w-full lg:w-56 flex-shrink-0 lg:border-r border-gray-200">
+        <div className="lg:col-span-2">
           <KPIPanel
             leads={totals.leads}
             prospects={totals.prospects}
@@ -146,23 +146,18 @@ export function DashboardNew() {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 p-4 lg:p-6 space-y-4 lg:space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
-            {/* Overview */}
-            <div>
-              <OverviewPanel
-                totalCount={totals.leads}
-                label="By count"
-              />
-            </div>
+        <div className="lg:col-span-5 space-y-6">
+          {/* Overview and Conversion Flow */}
+          <div className="grid grid-cols-1 gap-6">
+            <OverviewPanel
+              totalCount={totals.leads}
+              label="By count"
+            />
 
-            {/* Conversion Flow */}
-            <div className="lg:col-span-2">
-              <ConversionFlowPanel
-                leadsToProspects={leadsToProspects}
-                prospectsToClosedDeals={prospectsToClosedDeals}
-              />
-            </div>
+            <ConversionFlowPanel
+              leadsToProspects={leadsToProspects}
+              prospectsToClosedDeals={prospectsToClosedDeals}
+            />
           </div>
 
           {/* Activity Breakdown */}
@@ -171,26 +166,20 @@ export function DashboardNew() {
             reservations={totals.reservations}
             bankApplications={totals.bankApplications}
           />
-
-          {/* Sales Team Table - Mobile */}
-          <div className="lg:hidden">
-            <SalesTeamTable
-              data={salesTeamData}
-              totalCount={salesTeamData.length}
-            />
-          </div>
-
-          {/* Analytics Chart */}
-          <AnalyticsChart data={chartData} />
         </div>
 
-        {/* Right Panel - Sales Team Table (Desktop Only) */}
-        <div className="hidden lg:block w-96 flex-shrink-0 p-6">
+        {/* Right Panel - Sales Team Table */}
+        <div className="lg:col-span-3">
           <SalesTeamTable
             data={salesTeamData}
             totalCount={salesTeamData.length}
           />
         </div>
+      </div>
+
+      {/* Bottom Analytics Chart - Full Width */}
+      <div className="mt-6">
+        <AnalyticsChart data={chartData} />
       </div>
     </div>
   )

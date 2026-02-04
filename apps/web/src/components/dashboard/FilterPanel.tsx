@@ -37,19 +37,19 @@ export function FilterPanel({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-white border-r border-gray-200 p-4 space-y-6"
+      className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm"
     >
       {/* Scope Header */}
       <div>
-        <h3 className="text-sm font-bold text-gray-900 mb-3">Scope</h3>
+        <h3 className="text-lg font-bold text-gray-900 mb-4">Scope</h3>
         
         {/* Year Filter */}
-        <div className="mb-4">
-          <label className="text-xs font-semibold text-gray-700 mb-2 block">
+        <div className="mb-6">
+          <label className="text-sm font-semibold text-gray-700 mb-2 block">
             Year
           </label>
           <Select value={selectedYear} onValueChange={onYearChange}>
-            <SelectTrigger className="w-full h-9 text-sm">
+            <SelectTrigger className="w-full bg-cyan-400 text-white border-cyan-500 hover:bg-cyan-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -63,17 +63,17 @@ export function FilterPanel({
         </div>
 
         {/* Month Checkboxes */}
-        <div className="space-y-1.5">
+        <div className="space-y-2 mb-6">
           {MONTHS.map((month) => (
             <label
               key={month}
-              className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded"
+              className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded-lg transition-colors"
             >
               <input
                 type="checkbox"
                 checked={selectedMonths.includes(month)}
                 onChange={() => onMonthToggle(month)}
-                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
               />
               <span className="text-sm font-medium text-gray-700">{month}</span>
             </label>
@@ -83,11 +83,11 @@ export function FilterPanel({
 
       {/* Sales Consultant Filter */}
       <div>
-        <label className="text-xs font-semibold text-gray-700 mb-2 block">
+        <label className="text-sm font-semibold text-gray-700 mb-2 block">
           Sales Consultant
         </label>
         <Select value={selectedConsultant} onValueChange={onConsultantChange}>
-          <SelectTrigger className="w-full h-9 text-sm bg-cyan-400 text-white border-cyan-500">
+          <SelectTrigger className="w-full bg-cyan-400 text-white border-cyan-500 hover:bg-cyan-500">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
