@@ -90,18 +90,18 @@ export function DashboardNew() {
   }
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-3 lg:gap-4">
       {/* Left Column - Scope & KPIs */}
-      <div className="w-48 flex-shrink-0 space-y-4">
+      <div className="w-36 lg:w-44 flex-shrink-0 space-y-3">
         {/* Scope Section */}
-        <div className="bg-white rounded-lg border border-gray-200 p-4">
-          <h3 className="text-sm font-bold text-gray-900 mb-3">Scope</h3>
+        <div className="bg-white rounded-lg border border-gray-200 p-2.5">
+          <h3 className="text-xs font-bold text-gray-900 mb-2">Scope</h3>
           
           {/* Year */}
-          <div className="mb-3">
-            <label className="text-xs font-semibold text-gray-700 mb-1 block">Year</label>
+          <div className="mb-2">
+            <label className="text-[10px] font-semibold text-gray-700 mb-0.5 block">Year</label>
             <Select value={selectedYear} onValueChange={setSelectedYear}>
-              <SelectTrigger className="w-full h-8 text-sm bg-cyan-400 text-white border-cyan-500">
+              <SelectTrigger className="w-full h-7 text-xs bg-cyan-400 text-white border-cyan-500">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -113,14 +113,14 @@ export function DashboardNew() {
           </div>
 
           {/* Months */}
-          <div className="space-y-1 mb-3">
+          <div className="space-y-0.5 mb-2">
             {MONTHS.map((month) => (
-              <label key={month} className="flex items-center gap-2 cursor-pointer text-xs">
+              <label key={month} className="flex items-center gap-1.5 cursor-pointer text-[10px]">
                 <input
                   type="checkbox"
                   checked={selectedMonths.includes(month)}
                   onChange={() => handleMonthToggle(month)}
-                  className="w-3 h-3 rounded border-gray-300 text-blue-600"
+                  className="w-2.5 h-2.5 rounded border-gray-300 text-blue-600"
                 />
                 <span className="font-medium text-gray-700">{month}</span>
               </label>
@@ -129,9 +129,9 @@ export function DashboardNew() {
 
           {/* Sales Consultant */}
           <div>
-            <label className="text-xs font-semibold text-gray-700 mb-1 block">Sales Consultant</label>
+            <label className="text-[10px] font-semibold text-gray-700 mb-0.5 block">Sales Consultant</label>
             <Select value={selectedConsultant} onValueChange={setSelectedConsultant}>
-              <SelectTrigger className="w-full h-8 text-sm bg-cyan-400 text-white border-cyan-500">
+              <SelectTrigger className="w-full h-7 text-xs bg-cyan-400 text-white border-cyan-500">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -159,9 +159,9 @@ export function DashboardNew() {
       </div>
 
       {/* Middle Column - Overview, Conversion, Activities */}
-      <div className="flex-1 space-y-4">
+      <div className="flex-1 space-y-3 lg:space-y-4">
         {/* Top Row - Overview & Conversion Flow */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
           <OverviewPanel totalCount={totals.leads} label="By count" />
           <ConversionFlowPanel
             leadsToProspects={leadsToProspects}
@@ -178,7 +178,7 @@ export function DashboardNew() {
       </div>
 
       {/* Right Column - Sales Team */}
-      <div className="w-80 flex-shrink-0">
+      <div className="w-64 lg:w-80 flex-shrink-0">
         <SalesTeamTable data={salesTeamData} totalCount={salesTeamData.length} />
       </div>
     </div>

@@ -17,30 +17,30 @@ function KPICard({ label, value, goal, color, index, icon: Icon, collapsed }: KP
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className={`${color} rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 ${collapsed ? 'flex items-center justify-center' : ''}`}
+      className={`${color} rounded-md p-2 shadow-sm hover:shadow-md transition-all duration-300 ${collapsed ? 'flex items-center justify-center' : ''}`}
       title={collapsed ? `${label}: ${value}` : ''}
     >
       {collapsed ? (
         <div className="text-center">
-          <Icon className="w-6 h-6 text-white mx-auto mb-1" />
-          <div className="text-lg font-bold text-white">{value}</div>
+          <Icon className="w-4 h-4 text-white mx-auto mb-0.5" />
+          <div className="text-sm font-bold text-white">{value}</div>
         </div>
       ) : (
         <div className="text-center">
-          <Icon className="w-8 h-8 text-white mx-auto mb-2" />
+          <Icon className="w-5 h-5 text-white mx-auto mb-1" />
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: index * 0.05 + 0.2, type: 'spring', stiffness: 200 }}
-            className="text-3xl font-bold text-white mb-1"
+            className="text-xl font-bold text-white mb-0.5"
           >
             {value}
           </motion.div>
-          <div className="text-xs font-bold text-white uppercase tracking-wide">
+          <div className="text-[10px] font-bold text-white uppercase tracking-wide">
             {label}
           </div>
           {goal && (
-            <div className="text-xs text-white/90 mt-1 font-medium">
+            <div className="text-[9px] text-white/90 mt-0.5 font-medium">
               (Goal: {goal})
             </div>
           )}
@@ -76,7 +76,7 @@ export function KPIPanel({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.1 }}
-      className="space-y-2"
+      className="space-y-1.5"
     >
       <KPICard
         label="LEADS"
