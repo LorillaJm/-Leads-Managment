@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { api } from '@/lib/api'
 import { FilterPanel } from '@/components/dashboard/FilterPanel'
 import { KPIPanel } from '@/components/dashboard/KPIPanel'
@@ -16,6 +16,7 @@ export function DashboardNew() {
   const [selectedMonths, setSelectedMonths] = useState<string[]>(['ALL'])
   const [selectedConsultant, setSelectedConsultant] = useState('ALL')
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   // Fetch sales consultants
   const { data: consultantsData } = useQuery({
@@ -101,85 +102,103 @@ export function DashboardNew() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
+      {/* Sidebar Collapse Toggle - Desktop */}
+      <div className="hidden lg:block">
+        <button
+          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+          className="fixed left-4 top-20 z-50 p-2 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all"
+          title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+        >
+          {sidebarCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+        </button>
+      </div>
+
       {/* Mobile Filter Toggle */}
       <div className="lg:hidden">
         <button
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
         >
-          {mobileFiltersOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileFiltersOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           {mobileFiltersOpen ? 'Close Filters' : 'Open Filters'}
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Sidebar - Filters (Desktop & Mobile Drawer) */}
+      <div className="flex gap-4">
+        {/* Left Sidebar - Filters & KPIs */}
         <div className={`
           ${mobileFiltersOpen ? 'block' : 'hidden'} lg:block
-          lg:col-span-2
+          ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-64'}
+          transition-all duration-300 flex-shrink-0
         `}>
-          <FilterPanel
-            selectedYear={selectedYear}
-            selectedMonths={selectedMonths}
-            selectedConsultant={selectedConsultant}
-            onYearChange={setSelectedYear}
-            onMonthToggle={handleMonthToggle}
-            onConsultantChange={setSelectedConsultant}
-            salesConsultants={consultants.map((c: any) => ({
-              id: c.id,
-              name: c.fullName || `${c.firstName} ${c.lastName}`,
-            }))}
-          />
-        </div>
+          <div className="space-y-4">
+            {/* Filters */}
+            <div className={sidebarCollapsed ? 'hidden' : 'block'}>
+              <FilterPanel
+                selectedYear={selectedYear}
+                selectedMonths={selectedMonths}
+                selectedConsultant={selectedConsultant}
+                onYearChange={setSelectedYear}
+                onMonthToggle={handleMonthToggle}
+                onConsultantChange={setSelectedConsultant}
+                salesConsultants={consultants.map((c: any) => ({
+                  id: c.id,
+                  name: c.fullName || `${c.firstName} ${c.lastName}`,
+                }))}
+              />
+            </div>
 
-        {/* Left KPI Panel */}
-        <div className="lg:col-span-2">
-          <KPIPanel
-            leads={totals.leads}
-            prospects={totals.prospects}
-            testDrives={totals.testDrives}
-            reservations={totals.reservations}
-            bankApplications={totals.bankApplications}
-            closedDeals={totals.closedDeals}
-          />
+            {/* KPI Panel */}
+            <KPIPanel
+              leads={totals.leads}
+              prospects={totals.prospects}
+              testDrives={totals.testDrives}
+              reservations={totals.reservations}
+              bankApplications={totals.bankApplications}
+              closedDeals={totals.closedDeals}
+              collapsed={sidebarCollapsed}
+            />
+          </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="lg:col-span-5 space-y-6">
-          {/* Overview and Conversion Flow */}
-          <div className="grid grid-cols-1 gap-6">
-            <OverviewPanel
-              totalCount={totals.leads}
-              label="By count"
+        <div className="flex-1 min-w-0 space-y-4">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+            {/* Overview */}
+            <div className="xl:col-span-1">
+              <OverviewPanel
+                totalCount={totals.leads}
+                label="By count"
+              />
+            </div>
+
+            {/* Conversion Flow */}
+            <div className="xl:col-span-2">
+              <ConversionFlowPanel
+                leadsToProspects={leadsToProspects}
+                prospectsToClosedDeals={prospectsToClosedDeals}
+              />
+            </div>
+          </div>
+
+          {/* Activity Breakdown & Sales Team */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <ActivityBreakdownPanel
+              testDrives={totals.testDrives}
+              reservations={totals.reservations}
+              bankApplications={totals.bankApplications}
             />
 
-            <ConversionFlowPanel
-              leadsToProspects={leadsToProspects}
-              prospectsToClosedDeals={prospectsToClosedDeals}
+            <SalesTeamTable
+              data={salesTeamData}
+              totalCount={salesTeamData.length}
             />
           </div>
 
-          {/* Activity Breakdown */}
-          <ActivityBreakdownPanel
-            testDrives={totals.testDrives}
-            reservations={totals.reservations}
-            bankApplications={totals.bankApplications}
-          />
+          {/* Analytics Chart */}
+          <AnalyticsChart data={chartData} />
         </div>
-
-        {/* Right Panel - Sales Team Table */}
-        <div className="lg:col-span-3">
-          <SalesTeamTable
-            data={salesTeamData}
-            totalCount={salesTeamData.length}
-          />
-        </div>
-      </div>
-
-      {/* Bottom Analytics Chart - Full Width */}
-      <div className="mt-6">
-        <AnalyticsChart data={chartData} />
       </div>
     </div>
   )
