@@ -6,7 +6,6 @@ import { OverviewPanel } from '@/components/dashboard/OverviewPanel'
 import { ConversionFlowPanel } from '@/components/dashboard/ConversionFlowPanel'
 import { ActivityBreakdownPanel } from '@/components/dashboard/ActivityBreakdownPanel'
 import { SalesTeamTable } from '@/components/dashboard/SalesTeamTable'
-import { AnalyticsChart } from '@/components/dashboard/AnalyticsChart'
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton'
 import {
   Select,
@@ -24,19 +23,16 @@ export function DashboardNew() {
   const [selectedMonths, setSelectedMonths] = useState<string[]>(['ALL'])
   const [selectedConsultant, setSelectedConsultant] = useState('ALL')
 
-  // Fetch sales consultants
   const { data: consultantsData } = useQuery({
     queryKey: ['sales-consultants'],
     queryFn: () => api.getSalesConsultants(),
   })
 
-  // Fetch dashboard stats
   const { data: statsData, isLoading } = useQuery({
     queryKey: ['dashboard-stats', selectedYear, selectedMonths, selectedConsultant],
     queryFn: () => api.getDashboardStats({}),
   })
 
-  // Fetch sales team rankings
   const { data: rankingsData } = useQuery({
     queryKey: ['sales-rankings'],
     queryFn: () => api.getSalesConsultantRankings(false),
@@ -89,58 +85,6 @@ export function DashboardNew() {
     ? Math.round((totals.closedDeals / totals.prospects) * 100)
     : 0
 
-  const chartData = salesTeamData.slice(0, 10).map((consultant: any) => ({
-    consultant: consultant.name.split(' ').slice(0, 2).join(' '),
-    leads: consultant.leads,
-    prospects: consultant.prospects,
-    testDrives: consultant.testDrives,
-    reservations: consultant.reservations,
-    bankApplications: consultant.bankApplications,
-    closedDeals: consultant.closedDeals,
-  }))
-
-  if (isLoading) {
-    return <DashboardSkeleton />
-  }
-    id: ranking.userId || ranking.id,
-    name: ranking.fullName || ranking.name || 'Unknown',
-    leads: ranking.totalLeads || 0,
-    prospects: ranking.totalProspects || 0,
-    testDrives: ranking.totalTestDrives || 0,
-    reservations: ranking.totalReservations || 0,
-    bankApplications: ranking.totalBankApplications || 0,
-    closedDeals: ranking.totalClosedDeals || 0,
-  }))
-
-  // Calculate totals
-  const totals = {
-    leads: stats.totalLeads || 0,
-    prospects: stats.totalProspects || 0,
-    testDrives: stats.totalTestDrives || 0,
-    reservations: stats.totalReservations || 0,
-    bankApplications: stats.totalBankApplications || 0,
-    closedDeals: stats.totalClosedDeals || 0,
-  }
-
-  // Calculate conversion rates
-  const leadsToProspects = totals.leads > 0 
-    ? Math.round((totals.prospects / totals.leads) * 100) 
-    : 0
-  const prospectsToClosedDeals = totals.prospects > 0
-    ? Math.round((totals.closedDeals / totals.prospects) * 100)
-    : 0
-
-  // Transform data for analytics chart
-  const chartData = salesTeamData.slice(0, 10).map((consultant: any) => ({
-    consultant: consultant.name.split(' ').slice(0, 2).join(' '),
-    leads: consultant.leads,
-    prospects: consultant.prospects,
-    testDrives: consultant.testDrives,
-    reservations: consultant.reservations,
-    bankApplications: consultant.bankApplications,
-    closedDeals: consultant.closedDeals,
-  }))
-
   if (isLoading) {
     return <DashboardSkeleton />
   }
@@ -175,7 +119,7 @@ export function DashboardNew() {
                 <input
                   type="checkbox"
                   checked={selectedMonths.includes(month)}
-                  onChange={() => onMonthToggle(month)}
+                  onChange={() => handleMonthToggle(month)}
                   className="w-3 h-3 rounded border-gray-300 text-blue-600"
                 />
                 <span className="font-medium text-gray-700">{month}</span>
@@ -186,14 +130,16 @@ export function DashboardNew() {
           {/* Sales Consultant */}
           <div>
             <label className="text-xs font-semibold text-gray-700 mb-1 block">Sales Consultant</label>
-            <Select value={selectedConsultant} onValueChange={onConsultantChange}>
+            <Select value={selectedConsultant} onValueChange={setSelectedConsultant}>
               <SelectTrigger className="w-full h-8 text-sm bg-cyan-400 text-white border-cyan-500">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="ALL">ALL</SelectItem>
-                {salesConsultants.map((c) => (
-                  <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                {consultants.map((c: any) => (
+                  <SelectItem key={c.id} value={c.id}>
+                    {c.fullName || `${c.firstName} ${c.lastName}`}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -201,17 +147,15 @@ export function DashboardNew() {
         </div>
 
         {/* KPI Cards */}
-        <div className="space-y-2">
-          <KPIPanel
-            leads={totals.leads}
-            prospects={totals.prospects}
-            testDrives={totals.testDrives}
-            reservations={totals.reservations}
-            bankApplications={totals.bankApplications}
-            closedDeals={totals.closedDeals}
-            collapsed={false}
-          />
-        </div>
+        <KPIPanel
+          leads={totals.leads}
+          prospects={totals.prospects}
+          testDrives={totals.testDrives}
+          reservations={totals.reservations}
+          bankApplications={totals.bankApplications}
+          closedDeals={totals.closedDeals}
+          collapsed={false}
+        />
       </div>
 
       {/* Middle Column - Overview, Conversion, Activities */}
