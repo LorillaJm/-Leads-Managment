@@ -11,7 +11,7 @@ export function InterestLevelsChart({ data }: InterestLevelsChartProps) {
   const colors = ['#60a5fa', '#3b82f6', '#2563eb', '#1d4ed8']
 
   return (
-    <div className="h-64">
+    <div className="h-56">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}

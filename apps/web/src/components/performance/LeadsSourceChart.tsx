@@ -11,7 +11,7 @@ export function LeadsSourceChart({ data }: LeadsSourceChartProps) {
   const colors = ['#06b6d4', '#14b8a6', '#10b981', '#22c55e']
 
   return (
-    <div className="h-64">
+    <div className="h-56">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}

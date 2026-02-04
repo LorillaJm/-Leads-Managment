@@ -31,7 +31,7 @@ export function VehicleModelsChart({ data }: VehicleModelsChartProps) {
   }
 
   return (
-    <div className="h-64">
+    <div className="h-[500px]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}

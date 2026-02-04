@@ -36,7 +36,7 @@ export function MonthlyPerformanceChart({ data }: MonthlyPerformanceChartProps) 
   }
 
   return (
-    <div className="h-96">
+    <div className="h-[450px]">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={data}

@@ -33,7 +33,7 @@ export function ColorsChart({ data }: ColorsChartProps) {
   }
 
   return (
-    <div className="h-64">
+    <div className="h-[500px]">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
@@ -42,7 +42,7 @@ export function ColorsChart({ data }: ColorsChartProps) {
             cy="50%"
             labelLine={false}
             label={({ percentage }) => `${percentage}%`}
-            outerRadius={80}
+            outerRadius={120}
             fill="#8884d8"
             dataKey="count"
             nameKey="color"
