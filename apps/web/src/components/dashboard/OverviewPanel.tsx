@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { Users, TrendingUp, Car, FileText, Building2, CheckCircle } from 'lucide-react'
 
 interface OverviewPanelProps {
   totalCount: number
@@ -19,10 +18,9 @@ interface KPICardProps {
   goal?: number
   color: string
   index: number
-  icon: any
 }
 
-function KPICard({ label, value, goal, color, index, icon: Icon }: KPICardProps) {
+function KPICard({ label, value, goal, color, index }: KPICardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -53,7 +51,6 @@ function KPICard({ label, value, goal, color, index, icon: Icon }: KPICardProps)
 }
 
 export function OverviewPanel({ 
-  totalCount, 
   label,
   leads,
   prospects,
@@ -78,42 +75,36 @@ export function OverviewPanel({
           value={leads}
           goal={leadsGoal}
           color="bg-gradient-to-br from-gray-700 to-gray-800"
-          icon={Users}
           index={0}
         />
         <KPICard
           label="PROSPECTS"
           value={prospects}
           color="bg-gradient-to-br from-blue-500 to-blue-600"
-          icon={TrendingUp}
           index={1}
         />
         <KPICard
           label="TEST DRIVES"
           value={testDrives}
           color="bg-gradient-to-br from-blue-400 to-blue-500"
-          icon={Car}
           index={2}
         />
         <KPICard
           label="RESERVATIONS"
           value={reservations}
           color="bg-gradient-to-br from-blue-300 to-blue-400"
-          icon={FileText}
           index={3}
         />
         <KPICard
           label="BANK APPLICATIONS"
           value={bankApplications}
           color="bg-gradient-to-br from-yellow-500 to-yellow-600"
-          icon={Building2}
           index={4}
         />
         <KPICard
           label="CLOSED DEALS"
           value={closedDeals}
           color="bg-gradient-to-br from-green-600 to-green-700"
-          icon={CheckCircle}
           index={5}
         />
       </div>
