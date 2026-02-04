@@ -31,19 +31,12 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <DashboardNew />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/*"
             element={
               <ProtectedRoute>
                 <Layout>
                   <Routes>
+                    <Route path="/" element={<DashboardNew />} />
                     <Route path="/leads" element={<LeadsNew />} />
                     <Route path="/leads/:id" element={<LeadDetails />} />
                     <Route path="/closed-deals" element={<ClosedDeals />} />

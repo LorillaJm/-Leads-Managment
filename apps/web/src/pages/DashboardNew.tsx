@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Menu, X } from 'lucide-react'
 import { api } from '@/lib/api'
-import { DashboardHeader } from '@/components/dashboard/DashboardHeader'
 import { FilterPanel } from '@/components/dashboard/FilterPanel'
 import { KPIPanel } from '@/components/dashboard/KPIPanel'
 import { OverviewPanel } from '@/components/dashboard/OverviewPanel'
@@ -102,11 +101,9 @@ export function DashboardNew() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <DashboardHeader />
-      
+    <div className="bg-gray-50 -mx-6 -my-8 px-6 py-8">
       {/* Mobile Filter Toggle */}
-      <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3">
+      <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3 mb-4 rounded-lg">
         <button
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
           className="flex items-center gap-2 text-sm font-medium text-gray-700"
@@ -116,7 +113,7 @@ export function DashboardNew() {
         </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Left Sidebar - Filters (Desktop & Mobile Drawer) */}
         <div className={`
           ${mobileFiltersOpen ? 'block' : 'hidden'} lg:block
