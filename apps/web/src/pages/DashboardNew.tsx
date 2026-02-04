@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
-import { KPIPanel } from '@/components/dashboard/KPIPanel'
 import { OverviewPanel } from '@/components/dashboard/OverviewPanel'
 import { ConversionFlowPanel } from '@/components/dashboard/ConversionFlowPanel'
 import { ActivityBreakdownPanel } from '@/components/dashboard/ActivityBreakdownPanel'
@@ -103,8 +102,8 @@ export function DashboardNew() {
   return (
     <div className="space-y-3">
       <div className="flex gap-3 lg:gap-4">
-        {/* Left Column - Scope & KPIs */}
-        <div className="w-36 lg:w-44 flex-shrink-0 space-y-3">
+        {/* Left Column - Scope */}
+        <div className="w-32 lg:w-36 flex-shrink-0 space-y-3">
         {/* Scope Section */}
         <div className="bg-white rounded-lg border border-gray-200 p-2.5">
           <h3 className="text-xs font-bold text-gray-900 mb-2">Scope</h3>
@@ -157,24 +156,22 @@ export function DashboardNew() {
             </Select>
           </div>
         </div>
-
-        {/* KPI Cards */}
-        <KPIPanel
-          leads={totals.leads}
-          prospects={totals.prospects}
-          testDrives={totals.testDrives}
-          reservations={totals.reservations}
-          bankApplications={totals.bankApplications}
-          closedDeals={totals.closedDeals}
-          collapsed={false}
-        />
       </div>
 
       {/* Middle Column - Overview, Conversion, Activities */}
       <div className="flex-1 space-y-3 lg:space-y-4">
         {/* Top Row - Overview & Conversion Flow */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
-          <OverviewPanel totalCount={totals.leads} label="By count" />
+          <OverviewPanel 
+            totalCount={totals.leads} 
+            label="By count"
+            leads={totals.leads}
+            prospects={totals.prospects}
+            testDrives={totals.testDrives}
+            reservations={totals.reservations}
+            bankApplications={totals.bankApplications}
+            closedDeals={totals.closedDeals}
+          />
           <ConversionFlowPanel
             leadsToProspects={leadsToProspects}
             prospectsToClosedDeals={prospectsToClosedDeals}
