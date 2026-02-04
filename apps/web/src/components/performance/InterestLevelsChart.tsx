@@ -28,7 +28,7 @@ export function InterestLevelsChart({ data }: InterestLevelsChartProps) {
             width={110}
           />
           <Bar dataKey="count" radius={[0, 4, 4, 0]}>
-            {data.map((entry, index) => (
+            {data.map((_entry, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Bar>
