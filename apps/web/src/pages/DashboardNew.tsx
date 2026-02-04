@@ -49,8 +49,12 @@ export function DashboardNew() {
   }
 
   const stats = (statsData as any)?.data || {}
-  const consultants = (consultantsData as any)?.data || []
-  const rankings = (rankingsData as any)?.data || []
+  const consultants = Array.isArray((consultantsData as any)?.data) 
+    ? (consultantsData as any).data 
+    : []
+  const rankings = Array.isArray((rankingsData as any)?.data)
+    ? (rankingsData as any).data
+    : []
 
   // Transform rankings data for table and chart
   const salesTeamData = rankings.map((ranking: any) => ({
