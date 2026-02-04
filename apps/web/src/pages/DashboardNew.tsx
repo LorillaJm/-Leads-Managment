@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { api } from '@/lib/api'
 import { DashboardHeader } from '@/components/dashboard/DashboardHeader'
