@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { MonthlyPerformanceChart } from '@/components/performance/MonthlyPerformanceChart'
 import { MonthlyDataTable } from '@/components/performance/MonthlyDataTable'
 import { InterestLevelsChart } from '@/components/performance/InterestLevelsChart'
+import { LeadsSourceChart } from '@/components/performance/LeadsSourceChart'
 import { VehicleModelsChart } from '@/components/performance/VehicleModelsChart'
 import { ColorsChart } from '@/components/performance/ColorsChart'
 
@@ -28,6 +29,13 @@ export function Performance() {
     { level: 'Warm (interested)', count: 243 },
     { level: 'Cold (little to no interest)', count: 190 },
     { level: 'Just looking', count: 0 },
+  ]
+
+  const leadsSourceData = [
+    { source: 'Walk-in / Referral', count: 431 },
+    { source: 'Facebook', count: 122 },
+    { source: 'Mail / Banks', count: 316 },
+    { source: 'Web (Ayala)', count: 312 },
   ]
 
   const vehicleModelsData = [
@@ -57,23 +65,42 @@ export function Performance() {
 
   return (
     <div className="space-y-6 pb-8">
-      {/* Top Section - 3 Charts */}
+      {/* Top Section - Interest Levels and Leads Source */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Interest Levels */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg h-full">
-            <CardHeader className="border-b border-border/50 pb-3">
-              <CardTitle className="text-base font-semibold">Interest Levels</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-4">
-              <InterestLevelsChart data={interestLevelsData} />
-            </CardContent>
-          </Card>
-        </motion.div>
+        {/* Left Column - Interest Levels and Leads Source stacked */}
+        <div className="space-y-6">
+          {/* Interest Levels */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg">
+              <CardHeader className="border-b border-border/50 pb-3">
+                <CardTitle className="text-base font-semibold">Interest Levels</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <InterestLevelsChart data={interestLevelsData} />
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Leads Source */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+          >
+            <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg">
+              <CardHeader className="border-b border-border/50 pb-3">
+                <CardTitle className="text-base font-semibold">Leads Source</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <LeadsSourceChart data={leadsSourceData} />
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
 
         {/* Vehicle Models */}
         <motion.div
