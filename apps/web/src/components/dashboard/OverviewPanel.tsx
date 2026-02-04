@@ -26,22 +26,25 @@ function KPICard({ label, value, goal, color, index }: KPICardProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className={`${color} rounded p-3`}
+      className={`${color} rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm`}
+      style={{
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      }}
     >
       <div className="text-center">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: index * 0.05 + 0.1, type: 'spring', stiffness: 200 }}
-          className="text-3xl font-bold text-white mb-1"
+          className="text-4xl font-bold text-white mb-1.5"
         >
           {value}
         </motion.div>
-        <div className="text-xs font-bold text-white uppercase tracking-wide">
+        <div className="text-xs font-bold text-white uppercase tracking-wider opacity-95">
           {label}
         </div>
         {goal && (
-          <div className="text-xs text-white/90 mt-1 font-medium">
+          <div className="text-[10px] text-white/80 mt-1 font-medium">
             (Goal: {goal})
           </div>
         )}
@@ -64,12 +67,15 @@ export function OverviewPanel({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-lg border border-gray-200 p-3 shadow-sm"
+      className="bg-white/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 p-4 shadow-lg"
+      style={{
+        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      }}
     >
-      <h3 className="text-sm font-bold text-gray-900 mb-2">Overview</h3>
-      <div className="text-xs text-gray-600 mb-3">{label}</div>
+      <h3 className="text-base font-bold text-gray-900 mb-1">Overview</h3>
+      <div className="text-xs text-gray-500 mb-3">{label}</div>
       
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         <KPICard
           label="LEADS"
           value={leads}

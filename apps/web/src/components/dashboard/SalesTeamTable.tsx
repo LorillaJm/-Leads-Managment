@@ -53,7 +53,10 @@ export function SalesTeamTable({ data, totalCount }: SalesTeamTableProps) {
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+      className="bg-white/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 overflow-hidden shadow-lg"
+      style={{
+        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      }}
     >
       <div className="bg-blue-600 text-white px-3 py-2 flex items-center justify-between">
         <h3 className="text-sm lg:text-base font-bold">Sales Team</h3>

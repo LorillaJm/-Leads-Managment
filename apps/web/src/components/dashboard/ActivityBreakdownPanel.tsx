@@ -22,10 +22,13 @@ export function ActivityBreakdownPanel({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="bg-white rounded-lg border border-gray-200 p-3 lg:p-4"
+      className="bg-white/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 p-4 shadow-lg"
+      style={{
+        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      }}
     >
       <div className="grid grid-cols-2 gap-2 lg:gap-3">
-        <div className="border border-gray-200 rounded p-2 lg:p-3">
+        <div className="border border-gray-200/50 rounded-xl p-2 lg:p-3 bg-white/50 backdrop-blur-sm">
           <div className="text-xs lg:text-sm font-semibold text-gray-700 mb-1 lg:mb-2">
             Test Drives
           </div>
@@ -37,7 +40,7 @@ export function ActivityBreakdownPanel({
           </div>
         </div>
 
-        <div className="border border-gray-200 rounded p-2 lg:p-3">
+        <div className="border border-gray-200/50 rounded-xl p-2 lg:p-3 bg-white/50 backdrop-blur-sm">
           <div className="text-xs lg:text-sm font-semibold text-gray-700 mb-1 lg:mb-2">
             Reservations
           </div>
@@ -49,7 +52,7 @@ export function ActivityBreakdownPanel({
           </div>
         </div>
 
-        <div className="border border-gray-200 rounded p-2 lg:p-3 col-span-2">
+        <div className="border border-gray-200/50 rounded-xl p-2 lg:p-3 col-span-2 bg-white/50 backdrop-blur-sm">
           <div className="text-xs lg:text-sm font-semibold text-gray-700 mb-1 lg:mb-2">
             Bank Applications
           </div>
