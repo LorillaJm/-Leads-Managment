@@ -13,6 +13,16 @@ A modern, production-ready Lead Management System built with React, TypeScript, 
 - **Activity Timeline** - Track all interactions and activities per lead
 - **Audit Logging** - Complete audit trail for all system actions
 
+### 📊 NEW: Enterprise Dashboard
+- **Professional Layout** - BYD-branded enterprise dashboard matching reference design
+- **Advanced Filtering** - Year, month, and sales consultant filters
+- **KPI Metrics** - 6 color-coded cards (Leads, Prospects, Test Drives, Reservations, Bank Applications, Closed Deals)
+- **Conversion Tracking** - Real-time conversion rates with goal indicators
+- **Sales Team Table** - Sortable performance table with all metrics
+- **Analytics Charts** - Multi-category bar charts and line charts
+- **Fully Responsive** - Optimized for desktop, tablet, and mobile devices
+- **See**: [Dashboard Documentation](DASHBOARD_INDEX.md) for complete details
+
 ### 👥 User Roles
 - **Admin (Management)** - Full system access, user management, overall analytics
 - **SC (Sales Consultant)** - Personal leads, own performance metrics, peer rankings
