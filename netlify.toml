@@ -1,7 +1,10 @@
 [build]
   base = "/"
-  command = "npm install && npm run build -w @lead-management/shared && npm run build -w @lead-management/web"
+  command = "npm install && cd apps/web && npm install && npm run build"
   publish = "apps/web/dist"
+
+[build.environment]
+  NODE_VERSION = "18"
 
 [[redirects]]
   from = "/*"
