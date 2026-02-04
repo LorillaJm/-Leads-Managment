@@ -5,7 +5,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { Layout } from './components/layout/Layout'
 import { Toaster } from './components/ui/toaster'
 import { Login } from './pages/Login'
-import { DashboardNew } from './pages/DashboardNew'
+import { DashboardOriginal } from './pages/DashboardOriginal'
 import { LeadsNew } from './pages/LeadsNew'
 import { LeadDetails } from './pages/LeadDetails'
 import { ClosedDeals } from './pages/ClosedDeals'
@@ -36,7 +36,7 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <Routes>
-                    <Route path="/" element={<DashboardNew />} />
+                    <Route path="/" element={<DashboardOriginal />} />
                     <Route path="/leads" element={<LeadsNew />} />
                     <Route path="/leads/:id" element={<LeadDetails />} />
                     <Route path="/closed-deals" element={<ClosedDeals />} />

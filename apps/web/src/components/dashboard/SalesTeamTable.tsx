@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 
 interface SalesConsultantData {
   id: string
@@ -49,6 +50,17 @@ export function SalesTeamTable({ data, totalCount }: SalesTeamTableProps) {
     )
   }
 
+  // Prepare chart data - top 10 consultants
+  const chartData = sortedData.slice(0, 10).map(consultant => ({
+    name: consultant.name.split(' ')[0], // First name only for chart
+    Leads: consultant.leads,
+    Prospects: consultant.prospects,
+    'Test Drives': consultant.testDrives,
+    Reservations: consultant.reservations,
+    'Bank Applications': consultant.bankApplications,
+    'Closed Deals': consultant.closedDeals,
+  }))
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -78,7 +90,7 @@ export function SalesTeamTable({ data, totalCount }: SalesTeamTableProps) {
         <span className="text-xs text-gray-600">Count: {totalCount}</span>
       </div>
 
-      <div className="overflow-x-auto max-h-96 overflow-y-auto">
+      <div className="overflow-x-auto max-h-64 overflow-y-auto">
         <table className="w-full">
           <thead className="bg-blue-600 text-white sticky top-0 z-10">
             <tr>
@@ -178,6 +190,41 @@ export function SalesTeamTable({ data, totalCount }: SalesTeamTableProps) {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Chart Section */}
+      <div className="p-4 border-t border-gray-200 bg-gray-50/50">
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis 
+              dataKey="name" 
+              tick={{ fontSize: 10 }}
+              angle={-45}
+              textAnchor="end"
+              height={60}
+            />
+            <YAxis tick={{ fontSize: 10 }} />
+            <Tooltip 
+              contentStyle={{
+                backgroundColor: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '11px'
+              }}
+            />
+            <Legend 
+              wrapperStyle={{ fontSize: '10px' }}
+              iconSize={10}
+            />
+            <Bar dataKey="Leads" fill="#3b82f6" />
+            <Bar dataKey="Prospects" fill="#10b981" />
+            <Bar dataKey="Test Drives" fill="#f59e0b" />
+            <Bar dataKey="Reservations" fill="#ef4444" />
+            <Bar dataKey="Bank Applications" fill="#8b5cf6" />
+            <Bar dataKey="Closed Deals" fill="#06b6d4" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </motion.div>
   )
