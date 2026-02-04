@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Menu, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { api } from '@/lib/api'
-import { FilterPanel } from '@/components/dashboard/FilterPanel'
 import { KPIPanel } from '@/components/dashboard/KPIPanel'
 import { OverviewPanel } from '@/components/dashboard/OverviewPanel'
 import { ConversionFlowPanel } from '@/components/dashboard/ConversionFlowPanel'
@@ -10,13 +8,21 @@ import { ActivityBreakdownPanel } from '@/components/dashboard/ActivityBreakdown
 import { SalesTeamTable } from '@/components/dashboard/SalesTeamTable'
 import { AnalyticsChart } from '@/components/dashboard/AnalyticsChart'
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+
+const MONTHS = ['ALL', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+const YEARS = ['2024', '2025', '2026']
 
 export function DashboardNew() {
   const [selectedYear, setSelectedYear] = useState('2026')
   const [selectedMonths, setSelectedMonths] = useState<string[]>(['ALL'])
   const [selectedConsultant, setSelectedConsultant] = useState('ALL')
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   // Fetch sales consultants
   const { data: consultantsData } = useQuery({
@@ -56,8 +62,46 @@ export function DashboardNew() {
     ? (rankingsData as any).data
     : []
 
-  // Transform rankings data for table and chart
   const salesTeamData = rankings.map((ranking: any) => ({
+    id: ranking.userId || ranking.id,
+    name: ranking.fullName || ranking.name || 'Unknown',
+    leads: ranking.totalLeads || 0,
+    prospects: ranking.totalProspects || 0,
+    testDrives: ranking.totalTestDrives || 0,
+    reservations: ranking.totalReservations || 0,
+    bankApplications: ranking.totalBankApplications || 0,
+    closedDeals: ranking.totalClosedDeals || 0,
+  }))
+
+  const totals = {
+    leads: stats.totalLeads || 0,
+    prospects: stats.totalProspects || 0,
+    testDrives: stats.totalTestDrives || 0,
+    reservations: stats.totalReservations || 0,
+    bankApplications: stats.totalBankApplications || 0,
+    closedDeals: stats.totalClosedDeals || 0,
+  }
+
+  const leadsToProspects = totals.leads > 0 
+    ? Math.round((totals.prospects / totals.leads) * 100) 
+    : 0
+  const prospectsToClosedDeals = totals.prospects > 0
+    ? Math.round((totals.closedDeals / totals.prospects) * 100)
+    : 0
+
+  const chartData = salesTeamData.slice(0, 10).map((consultant: any) => ({
+    consultant: consultant.name.split(' ').slice(0, 2).join(' '),
+    leads: consultant.leads,
+    prospects: consultant.prospects,
+    testDrives: consultant.testDrives,
+    reservations: consultant.reservations,
+    bankApplications: consultant.bankApplications,
+    closedDeals: consultant.closedDeals,
+  }))
+
+  if (isLoading) {
+    return <DashboardSkeleton />
+  }
     id: ranking.userId || ranking.id,
     name: ranking.fullName || ranking.name || 'Unknown',
     leads: ranking.totalLeads || 0,
@@ -102,103 +146,96 @@ export function DashboardNew() {
   }
 
   return (
-    <div className="space-y-4">
-      {/* Sidebar Collapse Toggle - Desktop */}
-      <div className="hidden lg:block">
-        <button
-          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-          className="fixed left-4 top-20 z-50 p-2 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all"
-          title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-        >
-          {sidebarCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
-        </button>
-      </div>
+    <div className="flex gap-4">
+      {/* Left Column - Scope & KPIs */}
+      <div className="w-48 flex-shrink-0 space-y-4">
+        {/* Scope Section */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <h3 className="text-sm font-bold text-gray-900 mb-3">Scope</h3>
+          
+          {/* Year */}
+          <div className="mb-3">
+            <label className="text-xs font-semibold text-gray-700 mb-1 block">Year</label>
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger className="w-full h-8 text-sm bg-cyan-400 text-white border-cyan-500">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {YEARS.map((year) => (
+                  <SelectItem key={year} value={year}>{year}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-      {/* Mobile Filter Toggle */}
-      <div className="lg:hidden">
-        <button
-          onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-        >
-          {mobileFiltersOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          {mobileFiltersOpen ? 'Close Filters' : 'Open Filters'}
-        </button>
-      </div>
+          {/* Months */}
+          <div className="space-y-1 mb-3">
+            {MONTHS.map((month) => (
+              <label key={month} className="flex items-center gap-2 cursor-pointer text-xs">
+                <input
+                  type="checkbox"
+                  checked={selectedMonths.includes(month)}
+                  onChange={() => onMonthToggle(month)}
+                  className="w-3 h-3 rounded border-gray-300 text-blue-600"
+                />
+                <span className="font-medium text-gray-700">{month}</span>
+              </label>
+            ))}
+          </div>
 
-      <div className="flex gap-4">
-        {/* Left Sidebar - Filters & KPIs */}
-        <div className={`
-          ${mobileFiltersOpen ? 'block' : 'hidden'} lg:block
-          ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-64'}
-          transition-all duration-300 flex-shrink-0
-        `}>
-          <div className="space-y-4">
-            {/* Filters */}
-            <div className={sidebarCollapsed ? 'hidden' : 'block'}>
-              <FilterPanel
-                selectedYear={selectedYear}
-                selectedMonths={selectedMonths}
-                selectedConsultant={selectedConsultant}
-                onYearChange={setSelectedYear}
-                onMonthToggle={handleMonthToggle}
-                onConsultantChange={setSelectedConsultant}
-                salesConsultants={consultants.map((c: any) => ({
-                  id: c.id,
-                  name: c.fullName || `${c.firstName} ${c.lastName}`,
-                }))}
-              />
-            </div>
-
-            {/* KPI Panel */}
-            <KPIPanel
-              leads={totals.leads}
-              prospects={totals.prospects}
-              testDrives={totals.testDrives}
-              reservations={totals.reservations}
-              bankApplications={totals.bankApplications}
-              closedDeals={totals.closedDeals}
-              collapsed={sidebarCollapsed}
-            />
+          {/* Sales Consultant */}
+          <div>
+            <label className="text-xs font-semibold text-gray-700 mb-1 block">Sales Consultant</label>
+            <Select value={selectedConsultant} onValueChange={onConsultantChange}>
+              <SelectTrigger className="w-full h-8 text-sm bg-cyan-400 text-white border-cyan-500">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL">ALL</SelectItem>
+                {salesConsultants.map((c) => (
+                  <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
-        {/* Main Content Area */}
-        <div className="flex-1 min-w-0 space-y-4">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
-            {/* Overview */}
-            <div className="xl:col-span-1">
-              <OverviewPanel
-                totalCount={totals.leads}
-                label="By count"
-              />
-            </div>
-
-            {/* Conversion Flow */}
-            <div className="xl:col-span-2">
-              <ConversionFlowPanel
-                leadsToProspects={leadsToProspects}
-                prospectsToClosedDeals={prospectsToClosedDeals}
-              />
-            </div>
-          </div>
-
-          {/* Activity Breakdown & Sales Team */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-            <ActivityBreakdownPanel
-              testDrives={totals.testDrives}
-              reservations={totals.reservations}
-              bankApplications={totals.bankApplications}
-            />
-
-            <SalesTeamTable
-              data={salesTeamData}
-              totalCount={salesTeamData.length}
-            />
-          </div>
-
-          {/* Analytics Chart */}
-          <AnalyticsChart data={chartData} />
+        {/* KPI Cards */}
+        <div className="space-y-2">
+          <KPIPanel
+            leads={totals.leads}
+            prospects={totals.prospects}
+            testDrives={totals.testDrives}
+            reservations={totals.reservations}
+            bankApplications={totals.bankApplications}
+            closedDeals={totals.closedDeals}
+            collapsed={false}
+          />
         </div>
+      </div>
+
+      {/* Middle Column - Overview, Conversion, Activities */}
+      <div className="flex-1 space-y-4">
+        {/* Top Row - Overview & Conversion Flow */}
+        <div className="grid grid-cols-2 gap-4">
+          <OverviewPanel totalCount={totals.leads} label="By count" />
+          <ConversionFlowPanel
+            leadsToProspects={leadsToProspects}
+            prospectsToClosedDeals={prospectsToClosedDeals}
+          />
+        </div>
+
+        {/* Bottom Row - Activity Cards */}
+        <ActivityBreakdownPanel
+          testDrives={totals.testDrives}
+          reservations={totals.reservations}
+          bankApplications={totals.bankApplications}
+        />
+      </div>
+
+      {/* Right Column - Sales Team */}
+      <div className="w-80 flex-shrink-0">
+        <SalesTeamTable data={salesTeamData} totalCount={salesTeamData.length} />
       </div>
     </div>
   )
