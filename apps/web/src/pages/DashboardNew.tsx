@@ -6,6 +6,7 @@ import { OverviewPanel } from '@/components/dashboard/OverviewPanel'
 import { ConversionFlowPanel } from '@/components/dashboard/ConversionFlowPanel'
 import { ActivityBreakdownPanel } from '@/components/dashboard/ActivityBreakdownPanel'
 import { SalesTeamTable } from '@/components/dashboard/SalesTeamTable'
+import { AnalyticsChart } from '@/components/dashboard/AnalyticsChart'
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton'
 import {
   Select,
@@ -69,6 +70,16 @@ export function DashboardNew() {
     closedDeals: ranking.totalClosedDeals || 0,
   }))
 
+  const chartData = salesTeamData.map((item: any) => ({
+    consultant: item.name,
+    leads: item.leads,
+    prospects: item.prospects,
+    testDrives: item.testDrives,
+    reservations: item.reservations,
+    bankApplications: item.bankApplications,
+    closedDeals: item.closedDeals,
+  }))
+
   const totals = {
     leads: stats.totalLeads || 0,
     prospects: stats.totalProspects || 0,
@@ -90,9 +101,10 @@ export function DashboardNew() {
   }
 
   return (
-    <div className="flex gap-3 lg:gap-4">
-      {/* Left Column - Scope & KPIs */}
-      <div className="w-36 lg:w-44 flex-shrink-0 space-y-3">
+    <div className="space-y-3">
+      <div className="flex gap-3 lg:gap-4">
+        {/* Left Column - Scope & KPIs */}
+        <div className="w-36 lg:w-44 flex-shrink-0 space-y-3">
         {/* Scope Section */}
         <div className="bg-white rounded-lg border border-gray-200 p-2.5">
           <h3 className="text-xs font-bold text-gray-900 mb-2">Scope</h3>
@@ -181,6 +193,10 @@ export function DashboardNew() {
       <div className="w-64 lg:w-80 flex-shrink-0">
         <SalesTeamTable data={salesTeamData} totalCount={salesTeamData.length} />
       </div>
+      </div>
+
+      {/* Bottom Row - Analytics Chart */}
+      <AnalyticsChart data={chartData} />
     </div>
   )
 }

@@ -28,26 +28,26 @@ export function AnalyticsChart({ data }: AnalyticsChartProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="bg-white rounded-lg border border-gray-200 p-6"
+      className="bg-white rounded-lg border border-gray-200 p-3 lg:p-4"
     >
-      <h3 className="text-lg font-bold text-gray-900 mb-4">
+      <h3 className="text-sm lg:text-base font-bold text-gray-900 mb-2 lg:mb-3">
         Performance Analytics
       </h3>
       
-      <div className="h-80">
+      <div className="h-48 lg:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis 
               dataKey="consultant" 
-              tick={{ fontSize: 11 }}
+              tick={{ fontSize: 9 }}
               stroke="#9ca3af"
               angle={-45}
               textAnchor="end"
-              height={80}
+              height={60}
             />
             <YAxis 
-              tick={{ fontSize: 11 }}
+              tick={{ fontSize: 9 }}
               stroke="#9ca3af"
             />
             <Tooltip
@@ -55,18 +55,18 @@ export function AnalyticsChart({ data }: AnalyticsChartProps) {
                 backgroundColor: 'white',
                 border: '1px solid #e5e7eb',
                 borderRadius: '8px',
-                fontSize: '12px',
+                fontSize: '11px',
               }}
             />
             <Legend 
-              wrapperStyle={{ fontSize: '12px' }}
+              wrapperStyle={{ fontSize: '10px' }}
               iconType="circle"
             />
             <Bar dataKey="leads" fill="#f59e0b" name="Leads" />
             <Bar dataKey="prospects" fill="#3b82f6" name="Prospects" />
             <Bar dataKey="testDrives" fill="#06b6d4" name="Test Drives" />
             <Bar dataKey="reservations" fill="#8b5cf6" name="Reservations" />
-            <Bar dataKey="bankApplications" fill="#ec4899" name="Bank Applications" />
+            <Bar dataKey="bankApplications" fill="#ec4899" name="Bank" />
             <Bar dataKey="closedDeals" fill="#10b981" name="Closed Deals" />
           </BarChart>
         </ResponsiveContainer>
