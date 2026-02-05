@@ -196,11 +196,11 @@ export function DashboardPremium() {
               
               <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
                 {/* Leads */}
-                <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-2.5 shadow-md">
+                <div className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl p-2.5 shadow-md">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-white mb-0.5">{totals.leads}</div>
                     <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">LEADS</div>
-                    <div className="text-[9px] text-white/70 mt-0.5">Goal: 1500</div>
+                    <div className="text-[9px] text-white/70 mt-0.5">Goal: 1,500</div>
                   </div>
                 </div>
 
@@ -221,7 +221,7 @@ export function DashboardPremium() {
                 </div>
 
                 {/* Reservations */}
-                <div className="bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl p-2.5 shadow-md">
+                <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl p-2.5 shadow-md">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-white mb-0.5">{totals.reservations}</div>
                     <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">RESERVATIONS</div>
@@ -229,7 +229,7 @@ export function DashboardPremium() {
                 </div>
 
                 {/* Bank Applications */}
-                <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2.5 shadow-md">
+                <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-2.5 shadow-md">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-white mb-0.5">{totals.bankApplications}</div>
                     <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">BANK APPLICATIONS</div>
