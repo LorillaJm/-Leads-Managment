@@ -10,7 +10,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { Users, TrendingUp, Car, FileText, Building2, CheckCircle2, ArrowRight } from 'lucide-react'
 
 const MONTHS = ['ALL', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 const YEARS = ['2024', '2025', '2026']
@@ -69,6 +68,9 @@ export function DashboardPremium() {
     { id: '10', name: 'Mary Angelie Francisco', leads: 78, prospects: 43, testDrives: 20, reservations: 12, bankApplications: 15, closedDeals: 6 },
   ]
 
+  // Use sample consultants if API returns empty
+  const consultantsList = consultants.length > 0 ? consultants : sampleSalesTeam.map(c => ({ id: c.id, fullName: c.name }))
+
   const salesTeamData = rankings.length > 0 
     ? rankings.map((ranking: any) => ({
         id: ranking.userId || ranking.id,
@@ -120,26 +122,24 @@ export function DashboardPremium() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
-      <div className="max-w-[1800px] mx-auto space-y-4">
-        
-        {/* Top Section: Scope + Overview Cards */}
-        <div className="grid grid-cols-12 gap-4">
+    <div className="h-screen bg-white p-3 overflow-hidden">
+      <div className="h-full max-w-[1600px] mx-auto">
+        {/* Main Dashboard Grid - 3 Column Layout */}
+        <div className="h-full flex gap-3">
           
-          {/* Scope Panel */}
-          <div className="col-span-3">
-            <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 shadow-2xl">
-              <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                <div className="w-1 h-4 bg-cyan-400 rounded-full"></div>
-                Scope
-              </h2>
+          {/* LEFT: Scope Filter Panel - Fixed Width */}
+          <div className="w-[180px] flex-shrink-0">
+            <div className="bg-white rounded-lg border border-slate-200 shadow-sm h-full overflow-hidden flex flex-col">
+              <div className="bg-slate-50 px-2.5 py-1.5 border-b border-slate-200">
+                <h3 className="text-xs font-bold text-slate-900">Scope</h3>
+              </div>
               
-              <div className="space-y-3">
+              <div className="flex-1 overflow-y-auto p-2 space-y-2">
                 {/* Year */}
                 <div>
-                  <label className="text-xs font-medium text-slate-400 mb-1.5 block">Year</label>
+                  <label className="text-[10px] font-semibold text-slate-700 mb-1 block">Year</label>
                   <Select value={selectedYear} onValueChange={setSelectedYear}>
-                    <SelectTrigger className="w-full h-9 bg-cyan-500 hover:bg-cyan-600 text-white border-0 rounded-lg font-semibold shadow-lg">
+                    <SelectTrigger className="w-full h-7 text-xs bg-cyan-500 hover:bg-cyan-600 text-white border-0 rounded font-medium">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -150,36 +150,31 @@ export function DashboardPremium() {
                   </Select>
                 </div>
 
-                {/* Months - Compact Grid */}
-                <div>
-                  <label className="text-xs font-medium text-slate-400 mb-1.5 block">Months</label>
-                  <div className="grid grid-cols-3 gap-1">
-                    {MONTHS.map((month) => (
-                      <button
-                        key={month}
-                        onClick={() => handleMonthToggle(month)}
-                        className={`px-2 py-1 text-[10px] font-semibold rounded-md transition-all ${
-                          selectedMonths.includes(month)
-                            ? 'bg-cyan-500 text-white shadow-lg'
-                            : 'bg-slate-700/50 text-slate-400 hover:bg-slate-700'
-                        }`}
-                      >
-                        {month}
-                      </button>
-                    ))}
-                  </div>
+                {/* Months */}
+                <div className="space-y-0.5">
+                  {MONTHS.map((month) => (
+                    <label key={month} className="flex items-center gap-1.5 cursor-pointer hover:bg-slate-50 px-1 py-0.5 rounded transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={selectedMonths.includes(month)}
+                        onChange={() => handleMonthToggle(month)}
+                        className="w-3 h-3 rounded border-slate-300 text-blue-600 focus:ring-blue-500 focus:ring-offset-0"
+                      />
+                      <span className="text-[10px] font-medium text-slate-700">{month}</span>
+                    </label>
+                  ))}
                 </div>
 
                 {/* Sales Consultant */}
                 <div>
-                  <label className="text-xs font-medium text-slate-400 mb-1.5 block">Sales Consultant</label>
+                  <label className="text-[10px] font-semibold text-slate-700 mb-1 block">Sales Consultant</label>
                   <Select value={selectedConsultant} onValueChange={setSelectedConsultant}>
-                    <SelectTrigger className="w-full h-9 bg-cyan-500 hover:bg-cyan-600 text-white border-0 rounded-lg font-semibold shadow-lg">
+                    <SelectTrigger className="w-full h-7 text-xs bg-cyan-500 hover:bg-cyan-600 text-white border-0 rounded font-medium">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="ALL">ALL</SelectItem>
-                      {consultants.map((c: any) => (
+                      {consultantsList.map((c: any) => (
                         <SelectItem key={c.id} value={c.id}>
                           {c.fullName || `${c.firstName} ${c.lastName}`}
                         </SelectItem>
@@ -191,242 +186,155 @@ export function DashboardPremium() {
             </div>
           </div>
 
-          {/* Overview KPI Cards - 3x2 Grid */}
-          <div className="col-span-9">
-            <div className="bg-slate-800/30 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 shadow-2xl">
-              <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                <div className="w-1 h-4 bg-blue-400 rounded-full"></div>
-                Overview
-                <span className="text-xs font-normal text-slate-400 ml-2">By count</span>
-              </h2>
+          {/* MIDDLE-LEFT: Overview KPI Cards - Fixed Width */}
+          <div className="w-[200px] flex-shrink-0">
+            <div className="bg-white rounded-lg border border-slate-200 shadow-sm h-full overflow-hidden flex flex-col">
+              <div className="bg-slate-50 px-2.5 py-1.5 border-b border-slate-200">
+                <h3 className="text-xs font-bold text-slate-900">Overview</h3>
+                <p className="text-[10px] text-slate-600 mt-0.5">By count</p>
+              </div>
               
-              <div className="grid grid-cols-3 gap-3">
+              <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
                 {/* Leads */}
-                <div className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl p-4 border border-slate-600/50 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-slate-600/50 flex items-center justify-center">
-                      <Users className="w-5 h-5 text-slate-300" />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white">{totals.leads}</div>
-                      <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">LEADS</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-400">Goal: 1,500</span>
-                    <span className={`font-semibold ${totals.leads >= 1500 ? 'text-emerald-400' : 'text-amber-400'}`}>
-                      {Math.round((totals.leads / 1500) * 100)}%
-                    </span>
-                  </div>
-                  <div className="mt-2 h-1.5 bg-slate-900/50 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-slate-400 to-slate-500 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min((totals.leads / 1500) * 100, 100)}%` }}
-                    />
+                <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-2.5 shadow-md">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white mb-0.5">{totals.leads}</div>
+                    <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">LEADS</div>
+                    <div className="text-[9px] text-white/70 mt-0.5">Goal: 1500</div>
                   </div>
                 </div>
 
                 {/* Prospects */}
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-4 border border-blue-500/50 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/30 flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5 text-blue-200" />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white">{totals.prospects}</div>
-                      <div className="text-[10px] text-blue-200 uppercase tracking-wider font-semibold">PROSPECTS</div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-blue-200/80">
-                    {leadsToProspects}% conversion from leads
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-2.5 shadow-md">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white mb-0.5">{totals.prospects}</div>
+                    <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">PROSPECTS</div>
                   </div>
                 </div>
 
                 {/* Test Drives */}
-                <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-4 border border-purple-500/50 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/30 flex items-center justify-center">
-                      <Car className="w-5 h-5 text-purple-200" />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white">{totals.testDrives}</div>
-                      <div className="text-[10px] text-purple-200 uppercase tracking-wider font-semibold">TEST DRIVES</div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-purple-200/80">
-                    Min: 300
+                <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-2.5 shadow-md">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white mb-0.5">{totals.testDrives}</div>
+                    <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">TEST DRIVES</div>
                   </div>
                 </div>
 
                 {/* Reservations */}
-                <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl p-4 border border-indigo-500/50 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-indigo-500/30 flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-indigo-200" />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white">{totals.reservations}</div>
-                      <div className="text-[10px] text-indigo-200 uppercase tracking-wider font-semibold">RESERVATIONS</div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-indigo-200/80">
-                    Min: 120
+                <div className="bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl p-2.5 shadow-md">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white mb-0.5">{totals.reservations}</div>
+                    <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">RESERVATIONS</div>
                   </div>
                 </div>
 
                 {/* Bank Applications */}
-                <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-4 border border-orange-500/50 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-orange-500/30 flex items-center justify-center">
-                      <Building2 className="w-5 h-5 text-orange-200" />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white">{totals.bankApplications}</div>
-                      <div className="text-[10px] text-orange-200 uppercase tracking-wider font-semibold">BANK APPS</div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-orange-200/80">
-                    Min: 180
+                <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2.5 shadow-md">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white mb-0.5">{totals.bankApplications}</div>
+                    <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">BANK APPLICATIONS</div>
                   </div>
                 </div>
 
                 {/* Closed Deals */}
-                <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl p-4 border border-emerald-500/50 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-500/30 flex items-center justify-center">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-200" />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white">{totals.closedDeals}</div>
-                      <div className="text-[10px] text-emerald-200 uppercase tracking-wider font-semibold">CLOSED DEALS</div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-emerald-200/80">
-                    {prospectsToClosedDeals}% from prospects
+                <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl p-2.5 shadow-md">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white mb-0.5">{totals.closedDeals}</div>
+                    <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-90">CLOSED DEALS</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Middle Section: Conversion Flow + Sales Team */}
-        <div className="grid grid-cols-12 gap-4">
-          
-          {/* Conversion Flow */}
-          <div className="col-span-7">
-            <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-5 shadow-2xl">
-              <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                <div className="w-1 h-4 bg-purple-400 rounded-full"></div>
-                Conversion Flow
-                <span className="text-xs font-normal text-slate-400 ml-2">By Leads, Prospects, and Closed Deals</span>
-              </h2>
+          {/* CENTER: Conversion Flow - Flexible */}
+          <div className="flex-1 min-w-0">
+            <div className="bg-white rounded-lg border border-slate-200 shadow-sm h-full overflow-hidden flex flex-col">
+              <div className="bg-slate-50 px-2.5 py-1.5 border-b border-slate-200">
+                <h3 className="text-xs font-bold text-slate-900">Conversion Flow</h3>
+                <p className="text-[10px] text-slate-600 mt-0.5">By Leads, Prospects, and Closed Deals</p>
+              </div>
               
-              {/* Line Chart */}
-              <div className="h-[220px] mb-4 bg-slate-900/30 rounded-xl p-3">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={[
-                    { name: 'Leads', value: 1.0, label: 'Leads' },
-                    { name: 'Prospects', value: leadsToProspects / 100, label: 'Prospects' },
-                    { name: 'Closed', value: (prospectsToClosedDeals / 100) * (leadsToProspects / 100), label: 'Closed Deals' },
-                  ]}>
-                    <defs>
-                      <linearGradient id="lineGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                    <XAxis 
-                      dataKey="label" 
-                      tick={{ fontSize: 11, fill: '#94a3b8' }}
-                      stroke="#475569"
-                      tickLine={false}
-                    />
-                    <YAxis 
-                      tick={{ fontSize: 11, fill: '#94a3b8' }}
-                      stroke="#475569"
-                      tickLine={false}
-                      domain={[-0.2, 1.2]}
-                      tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
-                    />
-                    <Tooltip 
-                      contentStyle={{
-                        backgroundColor: '#1e293b',
-                        border: '1px solid #475569',
-                        borderRadius: '12px',
-                        fontSize: '12px',
-                        color: '#fff'
-                      }}
-                      formatter={(value: any) => [`${(value * 100).toFixed(1)}%`, 'Conversion']}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="value" 
-                      stroke="#3b82f6" 
-                      strokeWidth={3}
-                      fill="url(#lineGradient)"
-                      dot={{ fill: '#3b82f6', r: 6, strokeWidth: 3, stroke: '#1e293b' }}
-                      activeDot={{ r: 8 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
+              <div className="flex-1 overflow-y-auto p-2 space-y-2">
+                {/* Chart */}
+                <div className="h-[180px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={[
+                      { name: 'Leads', value: 1.0 },
+                      { name: 'Prospects', value: leadsToProspects / 100 },
+                      { name: 'Closed Deals', value: (prospectsToClosedDeals / 100) * (leadsToProspects / 100) },
+                    ]}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis 
+                        dataKey="name" 
+                        tick={{ fontSize: 11, fill: '#64748b' }}
+                        stroke="#cbd5e1"
+                      />
+                      <YAxis 
+                        tick={{ fontSize: 11, fill: '#64748b' }}
+                        stroke="#cbd5e1"
+                        domain={[-0.2, 1.2]}
+                        tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
+                      />
+                      <Tooltip 
+                        contentStyle={{
+                          backgroundColor: 'white',
+                          border: '1px solid #e2e8f0',
+                          borderRadius: '12px',
+                          fontSize: '12px',
+                          boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                        }}
+                        formatter={(value: any) => `${(value * 100).toFixed(1)}%`}
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="value" 
+                        stroke="#3b82f6" 
+                        strokeWidth={3}
+                        dot={{ fill: '#3b82f6', r: 5, strokeWidth: 2, stroke: '#fff' }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
 
-              {/* Conversion Metrics */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="bg-gradient-to-br from-blue-600/20 to-blue-700/20 border border-blue-500/30 rounded-xl p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <ArrowRight className="w-4 h-4 text-blue-400" />
-                    <span className="text-xs font-semibold text-blue-300">LEADS → PROSPECTS</span>
+                {/* Conversion Rate Cards */}
+                <div className="grid grid-cols-2 gap-1.5">
+                  <div className="bg-slate-50 rounded p-1.5 border border-slate-200">
+                    <div className="text-[9px] text-slate-600 mb-0.5 font-medium">Leads → Prospects</div>
+                    <div className="text-lg font-bold text-slate-900">{leadsToProspects}%</div>
+                    <div className="text-[9px] text-slate-500 mt-0.5">Goal: 20%</div>
                   </div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-white">{leadsToProspects}%</span>
-                    <span className="text-xs text-slate-400">Goal: 20%</span>
+
+                  <div className="bg-slate-50 rounded p-1.5 border border-slate-200">
+                    <div className="text-[9px] text-slate-600 mb-0.5 font-medium">Prospects → Closed Deals</div>
+                    <div className="text-lg font-bold text-slate-900">{prospectsToClosedDeals}%</div>
+                    <div className="text-[9px] text-slate-500 mt-0.5">Goal: 25%</div>
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-emerald-600/20 to-emerald-700/20 border border-emerald-500/30 rounded-xl p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <ArrowRight className="w-4 h-4 text-emerald-400" />
-                    <span className="text-xs font-semibold text-emerald-300">PROSPECTS → CLOSED</span>
+                {/* Additional Metrics */}
+                <div className="space-y-1 pt-1.5 border-t border-slate-200">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] text-slate-600 font-medium">Test Drives</span>
+                    <div className="text-right">
+                      <div className="text-sm font-bold text-slate-900">{totals.testDrives}</div>
+                      <div className="text-[9px] text-slate-500">Minimum: 300</div>
+                    </div>
                   </div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-white">{prospectsToClosedDeals}%</span>
-                    <span className="text-xs text-slate-400">Goal: 25%</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Performance Metrics */}
-              <div className="bg-slate-900/30 rounded-xl p-3 border border-slate-700/30">
-                <div className="text-xs font-bold text-slate-300 mb-2 uppercase tracking-wide">Performance Metrics</div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-400">Test Drives</span>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-sm font-bold ${totals.testDrives >= 300 ? 'text-emerald-400' : 'text-amber-400'}`}>
-                        {totals.testDrives}
-                      </span>
-                      <span className="text-xs text-slate-500">Min: 300</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] text-slate-600 font-medium">Reservations</span>
+                    <div className="text-right">
+                      <div className="text-sm font-bold text-slate-900">{totals.reservations}</div>
+                      <div className="text-[9px] text-slate-500">Minimum: 120</div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-400">Reservations</span>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-sm font-bold ${totals.reservations >= 120 ? 'text-emerald-400' : 'text-amber-400'}`}>
-                        {totals.reservations}
-                      </span>
-                      <span className="text-xs text-slate-500">Min: 120</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-400">Bank Applications</span>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-sm font-bold ${totals.bankApplications >= 180 ? 'text-emerald-400' : 'text-amber-400'}`}>
-                        {totals.bankApplications}
-                      </span>
-                      <span className="text-xs text-slate-500">Min: 180</span>
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] text-slate-600 font-medium">Bank Applications</span>
+                    <div className="text-right">
+                      <div className="text-sm font-bold text-slate-900">{totals.bankApplications}</div>
+                      <div className="text-[9px] text-slate-500">Minimum: 180</div>
                     </div>
                   </div>
                 </div>
@@ -434,230 +342,65 @@ export function DashboardPremium() {
             </div>
           </div>
 
-          {/* Sales Team Table */}
-          <div className="col-span-5">
-            <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
-              {/* Header with View Toggle Buttons */}
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-3">
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="text-sm font-bold text-white">Sales Team</h2>
-                  <div className="flex items-center gap-2">
-                    <button className="p-1.5 bg-blue-500/30 hover:bg-blue-500/50 rounded-lg transition-colors">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
-                      </svg>
-                    </button>
-                    <button className="p-1.5 bg-blue-500/30 hover:bg-blue-500/50 rounded-lg transition-colors">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6z" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-xs text-blue-200">Count: {salesTeamData.length}</span>
+          {/* RIGHT: Sales Team Table - Fixed Width */}
+          <div className="w-[420px] flex-shrink-0">
+            <div className="bg-white rounded-lg border border-slate-200 shadow-sm h-full overflow-hidden flex flex-col">
+              <div className="bg-blue-600 text-white px-2.5 py-1.5 flex items-center justify-between">
+                <h3 className="text-xs font-bold">Sales Team</h3>
+                <div className="flex items-center gap-1.5">
+                  <button className="p-1 bg-blue-700 rounded hover:bg-blue-800 transition-colors">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                    </svg>
+                  </button>
+                  <button className="p-1 bg-blue-700 rounded hover:bg-blue-800 transition-colors">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
               </div>
 
-              {/* Table */}
-              <div className="max-h-[280px] overflow-y-auto">
-                <table className="w-full">
-                  <thead className="bg-blue-600/80 sticky top-0 z-10">
-                    <tr>
-                      <th className="px-3 py-2.5 text-left text-[10px] font-bold text-white uppercase tracking-wider">
-                        <button className="flex items-center gap-1 hover:text-blue-200 transition-colors">
-                          <span>Sales Consultant</span>
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                          </svg>
-                        </button>
-                      </th>
-                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
-                          <Users className="w-3 h-3" />
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                          </svg>
-                        </button>
-                      </th>
-                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
-                          <TrendingUp className="w-3 h-3" />
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                          </svg>
-                        </button>
-                      </th>
-                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
-                          <Car className="w-3 h-3" />
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                          </svg>
-                        </button>
-                      </th>
-                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
-                          <FileText className="w-3 h-3" />
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                          </svg>
-                        </button>
-                      </th>
-                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
-                          <Building2 className="w-3 h-3" />
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                          </svg>
-                        </button>
-                      </th>
-                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
-                          <CheckCircle2 className="w-3 h-3" />
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                          </svg>
-                        </button>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-700/30">
-                    {salesTeamData.map((consultant: any) => (
-                      <tr key={consultant.id} className="hover:bg-blue-600/10 transition-colors group">
-                        <td className="px-3 py-2.5">
-                          <div className="text-[11px] font-medium text-slate-200">{consultant.name}</div>
-                        </td>
-                        <td className="px-2 py-2.5 text-center">
-                          <span className="text-[11px] font-semibold text-slate-300">
-                            {consultant.leads}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 text-center">
-                          <span className="text-[11px] font-semibold text-slate-300">
-                            {consultant.prospects}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 text-center">
-                          <span className="text-[11px] font-semibold text-slate-300">
-                            {consultant.testDrives}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 text-center">
-                          <span className="text-[11px] font-semibold text-slate-300">
-                            {consultant.reservations}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 text-center">
-                          <span className="text-[11px] font-semibold text-slate-300">
-                            {consultant.bankApplications}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 text-center">
-                          <span className="text-[11px] font-semibold text-slate-300">
-                            {consultant.closedDeals}
-                          </span>
-                        </td>
+              <div className="px-2.5 py-1 bg-slate-50 border-b border-slate-200 text-right">
+                <span className="text-[10px] text-slate-600 font-medium">Count: {salesTeamData.length}</span>
+              </div>
+
+              <div className="flex-1 overflow-hidden">
+                <div className="h-full overflow-y-auto">
+                  <table className="w-full">
+                    <thead className="bg-blue-600 text-white sticky top-0 z-10">
+                      <tr>
+                        <th className="px-1.5 py-1 text-left text-[9px] font-semibold uppercase tracking-wide">
+                          Sales Consultant
+                        </th>
+                        <th className="px-1.5 py-1 text-center text-[9px] font-semibold uppercase tracking-wide">Leads</th>
+                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Prosp</th>
+                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Test</th>
+                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Resrv</th>
+                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Bank</th>
+                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Closed</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Performance Chart Below Table */}
-              <div className="border-t border-slate-700/50 p-4 bg-slate-900/30">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px]">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded bg-amber-500"></div>
-                      <span className="text-slate-400">Leads</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded bg-blue-500"></div>
-                      <span className="text-slate-400">Prospects</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded bg-cyan-500"></div>
-                      <span className="text-slate-400">Test Drives</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded bg-orange-500"></div>
-                      <span className="text-slate-400">Reservations</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded bg-pink-500"></div>
-                      <span className="text-slate-400">Bank Applications</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-3 h-3 rounded bg-emerald-500"></div>
-                      <span className="text-slate-400">Closed Deals</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Horizontal Bar Chart */}
-                <div className="space-y-1.5">
-                  {salesTeamData.slice(0, 10).map((consultant: any) => {
-                    const maxValue = Math.max(
-                      consultant.leads,
-                      consultant.prospects,
-                      consultant.testDrives,
-                      consultant.reservations,
-                      consultant.bankApplications,
-                      consultant.closedDeals
-                    )
-                    return (
-                      <div key={consultant.id} className="flex items-center gap-2">
-                        <div className="w-32 text-[10px] text-slate-400 truncate text-right">
-                          {consultant.name}
-                        </div>
-                        <div className="flex-1 h-5 bg-slate-800/50 rounded-full overflow-hidden flex">
-                          {consultant.leads > 0 && (
-                            <div 
-                              className="bg-amber-500 h-full transition-all duration-500"
-                              style={{ width: `${(consultant.leads / maxValue) * 100}%` }}
-                            />
-                          )}
-                          {consultant.prospects > 0 && (
-                            <div 
-                              className="bg-blue-500 h-full transition-all duration-500"
-                              style={{ width: `${(consultant.prospects / maxValue) * 100}%` }}
-                            />
-                          )}
-                          {consultant.testDrives > 0 && (
-                            <div 
-                              className="bg-cyan-500 h-full transition-all duration-500"
-                              style={{ width: `${(consultant.testDrives / maxValue) * 100}%` }}
-                            />
-                          )}
-                          {consultant.reservations > 0 && (
-                            <div 
-                              className="bg-orange-500 h-full transition-all duration-500"
-                              style={{ width: `${(consultant.reservations / maxValue) * 100}%` }}
-                            />
-                          )}
-                          {consultant.bankApplications > 0 && (
-                            <div 
-                              className="bg-pink-500 h-full transition-all duration-500"
-                              style={{ width: `${(consultant.bankApplications / maxValue) * 100}%` }}
-                            />
-                          )}
-                          {consultant.closedDeals > 0 && (
-                            <div 
-                              className="bg-emerald-500 h-full transition-all duration-500"
-                              style={{ width: `${(consultant.closedDeals / maxValue) * 100}%` }}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {salesTeamData.map((consultant: any) => (
+                        <tr key={consultant.id} className="hover:bg-slate-50 transition-colors">
+                          <td className="px-1.5 py-1 text-[10px] text-slate-900 font-medium">{consultant.name}</td>
+                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.leads}</td>
+                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.prospects}</td>
+                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.testDrives}</td>
+                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.reservations}</td>
+                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.bankApplications}</td>
+                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.closedDeals}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   )
