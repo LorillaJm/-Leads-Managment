@@ -143,6 +143,10 @@ export function DashboardPremium() {
             
             {/* TOP - Executive KPI Row */}
             <section>
+              <div className="mb-3">
+                <h2 className="text-lg font-semibold text-slate-900">Overview</h2>
+                <p className="text-sm text-slate-600">By Count</p>
+              </div>
               <PremiumKPICards
                 leads={totals.leads}
                 prospects={totals.prospects}
@@ -157,7 +161,7 @@ export function DashboardPremium() {
             {/* CENTER - Conversion Analytics */}
             <section>
               <div className="mb-3">
-                <h2 className="text-lg font-semibold text-slate-900">Conversion Analytics</h2>
+                <h2 className="text-lg font-semibold text-slate-900">Conversion Flow</h2>
                 <p className="text-sm text-slate-600">Track your sales funnel performance</p>
               </div>
               <PremiumConversionFlow
