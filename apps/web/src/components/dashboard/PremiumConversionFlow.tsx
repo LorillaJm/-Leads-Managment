@@ -33,15 +33,9 @@ export function PremiumConversionFlow({
   ]
 
   return (
-    <div className="bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-300">
-      {/* Header */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-slate-900 mb-1">Conversion Flow</h3>
-        <p className="text-sm text-slate-500">Sales funnel performance</p>
-      </div>
-
+    <div className="bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-xl p-5 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-300">
       {/* Chart */}
-      <div className="h-64 mb-6">
+      <div className="h-56 mb-5">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <defs>
@@ -53,13 +47,13 @@ export function PremiumConversionFlow({
             <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
             <XAxis 
               dataKey="label" 
-              tick={{ fontSize: 12, fill: '#64748B' }}
+              tick={{ fontSize: 11, fill: '#64748B' }}
               stroke="#CBD5E1"
               tickLine={false}
               axisLine={{ stroke: '#E2E8F0' }}
             />
             <YAxis 
-              tick={{ fontSize: 12, fill: '#64748B' }}
+              tick={{ fontSize: 11, fill: '#64748B' }}
               stroke="#CBD5E1"
               tickLine={false}
               axisLine={{ stroke: '#E2E8F0' }}
@@ -92,7 +86,7 @@ export function PremiumConversionFlow({
       </div>
 
       {/* Conversion Rates */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-2 gap-3 mb-5">
         <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-4 border border-blue-200/60">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-blue-700">Leads → Prospects</span>
@@ -129,36 +123,36 @@ export function PremiumConversionFlow({
       </div>
 
       {/* Performance Metrics */}
-      <div className="space-y-3">
-        <div className="text-xs font-semibold text-slate-700 mb-3">Performance Metrics</div>
+      <div className="space-y-2">
+        <div className="text-[10px] font-semibold text-slate-700 mb-2">Performance Metrics</div>
         
-        <div className="flex items-center justify-between py-2.5 border-b border-slate-100">
-          <span className="text-sm font-medium text-slate-700">Test Drives</span>
+        <div className="flex items-center justify-between py-2 border-b border-slate-100">
+          <span className="text-xs font-medium text-slate-700">Test Drives</span>
           <div className="text-right">
-            <div className={`text-sm font-semibold ${testDrives >= testDrivesMin ? 'text-emerald-600' : 'text-amber-600'}`}>
+            <div className={`text-xs font-semibold ${testDrives >= testDrivesMin ? 'text-emerald-600' : 'text-amber-600'}`}>
               {testDrives.toLocaleString()}
             </div>
-            <div className="text-xs text-slate-500">Min: {testDrivesMin}</div>
+            <div className="text-[10px] text-slate-500">Min: {testDrivesMin}</div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between py-2.5 border-b border-slate-100">
-          <span className="text-sm font-medium text-slate-700">Reservations</span>
+        <div className="flex items-center justify-between py-2 border-b border-slate-100">
+          <span className="text-xs font-medium text-slate-700">Reservations</span>
           <div className="text-right">
-            <div className={`text-sm font-semibold ${reservations >= reservationsMin ? 'text-emerald-600' : 'text-amber-600'}`}>
+            <div className={`text-xs font-semibold ${reservations >= reservationsMin ? 'text-emerald-600' : 'text-amber-600'}`}>
               {reservations.toLocaleString()}
             </div>
-            <div className="text-xs text-slate-500">Min: {reservationsMin}</div>
+            <div className="text-[10px] text-slate-500">Min: {reservationsMin}</div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between py-2.5">
-          <span className="text-sm font-medium text-slate-700">Bank Applications</span>
+        <div className="flex items-center justify-between py-2">
+          <span className="text-xs font-medium text-slate-700">Bank Applications</span>
           <div className="text-right">
-            <div className={`text-sm font-semibold ${bankApplications >= bankApplicationsMin ? 'text-emerald-600' : 'text-amber-600'}`}>
+            <div className={`text-xs font-semibold ${bankApplications >= bankApplicationsMin ? 'text-emerald-600' : 'text-amber-600'}`}>
               {bankApplications.toLocaleString()}
             </div>
-            <div className="text-xs text-slate-500">Min: {bankApplicationsMin}</div>
+            <div className="text-[10px] text-slate-500">Min: {bankApplicationsMin}</div>
           </div>
         </div>
       </div>

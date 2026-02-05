@@ -31,25 +31,20 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <DashboardPremium />
-            </ProtectedRoute>
-          } />
           <Route
             path="/*"
             element={
               <ProtectedRoute>
                 <Layout>
                   <Routes>
-                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/" element={<DashboardPremium />} />
                     <Route path="/dashboard/old" element={<DashboardNew />} />
                     <Route path="/leads" element={<LeadsNew />} />
                     <Route path="/leads/:id" element={<LeadDetails />} />
                     <Route path="/closed-deals" element={<ClosedDeals />} />
                     <Route path="/performance" element={<Performance />} />
                     <Route path="/users" element={<Users />} />
-                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
                 </Layout>
               </ProtectedRoute>

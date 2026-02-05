@@ -23,32 +23,32 @@ function KPICard({ icon: Icon, label, value, goal, trend, color }: KPICardProps)
   const progress = goal ? Math.min((value / goal) * 100, 100) : null
 
   return (
-    <div className="group relative bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-5 hover:shadow-lg hover:shadow-slate-200/50 hover:border-slate-300/60 transition-all duration-300">
+    <div className="group relative bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-xl p-4 hover:shadow-lg hover:shadow-slate-200/50 hover:border-slate-300/60 transition-all duration-300">
       {/* Icon */}
-      <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-        <Icon className="w-5 h-5 text-white" />
+      <div className={`w-8 h-8 rounded-lg ${color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+        <Icon className="w-4 h-4 text-white" />
       </div>
 
       {/* Value */}
       <div className="mb-1">
-        <div className="text-3xl font-bold text-slate-900 tracking-tight">
+        <div className="text-2xl font-bold text-slate-900 tracking-tight">
           {value.toLocaleString()}
         </div>
       </div>
 
       {/* Label */}
-      <div className="text-sm font-medium text-slate-600 mb-3">
+      <div className="text-xs font-medium text-slate-600 mb-2">
         {label}
       </div>
 
       {/* Goal Progress */}
       {goal && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs">
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-[10px]">
             <span className="text-slate-500">Goal: {goal.toLocaleString()}</span>
             <span className="font-semibold text-slate-700">{progress?.toFixed(0)}%</span>
           </div>
-          <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+          <div className="h-1 bg-slate-100 rounded-full overflow-hidden">
             <div 
               className={`h-full ${color} transition-all duration-500`}
               style={{ width: `${progress}%` }}
@@ -59,8 +59,8 @@ function KPICard({ icon: Icon, label, value, goal, trend, color }: KPICardProps)
 
       {/* Trend (optional) */}
       {trend !== undefined && (
-        <div className="mt-3 flex items-center gap-1 text-xs">
-          <TrendingUp className={`w-3.5 h-3.5 ${trend >= 0 ? 'text-emerald-600' : 'text-red-600'}`} />
+        <div className="mt-2 flex items-center gap-1 text-[10px]">
+          <TrendingUp className={`w-3 h-3 ${trend >= 0 ? 'text-emerald-600' : 'text-red-600'}`} />
           <span className={`font-semibold ${trend >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             {trend >= 0 ? '+' : ''}{trend}%
           </span>
