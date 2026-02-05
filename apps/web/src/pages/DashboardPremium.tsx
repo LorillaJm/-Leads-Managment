@@ -345,56 +345,195 @@ export function DashboardPremium() {
           {/* RIGHT: Sales Team Table - Fixed Width */}
           <div className="w-[420px] flex-shrink-0">
             <div className="bg-white rounded-lg border border-slate-200 shadow-sm h-full overflow-hidden flex flex-col">
-              <div className="bg-blue-600 text-white px-2.5 py-1.5 flex items-center justify-between">
-                <h3 className="text-xs font-bold">Sales Team</h3>
-                <div className="flex items-center gap-1.5">
-                  <button className="p-1 bg-blue-700 rounded hover:bg-blue-800 transition-colors">
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
-                    </svg>
-                  </button>
-                  <button className="p-1 bg-blue-700 rounded hover:bg-blue-800 transition-colors">
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z" clipRule="evenodd" />
-                    </svg>
-                  </button>
+              {/* Header with View Toggle Buttons */}
+              <div className="bg-blue-600 text-white px-2.5 py-1.5">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-xs font-bold">Sales Team</h3>
+                  <div className="flex items-center gap-1.5">
+                    <button className="p-1 bg-blue-700 rounded hover:bg-blue-800 transition-colors">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                      </svg>
+                    </button>
+                    <button className="p-1 bg-blue-700 rounded hover:bg-blue-800 transition-colors">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-blue-200 font-medium">Count: {salesTeamData.length}</span>
                 </div>
               </div>
 
-              <div className="px-2.5 py-1 bg-slate-50 border-b border-slate-200 text-right">
-                <span className="text-[10px] text-slate-600 font-medium">Count: {salesTeamData.length}</span>
-              </div>
-
+              {/* Table with Sortable Headers */}
               <div className="flex-1 overflow-hidden">
                 <div className="h-full overflow-y-auto">
                   <table className="w-full">
                     <thead className="bg-blue-600 text-white sticky top-0 z-10">
                       <tr>
-                        <th className="px-1.5 py-1 text-left text-[9px] font-semibold uppercase tracking-wide">
-                          Sales Consultant
+                        <th className="px-2 py-2 text-left text-[9px] font-bold uppercase tracking-wide">
+                          <button className="flex items-center gap-1 hover:text-blue-200 transition-colors">
+                            <span>Sales Consultant</span>
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                          </button>
                         </th>
-                        <th className="px-1.5 py-1 text-center text-[9px] font-semibold uppercase tracking-wide">Leads</th>
-                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Prosp</th>
-                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Test</th>
-                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Resrv</th>
-                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Bank</th>
-                        <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wide">Closed</th>
+                        <th className="px-1 py-2 text-center text-[9px] font-bold uppercase">
+                          <button className="flex items-center gap-0.5 mx-auto hover:text-blue-200 transition-colors">
+                            <span>L</span>
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                          </button>
+                        </th>
+                        <th className="px-1 py-2 text-center text-[9px] font-bold uppercase">
+                          <button className="flex items-center gap-0.5 mx-auto hover:text-blue-200 transition-colors">
+                            <span>P</span>
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                          </button>
+                        </th>
+                        <th className="px-1 py-2 text-center text-[9px] font-bold uppercase">
+                          <button className="flex items-center gap-0.5 mx-auto hover:text-blue-200 transition-colors">
+                            <span>T</span>
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                          </button>
+                        </th>
+                        <th className="px-1 py-2 text-center text-[9px] font-bold uppercase">
+                          <button className="flex items-center gap-0.5 mx-auto hover:text-blue-200 transition-colors">
+                            <span>R</span>
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                          </button>
+                        </th>
+                        <th className="px-1 py-2 text-center text-[9px] font-bold uppercase">
+                          <button className="flex items-center gap-0.5 mx-auto hover:text-blue-200 transition-colors">
+                            <span>B</span>
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                          </button>
+                        </th>
+                        <th className="px-1 py-2 text-center text-[9px] font-bold uppercase">
+                          <button className="flex items-center gap-0.5 mx-auto hover:text-blue-200 transition-colors">
+                            <span>C</span>
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                          </button>
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
                       {salesTeamData.map((consultant: any) => (
-                        <tr key={consultant.id} className="hover:bg-slate-50 transition-colors">
-                          <td className="px-1.5 py-1 text-[10px] text-slate-900 font-medium">{consultant.name}</td>
-                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.leads}</td>
-                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.prospects}</td>
-                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.testDrives}</td>
-                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.reservations}</td>
-                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.bankApplications}</td>
-                          <td className="px-1.5 py-1 text-[10px] text-center text-slate-700">{consultant.closedDeals}</td>
+                        <tr key={consultant.id} className="hover:bg-blue-50 transition-colors">
+                          <td className="px-2 py-1.5 text-[10px] text-slate-900 font-medium">{consultant.name}</td>
+                          <td className="px-1 py-1.5 text-[10px] text-center text-slate-700">{consultant.leads}</td>
+                          <td className="px-1 py-1.5 text-[10px] text-center text-slate-700">{consultant.prospects}</td>
+                          <td className="px-1 py-1.5 text-[10px] text-center text-slate-700">{consultant.testDrives}</td>
+                          <td className="px-1 py-1.5 text-[10px] text-center text-slate-700">{consultant.reservations}</td>
+                          <td className="px-1 py-1.5 text-[10px] text-center text-slate-700">{consultant.bankApplications}</td>
+                          <td className="px-1 py-1.5 text-[10px] text-center text-slate-700">{consultant.closedDeals}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                </div>
+              </div>
+
+              {/* Performance Chart Below Table */}
+              <div className="border-t border-slate-200 p-3 bg-slate-50">
+                <div className="flex flex-wrap gap-x-3 gap-y-1 text-[9px] mb-2">
+                  <div className="flex items-center gap-1">
+                    <div className="w-2.5 h-2.5 rounded bg-amber-500"></div>
+                    <span className="text-slate-600">Leads</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2.5 h-2.5 rounded bg-blue-500"></div>
+                    <span className="text-slate-600">Prospects</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2.5 h-2.5 rounded bg-cyan-500"></div>
+                    <span className="text-slate-600">Test Drives</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2.5 h-2.5 rounded bg-orange-500"></div>
+                    <span className="text-slate-600">Reservations</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2.5 h-2.5 rounded bg-pink-500"></div>
+                    <span className="text-slate-600">Bank Apps</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2.5 h-2.5 rounded bg-emerald-500"></div>
+                    <span className="text-slate-600">Closed</span>
+                  </div>
+                </div>
+                
+                {/* Horizontal Bar Chart */}
+                <div className="space-y-1">
+                  {salesTeamData.slice(0, 10).map((consultant: any) => {
+                    const maxValue = Math.max(
+                      consultant.leads,
+                      consultant.prospects,
+                      consultant.testDrives,
+                      consultant.reservations,
+                      consultant.bankApplications,
+                      consultant.closedDeals
+                    )
+                    return (
+                      <div key={consultant.id} className="flex items-center gap-1.5">
+                        <div className="w-28 text-[9px] text-slate-600 truncate text-right">
+                          {consultant.name}
+                        </div>
+                        <div className="flex-1 h-4 bg-slate-200 rounded-full overflow-hidden flex">
+                          {consultant.leads > 0 && (
+                            <div 
+                              className="bg-amber-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.leads / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.prospects > 0 && (
+                            <div 
+                              className="bg-blue-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.prospects / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.testDrives > 0 && (
+                            <div 
+                              className="bg-cyan-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.testDrives / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.reservations > 0 && (
+                            <div 
+                              className="bg-orange-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.reservations / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.bankApplications > 0 && (
+                            <div 
+                              className="bg-pink-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.bankApplications / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.closedDeals > 0 && (
+                            <div 
+                              className="bg-emerald-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.closedDeals / maxValue) * 100}%` }}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             </div>
