@@ -117,7 +117,6 @@ export function Sidebar() {
             email: user.email,
             role: user.role,
             position: user.position,
-            department: user.department,
             isOnline: true,
           }}
           onLogout={handleLogout}
