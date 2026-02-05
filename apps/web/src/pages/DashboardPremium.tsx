@@ -404,79 +404,124 @@ export function DashboardPremium() {
           {/* Sales Team Table */}
           <div className="col-span-5">
             <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-3 flex items-center justify-between">
-                <h2 className="text-sm font-bold text-white">Sales Team</h2>
-                <span className="text-xs text-blue-200">Count: {salesTeamData.length}</span>
+              {/* Header with View Toggle Buttons */}
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-3">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-sm font-bold text-white">Sales Team</h2>
+                  <div className="flex items-center gap-2">
+                    <button className="p-1.5 bg-blue-500/30 hover:bg-blue-500/50 rounded-lg transition-colors">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                      </svg>
+                    </button>
+                    <button className="p-1.5 bg-blue-500/30 hover:bg-blue-500/50 rounded-lg transition-colors">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs text-blue-200">Count: {salesTeamData.length}</span>
+                </div>
               </div>
 
-              <div className="max-h-[400px] overflow-y-auto">
+              {/* Table */}
+              <div className="max-h-[280px] overflow-y-auto">
                 <table className="w-full">
-                  <thead className="bg-slate-900/50 sticky top-0 z-10">
+                  <thead className="bg-blue-600/80 sticky top-0 z-10">
                     <tr>
-                      <th className="px-3 py-2 text-left text-[10px] font-bold text-slate-300 uppercase tracking-wider">
-                        Consultant
+                      <th className="px-3 py-2.5 text-left text-[10px] font-bold text-white uppercase tracking-wider">
+                        <button className="flex items-center gap-1 hover:text-blue-200 transition-colors">
+                          <span>Sales Consultant</span>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
                       </th>
-                      <th className="px-2 py-2 text-center text-[10px] font-bold text-slate-300 uppercase">
-                        <Users className="w-3 h-3 mx-auto" />
+                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
+                          <Users className="w-3 h-3" />
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
                       </th>
-                      <th className="px-2 py-2 text-center text-[10px] font-bold text-slate-300 uppercase">
-                        <TrendingUp className="w-3 h-3 mx-auto" />
+                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
+                          <TrendingUp className="w-3 h-3" />
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
                       </th>
-                      <th className="px-2 py-2 text-center text-[10px] font-bold text-slate-300 uppercase">
-                        <Car className="w-3 h-3 mx-auto" />
+                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
+                          <Car className="w-3 h-3" />
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
                       </th>
-                      <th className="px-2 py-2 text-center text-[10px] font-bold text-slate-300 uppercase">
-                        <FileText className="w-3 h-3 mx-auto" />
+                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
+                          <FileText className="w-3 h-3" />
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
                       </th>
-                      <th className="px-2 py-2 text-center text-[10px] font-bold text-slate-300 uppercase">
-                        <Building2 className="w-3 h-3 mx-auto" />
+                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
+                          <Building2 className="w-3 h-3" />
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
                       </th>
-                      <th className="px-2 py-2 text-center text-[10px] font-bold text-slate-300 uppercase">
-                        <CheckCircle2 className="w-3 h-3 mx-auto" />
+                      <th className="px-2 py-2.5 text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <button className="flex items-center gap-1 mx-auto hover:text-blue-200 transition-colors">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-700/30">
-                    {salesTeamData.map((consultant: any, index: number) => (
-                      <tr key={consultant.id} className="hover:bg-slate-700/20 transition-colors group">
-                        <td className="px-3 py-2">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-[9px] font-bold">
-                              {consultant.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
-                            </div>
-                            <div>
-                              <div className="text-[11px] font-semibold text-white">{consultant.name}</div>
-                              <div className="text-[9px] text-slate-500">#{index + 1}</div>
-                            </div>
-                          </div>
+                    {salesTeamData.map((consultant: any) => (
+                      <tr key={consultant.id} className="hover:bg-blue-600/10 transition-colors group">
+                        <td className="px-3 py-2.5">
+                          <div className="text-[11px] font-medium text-slate-200">{consultant.name}</div>
                         </td>
-                        <td className="px-2 py-2 text-center">
-                          <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-slate-700/50 text-[11px] font-bold text-slate-300 group-hover:bg-slate-600/50">
+                        <td className="px-2 py-2.5 text-center">
+                          <span className="text-[11px] font-semibold text-slate-300">
                             {consultant.leads}
                           </span>
                         </td>
-                        <td className="px-2 py-2 text-center">
-                          <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-blue-600/30 text-[11px] font-bold text-blue-300 group-hover:bg-blue-600/50">
+                        <td className="px-2 py-2.5 text-center">
+                          <span className="text-[11px] font-semibold text-slate-300">
                             {consultant.prospects}
                           </span>
                         </td>
-                        <td className="px-2 py-2 text-center">
-                          <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-purple-600/30 text-[11px] font-bold text-purple-300 group-hover:bg-purple-600/50">
+                        <td className="px-2 py-2.5 text-center">
+                          <span className="text-[11px] font-semibold text-slate-300">
                             {consultant.testDrives}
                           </span>
                         </td>
-                        <td className="px-2 py-2 text-center">
-                          <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-indigo-600/30 text-[11px] font-bold text-indigo-300 group-hover:bg-indigo-600/50">
+                        <td className="px-2 py-2.5 text-center">
+                          <span className="text-[11px] font-semibold text-slate-300">
                             {consultant.reservations}
                           </span>
                         </td>
-                        <td className="px-2 py-2 text-center">
-                          <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-orange-600/30 text-[11px] font-bold text-orange-300 group-hover:bg-orange-600/50">
+                        <td className="px-2 py-2.5 text-center">
+                          <span className="text-[11px] font-semibold text-slate-300">
                             {consultant.bankApplications}
                           </span>
                         </td>
-                        <td className="px-2 py-2 text-center">
-                          <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-emerald-600/30 text-[11px] font-bold text-emerald-300 group-hover:bg-emerald-600/50">
+                        <td className="px-2 py-2.5 text-center">
+                          <span className="text-[11px] font-semibold text-slate-300">
                             {consultant.closedDeals}
                           </span>
                         </td>
@@ -484,6 +529,97 @@ export function DashboardPremium() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Performance Chart Below Table */}
+              <div className="border-t border-slate-700/50 p-4 bg-slate-900/30">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px]">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-3 h-3 rounded bg-amber-500"></div>
+                      <span className="text-slate-400">Leads</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-3 h-3 rounded bg-blue-500"></div>
+                      <span className="text-slate-400">Prospects</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-3 h-3 rounded bg-cyan-500"></div>
+                      <span className="text-slate-400">Test Drives</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-3 h-3 rounded bg-orange-500"></div>
+                      <span className="text-slate-400">Reservations</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-3 h-3 rounded bg-pink-500"></div>
+                      <span className="text-slate-400">Bank Applications</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-3 h-3 rounded bg-emerald-500"></div>
+                      <span className="text-slate-400">Closed Deals</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Horizontal Bar Chart */}
+                <div className="space-y-1.5">
+                  {salesTeamData.slice(0, 10).map((consultant: any) => {
+                    const maxValue = Math.max(
+                      consultant.leads,
+                      consultant.prospects,
+                      consultant.testDrives,
+                      consultant.reservations,
+                      consultant.bankApplications,
+                      consultant.closedDeals
+                    )
+                    return (
+                      <div key={consultant.id} className="flex items-center gap-2">
+                        <div className="w-32 text-[10px] text-slate-400 truncate text-right">
+                          {consultant.name}
+                        </div>
+                        <div className="flex-1 h-5 bg-slate-800/50 rounded-full overflow-hidden flex">
+                          {consultant.leads > 0 && (
+                            <div 
+                              className="bg-amber-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.leads / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.prospects > 0 && (
+                            <div 
+                              className="bg-blue-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.prospects / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.testDrives > 0 && (
+                            <div 
+                              className="bg-cyan-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.testDrives / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.reservations > 0 && (
+                            <div 
+                              className="bg-orange-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.reservations / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.bankApplications > 0 && (
+                            <div 
+                              className="bg-pink-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.bankApplications / maxValue) * 100}%` }}
+                            />
+                          )}
+                          {consultant.closedDeals > 0 && (
+                            <div 
+                              className="bg-emerald-500 h-full transition-all duration-500"
+                              style={{ width: `${(consultant.closedDeals / maxValue) * 100}%` }}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
             </div>
           </div>
