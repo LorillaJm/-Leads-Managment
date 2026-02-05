@@ -125,6 +125,97 @@ export function PremiumSalesTable({ data }: PremiumSalesTableProps) {
           </tbody>
         </table>
       </div>
+
+      {/* Performance Comparison Chart */}
+      <div className="border-t border-slate-200 bg-slate-50/50 p-4">
+        {/* Legend */}
+        <div className="flex flex-wrap gap-x-4 gap-y-2 mb-4">
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded bg-amber-500"></div>
+            <span className="text-[10px] font-medium text-slate-600">Leads</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded bg-blue-500"></div>
+            <span className="text-[10px] font-medium text-slate-600">Prospects</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded bg-cyan-500"></div>
+            <span className="text-[10px] font-medium text-slate-600">Test Drives</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded bg-orange-500"></div>
+            <span className="text-[10px] font-medium text-slate-600">Reservations</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded bg-pink-500"></div>
+            <span className="text-[10px] font-medium text-slate-600">Bank Applications</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded bg-emerald-500"></div>
+            <span className="text-[10px] font-medium text-slate-600">Closed Deals</span>
+          </div>
+        </div>
+
+        {/* Horizontal Stacked Bar Chart */}
+        <div className="space-y-2">
+          {sortedData.map((consultant) => {
+            const total = consultant.leads + consultant.prospects + consultant.testDrives + 
+                         consultant.reservations + consultant.bankApplications + consultant.closedDeals
+            
+            return (
+              <div key={consultant.id} className="flex items-center gap-2">
+                <div className="w-32 text-[10px] text-slate-600 truncate text-right font-medium">
+                  {consultant.name}
+                </div>
+                <div className="flex-1 h-6 bg-slate-200 rounded-full overflow-hidden flex">
+                  {consultant.leads > 0 && (
+                    <div 
+                      className="bg-amber-500 h-full transition-all duration-500 hover:opacity-80"
+                      style={{ width: `${(consultant.leads / total) * 100}%` }}
+                      title={`Leads: ${consultant.leads}`}
+                    />
+                  )}
+                  {consultant.prospects > 0 && (
+                    <div 
+                      className="bg-blue-500 h-full transition-all duration-500 hover:opacity-80"
+                      style={{ width: `${(consultant.prospects / total) * 100}%` }}
+                      title={`Prospects: ${consultant.prospects}`}
+                    />
+                  )}
+                  {consultant.testDrives > 0 && (
+                    <div 
+                      className="bg-cyan-500 h-full transition-all duration-500 hover:opacity-80"
+                      style={{ width: `${(consultant.testDrives / total) * 100}%` }}
+                      title={`Test Drives: ${consultant.testDrives}`}
+                    />
+                  )}
+                  {consultant.reservations > 0 && (
+                    <div 
+                      className="bg-orange-500 h-full transition-all duration-500 hover:opacity-80"
+                      style={{ width: `${(consultant.reservations / total) * 100}%` }}
+                      title={`Reservations: ${consultant.reservations}`}
+                    />
+                  )}
+                  {consultant.bankApplications > 0 && (
+                    <div 
+                      className="bg-pink-500 h-full transition-all duration-500 hover:opacity-80"
+                      style={{ width: `${(consultant.bankApplications / total) * 100}%` }}
+                      title={`Bank Applications: ${consultant.bankApplications}`}
+                    />
+                  )}
+                  {consultant.closedDeals > 0 && (
+                    <div 
+                      className="bg-emerald-500 h-full transition-all duration-500 hover:opacity-80"
+                      style={{ width: `${(consultant.closedDeals / total) * 100}%` }}
+                      title={`Closed Deals: ${consultant.closedDeals}`}
+                    />
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }
