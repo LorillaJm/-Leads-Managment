@@ -156,64 +156,105 @@ export function PremiumSalesTable({ data }: PremiumSalesTableProps) {
           </div>
         </div>
 
-        {/* Horizontal Stacked Bar Chart */}
-        <div className="space-y-2">
-          {sortedData.map((consultant) => {
-            const total = consultant.leads + consultant.prospects + consultant.testDrives + 
-                         consultant.reservations + consultant.bankApplications + consultant.closedDeals
-            
-            return (
-              <div key={consultant.id} className="flex items-center gap-2">
-                <div className="w-32 text-[10px] text-slate-600 truncate text-right font-medium">
-                  {consultant.name}
+        {/* Chart Container with Axis */}
+        <div className="relative">
+          {/* Y-axis (Consultant Names) and Bars */}
+          <div className="space-y-2 mb-2">
+            {sortedData.map((consultant) => {
+              const total = consultant.leads + consultant.prospects + consultant.testDrives + 
+                           consultant.reservations + consultant.bankApplications + consultant.closedDeals
+              
+              // Calculate percentages
+              const leadsPercent = (consultant.leads / total) * 100
+              const prospectsPercent = (consultant.prospects / total) * 100
+              const testDrivesPercent = (consultant.testDrives / total) * 100
+              const reservationsPercent = (consultant.reservations / total) * 100
+              const bankAppsPercent = (consultant.bankApplications / total) * 100
+              const closedDealsPercent = (consultant.closedDeals / total) * 100
+              
+              return (
+                <div key={consultant.id} className="flex items-center gap-2">
+                  <div className="w-36 text-[10px] text-slate-600 truncate text-right font-medium">
+                    {consultant.name}
+                  </div>
+                  <div className="flex-1 h-5 bg-slate-200/50 rounded overflow-hidden flex border border-slate-300/50">
+                    {consultant.leads > 0 && (
+                      <div 
+                        className="bg-amber-500 h-full transition-all duration-500 hover:opacity-80 relative group"
+                        style={{ width: `${leadsPercent}%` }}
+                      >
+                        <span className="absolute inset-0 flex items-center justify-center text-[8px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                          {leadsPercent.toFixed(0)}%
+                        </span>
+                      </div>
+                    )}
+                    {consultant.prospects > 0 && (
+                      <div 
+                        className="bg-blue-500 h-full transition-all duration-500 hover:opacity-80 relative group"
+                        style={{ width: `${prospectsPercent}%` }}
+                      >
+                        <span className="absolute inset-0 flex items-center justify-center text-[8px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                          {prospectsPercent.toFixed(0)}%
+                        </span>
+                      </div>
+                    )}
+                    {consultant.testDrives > 0 && (
+                      <div 
+                        className="bg-cyan-500 h-full transition-all duration-500 hover:opacity-80 relative group"
+                        style={{ width: `${testDrivesPercent}%` }}
+                      >
+                        <span className="absolute inset-0 flex items-center justify-center text-[8px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                          {testDrivesPercent.toFixed(0)}%
+                        </span>
+                      </div>
+                    )}
+                    {consultant.reservations > 0 && (
+                      <div 
+                        className="bg-orange-500 h-full transition-all duration-500 hover:opacity-80 relative group"
+                        style={{ width: `${reservationsPercent}%` }}
+                      >
+                        <span className="absolute inset-0 flex items-center justify-center text-[8px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                          {reservationsPercent.toFixed(0)}%
+                        </span>
+                      </div>
+                    )}
+                    {consultant.bankApplications > 0 && (
+                      <div 
+                        className="bg-pink-500 h-full transition-all duration-500 hover:opacity-80 relative group"
+                        style={{ width: `${bankAppsPercent}%` }}
+                      >
+                        <span className="absolute inset-0 flex items-center justify-center text-[8px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                          {bankAppsPercent.toFixed(0)}%
+                        </span>
+                      </div>
+                    )}
+                    {consultant.closedDeals > 0 && (
+                      <div 
+                        className="bg-emerald-500 h-full transition-all duration-500 hover:opacity-80 relative group"
+                        style={{ width: `${closedDealsPercent}%` }}
+                      >
+                        <span className="absolute inset-0 flex items-center justify-center text-[8px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                          {closedDealsPercent.toFixed(0)}%
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="flex-1 h-6 bg-slate-200 rounded-full overflow-hidden flex">
-                  {consultant.leads > 0 && (
-                    <div 
-                      className="bg-amber-500 h-full transition-all duration-500 hover:opacity-80"
-                      style={{ width: `${(consultant.leads / total) * 100}%` }}
-                      title={`Leads: ${consultant.leads}`}
-                    />
-                  )}
-                  {consultant.prospects > 0 && (
-                    <div 
-                      className="bg-blue-500 h-full transition-all duration-500 hover:opacity-80"
-                      style={{ width: `${(consultant.prospects / total) * 100}%` }}
-                      title={`Prospects: ${consultant.prospects}`}
-                    />
-                  )}
-                  {consultant.testDrives > 0 && (
-                    <div 
-                      className="bg-cyan-500 h-full transition-all duration-500 hover:opacity-80"
-                      style={{ width: `${(consultant.testDrives / total) * 100}%` }}
-                      title={`Test Drives: ${consultant.testDrives}`}
-                    />
-                  )}
-                  {consultant.reservations > 0 && (
-                    <div 
-                      className="bg-orange-500 h-full transition-all duration-500 hover:opacity-80"
-                      style={{ width: `${(consultant.reservations / total) * 100}%` }}
-                      title={`Reservations: ${consultant.reservations}`}
-                    />
-                  )}
-                  {consultant.bankApplications > 0 && (
-                    <div 
-                      className="bg-pink-500 h-full transition-all duration-500 hover:opacity-80"
-                      style={{ width: `${(consultant.bankApplications / total) * 100}%` }}
-                      title={`Bank Applications: ${consultant.bankApplications}`}
-                    />
-                  )}
-                  {consultant.closedDeals > 0 && (
-                    <div 
-                      className="bg-emerald-500 h-full transition-all duration-500 hover:opacity-80"
-                      style={{ width: `${(consultant.closedDeals / total) * 100}%` }}
-                      title={`Closed Deals: ${consultant.closedDeals}`}
-                    />
-                  )}
-                </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
+
+          {/* X-axis Labels */}
+          <div className="flex items-center gap-2 mt-1">
+            <div className="w-36"></div>
+            <div className="flex-1 flex justify-between text-[9px] text-slate-500 font-medium px-1">
+              <span>0%</span>
+              <span>25%</span>
+              <span>50%</span>
+              <span>75%</span>
+              <span>100%</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
