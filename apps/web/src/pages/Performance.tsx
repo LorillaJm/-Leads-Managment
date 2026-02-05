@@ -39,19 +39,25 @@ export function Performance() {
   ]
 
   const vehicleModelsData = [
-    { model: 'Atto 3', inquiryCount: 12, closedDeals: 2 },
-    { model: 'Atto 3 EV', inquiryCount: 8, closedDeals: 1 },
-    { model: 'Dolphin', inquiryCount: 15, closedDeals: 3 },
-    { model: 'eMax 7', inquiryCount: 22, closedDeals: 4 },
-    { model: 'eMax 7 D', inquiryCount: 18, closedDeals: 2 },
-    { model: 'Han', inquiryCount: 52, closedDeals: 8 },
-    { model: 'Sealion 6', inquiryCount: 25, closedDeals: 5 },
-    { model: 'Seal 6 DM-i Pr...', inquiryCount: 18, closedDeals: 3 },
-    { model: 'Sealion 7', inquiryCount: 95, closedDeals: 12 },
-    { model: 'Shark', inquiryCount: 42, closedDeals: 6 },
-    { model: 'Shark DM-i', inquiryCount: 35, closedDeals: 5 },
-    { model: 'Shark EV', inquiryCount: 28, closedDeals: 4 },
-    { model: 'Shark EVO', inquiryCount: 22, closedDeals: 3 },
+    { model: 'Atto 3 Dynamic', inquiryCount: 45, closedDeals: 8 },
+    { model: 'Atto 3 Premium', inquiryCount: 38, closedDeals: 7 },
+    { model: 'Dolphin', inquiryCount: 52, closedDeals: 9 },
+    { model: 'eMax7 Standard', inquiryCount: 28, closedDeals: 5 },
+    { model: 'eMax7 Superior Captain', inquiryCount: 35, closedDeals: 6 },
+    { model: 'eMax9 DM-i Advanced', inquiryCount: 42, closedDeals: 7 },
+    { model: 'eMax9 DM-i Premium', inquiryCount: 48, closedDeals: 8 },
+    { model: 'Han', inquiryCount: 65, closedDeals: 11 },
+    { model: 'Seagull', inquiryCount: 32, closedDeals: 5 },
+    { model: 'Seal 5 DM-i Dynamic', inquiryCount: 38, closedDeals: 6 },
+    { model: 'Seal 5 DM-i Premium', inquiryCount: 44, closedDeals: 7 },
+    { model: 'Seal Performance', inquiryCount: 55, closedDeals: 9 },
+    { model: 'Seal Advanced', inquiryCount: 48, closedDeals: 8 },
+    { model: 'Sealion 5 DM-i', inquiryCount: 72, closedDeals: 12 },
+    { model: 'Sealion 6 DM-i', inquiryCount: 88, closedDeals: 15 },
+    { model: 'Shark 6 DMO Advanced', inquiryCount: 58, closedDeals: 10 },
+    { model: 'Shark 6 DMO Premium', inquiryCount: 62, closedDeals: 11 },
+    { model: 'Tang EV', inquiryCount: 68, closedDeals: 12 },
+    { model: 'Tang DM-i', inquiryCount: 75, closedDeals: 13 },
   ]
 
   const colorsData = [
