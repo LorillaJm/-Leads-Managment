@@ -39,14 +39,14 @@ export function ConversionFlowPanel({
       transition={{ delay: 0.1 }}
       className="bg-white rounded-lg border border-gray-300 shadow-sm h-full flex flex-col"
     >
-      <div className="bg-gray-100 px-3 py-2 border-b border-gray-300">
-        <h3 className="text-sm font-bold text-gray-900">Conversion Flow</h3>
-        <div className="text-xs text-gray-600 mt-0.5">By Leads, Prospects, and Closed Deals</div>
+      <div className="bg-gray-100 px-2.5 py-1.5 border-b border-gray-300">
+        <h3 className="text-xs font-bold text-gray-900">Conversion Flow</h3>
+        <div className="text-[10px] text-gray-600 mt-0.5">By Leads, Prospects, and Closed Deals</div>
       </div>
       
-      <div className="p-3 flex-1 flex flex-col">
+      <div className="p-2 flex-1 flex flex-col">
         {/* Main Conversion Chart */}
-        <div className="flex-1 min-h-[180px] mb-3">
+        <div className="flex-1 min-h-[140px] mb-2">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -82,51 +82,51 @@ export function ConversionFlowPanel({
         </div>
 
         {/* Conversion Rates */}
-        <div className="grid grid-cols-2 gap-2 mb-3">
-          <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
-            <div className="text-[10px] text-gray-600 mb-0.5">Leads → Prospects</div>
-            <div className="text-xl font-bold text-gray-900">
+        <div className="grid grid-cols-2 gap-1.5 mb-2">
+          <div className="border border-gray-200 rounded p-1.5 bg-gray-50">
+            <div className="text-[9px] text-gray-600 mb-0.5">Leads → Prospects</div>
+            <div className="text-lg font-bold text-gray-900">
               {leadsToProspects}%
             </div>
-            <div className="text-[10px] text-gray-500 mt-0.5">
+            <div className="text-[9px] text-gray-500 mt-0.5">
               Goal: {leadsToProspectsGoal}%
             </div>
           </div>
 
-          <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
-            <div className="text-[10px] text-gray-600 mb-0.5">Prospects → Closed Deals</div>
-            <div className="text-xl font-bold text-gray-900">
+          <div className="border border-gray-200 rounded p-1.5 bg-gray-50">
+            <div className="text-[9px] text-gray-600 mb-0.5">Prospects → Closed Deals</div>
+            <div className="text-lg font-bold text-gray-900">
               {prospectsToClosedDeals}%
             </div>
-            <div className="text-[10px] text-gray-500 mt-0.5">
+            <div className="text-[9px] text-gray-500 mt-0.5">
               Goal: {prospectsToClosedDealsGoal}%
             </div>
           </div>
         </div>
 
         {/* Additional Metrics */}
-        <div className="space-y-1.5 pt-2 border-t border-gray-200">
+        <div className="space-y-1 pt-1.5 border-t border-gray-200">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600 font-medium">Test Drives</span>
+            <span className="text-[10px] text-gray-600 font-medium">Test Drives</span>
             <div className="text-right">
-              <div className="text-base font-bold text-gray-900">{testDrives}</div>
-              <div className="text-[10px] text-gray-500">Minimum: {testDrivesMin}</div>
+              <div className="text-sm font-bold text-gray-900">{testDrives}</div>
+              <div className="text-[9px] text-gray-500">Minimum: {testDrivesMin}</div>
             </div>
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600 font-medium">Reservations</span>
+            <span className="text-[10px] text-gray-600 font-medium">Reservations</span>
             <div className="text-right">
-              <div className="text-base font-bold text-gray-900">{reservations}</div>
-              <div className="text-[10px] text-gray-500">Minimum: {reservationsMin}</div>
+              <div className="text-sm font-bold text-gray-900">{reservations}</div>
+              <div className="text-[9px] text-gray-500">Minimum: {reservationsMin}</div>
             </div>
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600 font-medium">Bank Applications</span>
+            <span className="text-[10px] text-gray-600 font-medium">Bank Applications</span>
             <div className="text-right">
-              <div className="text-base font-bold text-gray-900">{bankApplications}</div>
-              <div className="text-[10px] text-gray-500">Minimum: {bankApplicationsMin}</div>
+              <div className="text-sm font-bold text-gray-900">{bankApplications}</div>
+              <div className="text-[9px] text-gray-500">Minimum: {bankApplicationsMin}</div>
             </div>
           </div>
         </div>

@@ -26,22 +26,22 @@ function KPICard({ label, value, goal, color, index }: KPICardProps) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: index * 0.04, duration: 0.3 }}
-      className={`${color} rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105`}
+      className={`${color} rounded-xl p-2.5 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105`}
     >
       <div className="text-center">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: index * 0.04 + 0.15, type: 'spring', stiffness: 150 }}
-          className="text-3xl font-bold text-white mb-1"
+          className="text-2xl font-bold text-white mb-0.5"
         >
           {value}
         </motion.div>
-        <div className="text-xs font-bold text-white uppercase tracking-wider opacity-95">
+        <div className="text-[10px] font-bold text-white uppercase tracking-wider opacity-95">
           {label}
         </div>
         {goal && (
-          <div className="text-[10px] text-white/75 mt-1 font-medium">
+          <div className="text-[9px] text-white/75 mt-0.5 font-medium">
             Goal: {goal}
           </div>
         )}
@@ -66,12 +66,12 @@ export function OverviewPanel({
       animate={{ opacity: 1, y: 0 }}
       className="bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden h-full"
     >
-      <div className="bg-gray-100 px-3 py-2 border-b border-gray-300">
-        <h3 className="text-sm font-bold text-gray-900">Overview</h3>
-        <div className="text-xs text-gray-600 mt-0.5">{label}</div>
+      <div className="bg-gray-100 px-2.5 py-1.5 border-b border-gray-300">
+        <h3 className="text-xs font-bold text-gray-900">Overview</h3>
+        <div className="text-[10px] text-gray-600 mt-0.5">{label}</div>
       </div>
       
-      <div className="p-3 space-y-2">
+      <div className="p-2 space-y-1.5">
         <KPICard
           label="LEADS"
           value={leads}
