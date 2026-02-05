@@ -67,8 +67,6 @@ export function DashboardNew() {
     closedDeals: ranking.totalClosedDeals || 0,
   }))
 
-
-
   const totals = {
     leads: stats.totalLeads || 0,
     prospects: stats.totalProspects || 0,
@@ -92,9 +90,10 @@ export function DashboardNew() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       <div className="max-w-[1800px] mx-auto">
-        <div className="flex gap-3">
-          {/* Left Column - Scope */}
-          <div className="w-48 flex-shrink-0">
+        {/* Grid Layout matching original dashboard */}
+        <div className="grid grid-cols-12 gap-4">
+          {/* Left Column - Scope Filter (2 cols) */}
+          <div className="col-span-2">
             <div className="bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-3 py-2 border-b border-gray-300">
                 <h3 className="text-sm font-bold text-gray-900">Scope</h3>
@@ -152,8 +151,8 @@ export function DashboardNew() {
             </div>
           </div>
 
-          {/* Middle Left - Overview */}
-          <div className="w-56 flex-shrink-0">
+          {/* Middle Left - Overview (2 cols) */}
+          <div className="col-span-2">
             <OverviewPanel 
               totalCount={totals.leads} 
               label="By count"
@@ -163,22 +162,28 @@ export function DashboardNew() {
               reservations={totals.reservations}
               bankApplications={totals.bankApplications}
               closedDeals={totals.closedDeals}
+              leadsGoal={1500}
             />
           </div>
 
-          {/* Middle - Conversion Flow */}
-          <div className="flex-1 min-w-0">
+          {/* Center - Conversion Flow (4 cols) */}
+          <div className="col-span-4">
             <ConversionFlowPanel
               leadsToProspects={leadsToProspects}
               prospectsToClosedDeals={prospectsToClosedDeals}
+              leadsToProspectsGoal={20}
+              prospectsToClosedDealsGoal={25}
               testDrives={totals.testDrives}
               reservations={totals.reservations}
               bankApplications={totals.bankApplications}
+              testDrivesMin={300}
+              reservationsMin={120}
+              bankApplicationsMin={180}
             />
           </div>
 
-          {/* Right Column - Sales Team */}
-          <div className="w-[420px] flex-shrink-0">
+          {/* Right - Sales Team Table (4 cols) */}
+          <div className="col-span-4">
             <SalesTeamTable data={salesTeamData} totalCount={salesTeamData.length} />
           </div>
         </div>

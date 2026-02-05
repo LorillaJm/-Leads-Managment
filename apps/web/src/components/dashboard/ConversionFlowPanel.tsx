@@ -37,16 +37,16 @@ export function ConversionFlowPanel({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="bg-white rounded-lg border border-gray-300 shadow-sm h-full"
+      className="bg-white rounded-lg border border-gray-300 shadow-sm h-full flex flex-col"
     >
       <div className="bg-gray-100 px-3 py-2 border-b border-gray-300">
         <h3 className="text-sm font-bold text-gray-900">Conversion Flow</h3>
         <div className="text-xs text-gray-600 mt-0.5">By Leads, Prospects, and Closed Deals</div>
       </div>
       
-      <div className="p-3">
+      <div className="p-3 flex-1 flex flex-col">
         {/* Main Conversion Chart */}
-        <div className="h-48 mb-3">
+        <div className="flex-1 min-h-[180px] mb-3">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />

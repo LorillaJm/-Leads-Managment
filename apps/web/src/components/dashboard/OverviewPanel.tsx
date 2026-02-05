@@ -64,9 +64,9 @@ export function OverviewPanel({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden"
+      className="bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden h-full"
     >
-      <div className="bg-gradient-to-r from-gray-50 to-white px-4 py-2.5 border-b border-gray-200">
+      <div className="bg-gray-100 px-3 py-2 border-b border-gray-300">
         <h3 className="text-sm font-bold text-gray-900">Overview</h3>
         <div className="text-xs text-gray-600 mt-0.5">{label}</div>
       </div>

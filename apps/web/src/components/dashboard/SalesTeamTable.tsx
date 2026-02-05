@@ -53,7 +53,7 @@ export function SalesTeamTable({ data, totalCount }: SalesTeamTableProps) {
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden"
+      className="bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden h-full flex flex-col"
     >
       <div className="bg-blue-600 text-white px-3 py-2 flex items-center justify-between">
         <h3 className="text-sm font-bold">Sales Team</h3>
@@ -75,106 +75,108 @@ export function SalesTeamTable({ data, totalCount }: SalesTeamTableProps) {
         <span className="text-xs text-gray-600">Count: {totalCount}</span>
       </div>
 
-      <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
-        <table className="w-full">
-          <thead className="bg-blue-600 text-white sticky top-0 z-10">
-            <tr>
-              <th className="px-2 py-1.5 text-left text-[10px] font-semibold">
-                <button className="flex items-center gap-0.5 hover:text-blue-100">
-                  Sales Consultant
-                  <ChevronDown className="w-3 h-3" />
-                </button>
-              </th>
-              <th className="px-2 py-1.5 text-center text-[10px] font-semibold">
-                <button
-                  onClick={() => handleSort('leads')}
-                  className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
+      <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="overflow-x-auto overflow-y-auto flex-1">
+          <table className="w-full">
+            <thead className="bg-blue-600 text-white sticky top-0 z-10">
+              <tr>
+                <th className="px-2 py-1.5 text-left text-[10px] font-semibold whitespace-nowrap">
+                  <button className="flex items-center gap-0.5 hover:text-blue-100">
+                    Sales Consultant
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                </th>
+                <th className="px-2 py-1.5 text-center text-[10px] font-semibold whitespace-nowrap">
+                  <button
+                    onClick={() => handleSort('leads')}
+                    className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
+                  >
+                    Leads
+                    <SortIcon field="leads" />
+                  </button>
+                </th>
+                <th className="px-2 py-1.5 text-center text-[10px] font-semibold whitespace-nowrap">
+                  <button
+                    onClick={() => handleSort('prospects')}
+                    className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
+                  >
+                    Prosp
+                    <SortIcon field="prospects" />
+                  </button>
+                </th>
+                <th className="px-2 py-1.5 text-center text-[10px] font-semibold whitespace-nowrap">
+                  <button
+                    onClick={() => handleSort('testDrives')}
+                    className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
+                  >
+                    Test Drv
+                    <SortIcon field="testDrives" />
+                  </button>
+                </th>
+                <th className="px-2 py-1.5 text-center text-[10px] font-semibold whitespace-nowrap">
+                  <button
+                    onClick={() => handleSort('reservations')}
+                    className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
+                  >
+                    Resrv
+                    <SortIcon field="reservations" />
+                  </button>
+                </th>
+                <th className="px-2 py-1.5 text-center text-[10px] font-semibold whitespace-nowrap">
+                  <button
+                    onClick={() => handleSort('bankApplications')}
+                    className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
+                  >
+                    Bank A
+                    <SortIcon field="bankApplications" />
+                  </button>
+                </th>
+                <th className="px-2 py-1.5 text-center text-[10px] font-semibold whitespace-nowrap">
+                  <button
+                    onClick={() => handleSort('closedDeals')}
+                    className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
+                  >
+                    Closed
+                    <SortIcon field="closedDeals" />
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {sortedData.map((consultant, index) => (
+                <motion.tr
+                  key={consultant.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.02 }}
+                  className="hover:bg-gray-50"
                 >
-                  Leads
-                  <SortIcon field="leads" />
-                </button>
-              </th>
-              <th className="px-2 py-1.5 text-center text-[10px] font-semibold">
-                <button
-                  onClick={() => handleSort('prospects')}
-                  className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
-                >
-                  Prosp
-                  <SortIcon field="prospects" />
-                </button>
-              </th>
-              <th className="px-2 py-1.5 text-center text-[10px] font-semibold">
-                <button
-                  onClick={() => handleSort('testDrives')}
-                  className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
-                >
-                  Test Drv
-                  <SortIcon field="testDrives" />
-                </button>
-              </th>
-              <th className="px-2 py-1.5 text-center text-[10px] font-semibold">
-                <button
-                  onClick={() => handleSort('reservations')}
-                  className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
-                >
-                  Resrv
-                  <SortIcon field="reservations" />
-                </button>
-              </th>
-              <th className="px-2 py-1.5 text-center text-[10px] font-semibold">
-                <button
-                  onClick={() => handleSort('bankApplications')}
-                  className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
-                >
-                  Bank
-                  <SortIcon field="bankApplications" />
-                </button>
-              </th>
-              <th className="px-2 py-1.5 text-center text-[10px] font-semibold">
-                <button
-                  onClick={() => handleSort('closedDeals')}
-                  className="flex items-center gap-0.5 hover:text-blue-100 mx-auto"
-                >
-                  Closed
-                  <SortIcon field="closedDeals" />
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {sortedData.map((consultant, index) => (
-              <motion.tr
-                key={consultant.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.02 }}
-                className="hover:bg-gray-50"
-              >
-                <td className="px-2 py-1.5 text-xs text-gray-900">
-                  {consultant.name}
-                </td>
-                <td className="px-2 py-1.5 text-xs text-center text-gray-900">
-                  {consultant.leads}
-                </td>
-                <td className="px-2 py-1.5 text-xs text-center text-gray-900">
-                  {consultant.prospects}
-                </td>
-                <td className="px-2 py-1.5 text-xs text-center text-gray-900">
-                  {consultant.testDrives}
-                </td>
-                <td className="px-2 py-1.5 text-xs text-center text-gray-900">
-                  {consultant.reservations}
-                </td>
-                <td className="px-2 py-1.5 text-xs text-center text-gray-900">
-                  {consultant.bankApplications}
-                </td>
-                <td className="px-2 py-1.5 text-xs text-center text-gray-900">
-                  {consultant.closedDeals}
-                </td>
-              </motion.tr>
-            ))}
-          </tbody>
-        </table>
+                  <td className="px-2 py-1.5 text-xs text-gray-900">
+                    {consultant.name}
+                  </td>
+                  <td className="px-2 py-1.5 text-xs text-center text-gray-900">
+                    {consultant.leads}
+                  </td>
+                  <td className="px-2 py-1.5 text-xs text-center text-gray-900">
+                    {consultant.prospects}
+                  </td>
+                  <td className="px-2 py-1.5 text-xs text-center text-gray-900">
+                    {consultant.testDrives}
+                  </td>
+                  <td className="px-2 py-1.5 text-xs text-center text-gray-900">
+                    {consultant.reservations}
+                  </td>
+                  <td className="px-2 py-1.5 text-xs text-center text-gray-900">
+                    {consultant.bankApplications}
+                  </td>
+                  <td className="px-2 py-1.5 text-xs text-center text-gray-900">
+                    {consultant.closedDeals}
+                  </td>
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </motion.div>
   )
