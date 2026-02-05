@@ -28,8 +28,8 @@ export function ConversionFlowPanel({
 }: ConversionFlowPanelProps) {
   const data = [
     { name: 'Leads', value: 1.0 },
-    { name: 'Prospects', value: 0.5 },
-    { name: 'Closed Deals', value: 0 },
+    { name: 'Prospects', value: leadsToProspects / 100 },
+    { name: 'Closed Deals', value: (prospectsToClosedDeals / 100) * (leadsToProspects / 100) },
   ]
 
   return (
@@ -37,40 +37,38 @@ export function ConversionFlowPanel({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="bg-white/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 p-4 shadow-lg h-full"
-      style={{
-        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-      }}
+      className="bg-white rounded-lg border border-gray-300 shadow-sm h-full"
     >
-      <h3 className="text-base font-bold text-gray-900 mb-2">Conversion Flow</h3>
+      <div className="bg-gray-100 px-3 py-2 border-b border-gray-300">
+        <h3 className="text-sm font-bold text-gray-900">Conversion Flow</h3>
+        <div className="text-xs text-gray-600 mt-0.5">By Leads, Prospects, and Closed Deals</div>
+      </div>
       
-      <div className="space-y-4">
-        <div className="text-sm text-gray-600">
-          By Leads, Prospects, and Closed Deals
-        </div>
-
+      <div className="p-3">
         {/* Main Conversion Chart */}
-        <div className="h-64">
+        <div className="h-48 mb-3">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis 
                 dataKey="name" 
-                tick={{ fontSize: 11 }}
+                tick={{ fontSize: 10 }}
                 stroke="#9ca3af"
               />
               <YAxis 
-                tick={{ fontSize: 11 }}
+                tick={{ fontSize: 10 }}
                 stroke="#9ca3af"
-                domain={[-1, 1]}
+                domain={[-0.2, 1.2]}
+                tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
               />
               <Tooltip 
                 contentStyle={{
                   backgroundColor: 'white',
                   border: '1px solid #e5e7eb',
-                  borderRadius: '8px',
-                  fontSize: '12px'
+                  borderRadius: '6px',
+                  fontSize: '11px'
                 }}
+                formatter={(value: any) => `${(value * 100).toFixed(1)}%`}
               />
               <Line 
                 type="monotone" 
@@ -84,51 +82,51 @@ export function ConversionFlowPanel({
         </div>
 
         {/* Conversion Rates */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="border border-gray-200/50 rounded-xl p-3 bg-white/50 backdrop-blur-sm">
-            <div className="text-xs text-gray-600 mb-1">Leads → Prospects</div>
-            <div className="text-2xl font-bold text-gray-900">
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
+            <div className="text-[10px] text-gray-600 mb-0.5">Leads → Prospects</div>
+            <div className="text-xl font-bold text-gray-900">
               {leadsToProspects}%
             </div>
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-[10px] text-gray-500 mt-0.5">
               Goal: {leadsToProspectsGoal}%
             </div>
           </div>
 
-          <div className="border border-gray-200/50 rounded-xl p-3 bg-white/50 backdrop-blur-sm">
-            <div className="text-xs text-gray-600 mb-1">Prospects → Closed Deals</div>
-            <div className="text-2xl font-bold text-gray-900">
+          <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
+            <div className="text-[10px] text-gray-600 mb-0.5">Prospects → Closed Deals</div>
+            <div className="text-xl font-bold text-gray-900">
               {prospectsToClosedDeals}%
             </div>
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-[10px] text-gray-500 mt-0.5">
               Goal: {prospectsToClosedDealsGoal}%
             </div>
           </div>
         </div>
 
         {/* Additional Metrics */}
-        <div className="space-y-2 pt-2 border-t border-gray-200">
+        <div className="space-y-1.5 pt-2 border-t border-gray-200">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Test Drives</span>
+            <span className="text-xs text-gray-600 font-medium">Test Drives</span>
             <div className="text-right">
-              <div className="text-lg font-bold text-gray-900">{testDrives}</div>
-              <div className="text-xs text-gray-500">Minimum: {testDrivesMin}</div>
+              <div className="text-base font-bold text-gray-900">{testDrives}</div>
+              <div className="text-[10px] text-gray-500">Minimum: {testDrivesMin}</div>
             </div>
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Reservations</span>
+            <span className="text-xs text-gray-600 font-medium">Reservations</span>
             <div className="text-right">
-              <div className="text-lg font-bold text-gray-900">{reservations}</div>
-              <div className="text-xs text-gray-500">Minimum: {reservationsMin}</div>
+              <div className="text-base font-bold text-gray-900">{reservations}</div>
+              <div className="text-[10px] text-gray-500">Minimum: {reservationsMin}</div>
             </div>
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Bank Applications</span>
+            <span className="text-xs text-gray-600 font-medium">Bank Applications</span>
             <div className="text-right">
-              <div className="text-lg font-bold text-gray-900">{bankApplications}</div>
-              <div className="text-xs text-gray-500">Minimum: {bankApplicationsMin}</div>
+              <div className="text-base font-bold text-gray-900">{bankApplications}</div>
+              <div className="text-[10px] text-gray-500">Minimum: {bankApplicationsMin}</div>
             </div>
           </div>
         </div>

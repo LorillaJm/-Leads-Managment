@@ -100,104 +100,99 @@ export function DashboardNew() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex gap-4">
-        {/* Left Column - Scope */}
-        <div className="w-52 flex-shrink-0">
-          {/* Scope Section */}
-          <div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 p-3 shadow-lg"
-            style={{
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <h3 className="text-sm font-bold text-gray-900 mb-2">Scope</h3>
-          
-          {/* Year */}
-          <div className="mb-2">
-            <label className="text-xs font-semibold text-gray-700 mb-1 block">Year</label>
-            <Select value={selectedYear} onValueChange={setSelectedYear}>
-              <SelectTrigger className="w-full h-9 text-sm bg-cyan-400 text-white border-cyan-500 rounded-lg">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {YEARS.map((year) => (
-                  <SelectItem key={year} value={year}>{year}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+      <div className="max-w-[1800px] mx-auto">
+        <div className="flex gap-3">
+          {/* Left Column - Scope */}
+          <div className="w-48 flex-shrink-0">
+            <div className="bg-white rounded-lg border border-gray-300 shadow-sm overflow-hidden">
+              <div className="bg-gray-100 px-3 py-2 border-b border-gray-300">
+                <h3 className="text-sm font-bold text-gray-900">Scope</h3>
+              </div>
+              
+              <div className="p-3 space-y-3">
+                {/* Year */}
+                <div>
+                  <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Year</label>
+                  <Select value={selectedYear} onValueChange={setSelectedYear}>
+                    <SelectTrigger className="w-full h-8 text-sm bg-cyan-400 hover:bg-cyan-500 text-white border-0 rounded">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {YEARS.map((year) => (
+                        <SelectItem key={year} value={year}>{year}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Months */}
+                <div className="space-y-0.5">
+                  {MONTHS.map((month) => (
+                    <label key={month} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-1 py-0.5 rounded">
+                      <input
+                        type="checkbox"
+                        checked={selectedMonths.includes(month)}
+                        onChange={() => handleMonthToggle(month)}
+                        className="w-3.5 h-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="text-xs font-medium text-gray-700">{month}</span>
+                    </label>
+                  ))}
+                </div>
+
+                {/* Sales Consultant */}
+                <div>
+                  <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Sales Consultant</label>
+                  <Select value={selectedConsultant} onValueChange={setSelectedConsultant}>
+                    <SelectTrigger className="w-full h-8 text-sm bg-cyan-400 hover:bg-cyan-500 text-white border-0 rounded">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ALL">ALL</SelectItem>
+                      {consultants.map((c: any) => (
+                        <SelectItem key={c.id} value={c.id}>
+                          {c.fullName || `${c.firstName} ${c.lastName}`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Months */}
-          <div className="space-y-1 mb-2">
-            {MONTHS.map((month) => (
-              <label key={month} className="flex items-center gap-2 cursor-pointer text-xs">
-                <input
-                  type="checkbox"
-                  checked={selectedMonths.includes(month)}
-                  onChange={() => handleMonthToggle(month)}
-                  className="w-3.5 h-3.5 rounded border-gray-300 text-blue-600"
-                />
-                <span className="font-medium text-gray-700">{month}</span>
-              </label>
-            ))}
+          {/* Middle Left - Overview */}
+          <div className="w-56 flex-shrink-0">
+            <OverviewPanel 
+              totalCount={totals.leads} 
+              label="By count"
+              leads={totals.leads}
+              prospects={totals.prospects}
+              testDrives={totals.testDrives}
+              reservations={totals.reservations}
+              bankApplications={totals.bankApplications}
+              closedDeals={totals.closedDeals}
+            />
           </div>
 
-          {/* Sales Consultant */}
-          <div>
-            <label className="text-xs font-semibold text-gray-700 mb-1 block">Sales Consultant</label>
-            <Select value={selectedConsultant} onValueChange={setSelectedConsultant}>
-              <SelectTrigger className="w-full h-9 text-sm bg-cyan-400 text-white border-cyan-500 rounded-lg">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">ALL</SelectItem>
-                {consultants.map((c: any) => (
-                  <SelectItem key={c.id} value={c.id}>
-                    {c.fullName || `${c.firstName} ${c.lastName}`}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          {/* Middle - Conversion Flow */}
+          <div className="flex-1 min-w-0">
+            <ConversionFlowPanel
+              leadsToProspects={leadsToProspects}
+              prospectsToClosedDeals={prospectsToClosedDeals}
+              testDrives={totals.testDrives}
+              reservations={totals.reservations}
+              bankApplications={totals.bankApplications}
+            />
           </div>
-        </div>
-        </div>
 
-        {/* Middle Left - Overview */}
-        <div className="w-64 flex-shrink-0">
-          <OverviewPanel 
-            totalCount={totals.leads} 
-            label="By count"
-            leads={totals.leads}
-            prospects={totals.prospects}
-            testDrives={totals.testDrives}
-            reservations={totals.reservations}
-            bankApplications={totals.bankApplications}
-            closedDeals={totals.closedDeals}
-          />
-        </div>
-
-        {/* Middle Right - Conversion Flow & Activities */}
-        <div className="flex-1 space-y-4">
-          <ConversionFlowPanel
-            leadsToProspects={leadsToProspects}
-            prospectsToClosedDeals={prospectsToClosedDeals}
-          />
-          
-          <ActivityBreakdownPanel
-            testDrives={totals.testDrives}
-            reservations={totals.reservations}
-            bankApplications={totals.bankApplications}
-          />
-        </div>
-
-        {/* Right Column - Sales Team */}
-        <div className="w-80 flex-shrink-0">
-          <SalesTeamTable data={salesTeamData} totalCount={salesTeamData.length} />
+          {/* Right Column - Sales Team */}
+          <div className="w-[420px] flex-shrink-0">
+            <SalesTeamTable data={salesTeamData} totalCount={salesTeamData.length} />
+          </div>
         </div>
       </div>
-
-      {/* Bottom Row - Analytics Chart */}
-      <AnalyticsChart data={chartData} />
     </div>
   )
 }
