@@ -3,9 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import { OverviewPanel } from '@/components/dashboard/OverviewPanel'
 import { ConversionFlowPanel } from '@/components/dashboard/ConversionFlowPanel'
-import { ActivityBreakdownPanel } from '@/components/dashboard/ActivityBreakdownPanel'
 import { SalesTeamTable } from '@/components/dashboard/SalesTeamTable'
-import { AnalyticsChart } from '@/components/dashboard/AnalyticsChart'
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton'
 import {
   Select,
@@ -69,15 +67,7 @@ export function DashboardNew() {
     closedDeals: ranking.totalClosedDeals || 0,
   }))
 
-  const chartData = salesTeamData.map((item: any) => ({
-    consultant: item.name,
-    leads: item.leads,
-    prospects: item.prospects,
-    testDrives: item.testDrives,
-    reservations: item.reservations,
-    bankApplications: item.bankApplications,
-    closedDeals: item.closedDeals,
-  }))
+
 
   const totals = {
     leads: stats.totalLeads || 0,
