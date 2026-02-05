@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Users, CheckCircle2, TrendingUp, Trophy } from 'lucide-react'
+import { LayoutDashboard, Users, CheckCircle2, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navigation = [
