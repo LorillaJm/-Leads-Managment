@@ -71,73 +71,77 @@ export function Performance() {
 
   return (
     <div className="space-y-6 pb-8">
-      {/* Top Section - Interest Levels and Leads Source */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Interest Levels and Leads Source stacked */}
-        <div className="space-y-6">
-          {/* Interest Levels */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg">
-              <CardHeader className="border-b border-border/50 pb-3">
-                <CardTitle className="text-base font-semibold">Interest Levels</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <InterestLevelsChart data={interestLevelsData} />
-              </CardContent>
-            </Card>
-          </motion.div>
+      {/* Compact Analytics Grid - Desktop: 12-column responsive layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+        
+        {/* Row 1: Interest Levels (3 cols) + Vehicle Models (6 cols) + Colors (3 cols) */}
+        
+        {/* Interest Levels - Left Column */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="lg:col-span-3"
+        >
+          <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg h-full flex flex-col">
+            <CardHeader className="border-b border-border/50 pb-3 flex-shrink-0">
+              <CardTitle className="text-base font-semibold">Interest Levels</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-4 flex-1 flex flex-col min-h-0">
+              <InterestLevelsChart data={interestLevelsData} />
+            </CardContent>
+          </Card>
+        </motion.div>
 
-          {/* Leads Source */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-          >
-            <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg">
-              <CardHeader className="border-b border-border/50 pb-3">
-                <CardTitle className="text-base font-semibold">Leads Source</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <LeadsSourceChart data={leadsSourceData} />
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        {/* Vehicle Models */}
+        {/* Vehicle Models - Center Wide Column (Primary Focus) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
+          className="lg:col-span-6"
         >
-          <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg h-full">
-            <CardHeader className="border-b border-border/50 pb-3">
+          <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg h-full flex flex-col">
+            <CardHeader className="border-b border-border/50 pb-3 flex-shrink-0">
               <CardTitle className="text-base font-semibold">Vehicle Models</CardTitle>
               <p className="text-xs text-muted-foreground">By leads inquiry interest and closed deals</p>
             </CardHeader>
-            <CardContent className="pt-4">
+            <CardContent className="pt-4 flex-1 flex flex-col min-h-0">
               <VehicleModelsChart data={vehicleModelsData} />
             </CardContent>
           </Card>
         </motion.div>
 
-        {/* Colors */}
+        {/* Colors - Right Column */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
+          className="lg:col-span-3"
         >
-          <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg h-full">
-            <CardHeader className="border-b border-border/50 pb-3">
+          <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg h-full flex flex-col">
+            <CardHeader className="border-b border-border/50 pb-3 flex-shrink-0">
               <CardTitle className="text-base font-semibold">Colors</CardTitle>
               <p className="text-xs text-muted-foreground">By leads enquiry interest</p>
             </CardHeader>
-            <CardContent className="pt-4">
+            <CardContent className="pt-4 flex-1 flex flex-col min-h-0">
               <ColorsChart data={colorsData} />
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Row 2: Leads Source (Full Width Below) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="lg:col-span-12"
+        >
+          <Card className="bg-background/60 backdrop-blur-xl border-border/50 shadow-lg">
+            <CardHeader className="border-b border-border/50 pb-3">
+              <CardTitle className="text-base font-semibold">Leads Source</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-4">
+              <LeadsSourceChart data={leadsSourceData} />
             </CardContent>
           </Card>
         </motion.div>
@@ -147,7 +151,7 @@ export function Performance() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
+        transition={{ delay: 0.5 }}
       >
         <Card className="bg-gradient-to-br from-blue-600/95 to-blue-700/95 backdrop-blur-xl border-blue-500/50 shadow-2xl">
           <CardHeader className="border-b border-white/20 pb-4">

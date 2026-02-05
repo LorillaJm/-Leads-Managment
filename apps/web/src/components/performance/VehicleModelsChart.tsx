@@ -16,12 +16,12 @@ export function VehicleModelsChart({ data }: VehicleModelsChartProps) {
           <p className="font-semibold mb-2 text-sm">{label}</p>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded bg-gray-400" />
-              <span className="text-xs">Inquiry Count: {payload[0]?.value || 0}</span>
+              <div className="w-3 h-3 rounded bg-slate-400" />
+              <span className="text-xs">Inquiry: {payload[0]?.value || 0}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded bg-emerald-500" />
-              <span className="text-xs">Closed Deals: {payload[1]?.value || 0}</span>
+              <span className="text-xs">Closed: {payload[1]?.value || 0}</span>
             </div>
           </div>
         </div>
@@ -31,13 +31,15 @@ export function VehicleModelsChart({ data }: VehicleModelsChartProps) {
   }
 
   return (
-    <div className="h-[500px]">
+    <div className="w-full h-full min-h-[400px]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
+          margin={{ top: 10, right: 10, left: 0, bottom: 80 }}
+          barGap={2}
+          barCategoryGap="15%"
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.2} vertical={false} />
           <XAxis 
             dataKey="model" 
             stroke="hsl(var(--muted-foreground))" 
@@ -45,15 +47,23 @@ export function VehicleModelsChart({ data }: VehicleModelsChartProps) {
             angle={-45}
             textAnchor="end"
             height={80}
+            interval={0}
+            tick={{ fill: 'hsl(var(--muted-foreground))' }}
           />
-          <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-          <Tooltip content={<CustomTooltip />} />
+          <YAxis 
+            stroke="hsl(var(--muted-foreground))" 
+            fontSize={11}
+            width={35}
+            tick={{ fill: 'hsl(var(--muted-foreground))' }}
+          />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted) / 0.1)' }} />
           <Legend 
-            wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
-            iconType="square"
+            wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }}
+            iconType="rect"
+            iconSize={10}
           />
-          <Bar dataKey="inquiryCount" fill="#9ca3af" name="Inquiry Count" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="closedDeals" fill="#10b981" name="Closed Deals" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="inquiryCount" fill="hsl(var(--muted-foreground) / 0.6)" name="Inquiry Count" radius={[3, 3, 0, 0]} maxBarSize={40} />
+          <Bar dataKey="closedDeals" fill="hsl(142 76% 36%)" name="Closed Deals" radius={[3, 3, 0, 0]} maxBarSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -33,30 +33,32 @@ export function ColorsChart({ data }: ColorsChartProps) {
   }
 
   return (
-    <div className="h-[500px]">
+    <div className="w-full h-full min-h-[280px] flex flex-col">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}
             cx="50%"
-            cy="50%"
+            cy="45%"
             labelLine={false}
             label={({ percentage }) => `${percentage}%`}
-            outerRadius={120}
+            outerRadius="70%"
+            innerRadius="0%"
             fill="#8884d8"
             dataKey="count"
             nameKey="color"
           >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[entry.color] || '#94a3b8'} stroke="#fff" strokeWidth={2} />
+              <Cell key={`cell-${index}`} fill={COLORS[entry.color] || '#94a3b8'} stroke="hsl(var(--background))" strokeWidth={2} />
             ))}
           </Pie>
           <Tooltip content={<CustomTooltip />} />
           <Legend 
             verticalAlign="bottom" 
-            height={36}
-            wrapperStyle={{ fontSize: '11px' }}
+            height={50}
+            wrapperStyle={{ fontSize: '10px', paddingTop: '10px' }}
             iconType="circle"
+            iconSize={8}
           />
         </PieChart>
       </ResponsiveContainer>
