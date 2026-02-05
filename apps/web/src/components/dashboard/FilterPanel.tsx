@@ -37,19 +37,21 @@ export function FilterPanel({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-white rounded-lg border border-gray-200 p-3 lg:p-4 shadow-sm"
+      className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden"
     >
       {/* Scope Header */}
-      <div>
-        <h3 className="text-sm lg:text-base font-bold text-gray-900 mb-2 lg:mb-3">Scope</h3>
-        
+      <div className="bg-gradient-to-r from-gray-50 to-white px-4 py-2.5 border-b border-gray-200">
+        <h3 className="text-sm font-bold text-gray-900">Scope</h3>
+      </div>
+
+      <div className="p-3">
         {/* Year Filter */}
-        <div className="mb-3 lg:mb-4">
-          <label className="text-xs lg:text-sm font-semibold text-gray-700 mb-1 block">
+        <div className="mb-3">
+          <label className="text-xs font-semibold text-gray-600 mb-1.5 block">
             Year
           </label>
           <Select value={selectedYear} onValueChange={onYearChange}>
-            <SelectTrigger className="w-full h-8 lg:h-9 text-xs lg:text-sm bg-cyan-400 text-white border-cyan-500 hover:bg-cyan-500">
+            <SelectTrigger className="w-full h-9 text-sm bg-gradient-to-r from-cyan-400 to-cyan-500 text-white border-0 hover:from-cyan-500 hover:to-cyan-600 shadow-sm font-medium">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -63,42 +65,42 @@ export function FilterPanel({
         </div>
 
         {/* Month Checkboxes */}
-        <div className="space-y-1 lg:space-y-1.5 mb-3 lg:mb-4">
+        <div className="space-y-0.5 mb-4">
           {MONTHS.map((month) => (
             <label
               key={month}
-              className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-1 py-0.5 lg:px-2 lg:py-1 rounded transition-colors"
+              className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded-md transition-colors group"
             >
               <input
                 type="checkbox"
                 checked={selectedMonths.includes(month)}
                 onChange={() => onMonthToggle(month)}
-                className="w-3 h-3 lg:w-3.5 lg:h-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                className="w-3.5 h-3.5 rounded border-gray-300 text-cyan-500 focus:ring-cyan-500 focus:ring-2 cursor-pointer"
               />
-              <span className="text-xs lg:text-sm font-medium text-gray-700">{month}</span>
+              <span className="text-xs font-medium text-gray-700 group-hover:text-gray-900">{month}</span>
             </label>
           ))}
         </div>
-      </div>
 
-      {/* Sales Consultant Filter */}
-      <div>
-        <label className="text-xs lg:text-sm font-semibold text-gray-700 mb-1 block">
-          Sales Consultant
-        </label>
-        <Select value={selectedConsultant} onValueChange={onConsultantChange}>
-          <SelectTrigger className="w-full h-8 lg:h-9 text-xs lg:text-sm bg-cyan-400 text-white border-cyan-500 hover:bg-cyan-500">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="ALL">ALL</SelectItem>
-            {salesConsultants.map((consultant) => (
-              <SelectItem key={consultant.id} value={consultant.id}>
-                {consultant.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {/* Sales Consultant Filter */}
+        <div>
+          <label className="text-xs font-semibold text-gray-600 mb-1.5 block">
+            Sales Consultant
+          </label>
+          <Select value={selectedConsultant} onValueChange={onConsultantChange}>
+            <SelectTrigger className="w-full h-9 text-sm bg-gradient-to-r from-cyan-400 to-cyan-500 text-white border-0 hover:from-cyan-500 hover:to-cyan-600 shadow-sm font-medium">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ALL">ALL</SelectItem>
+              {salesConsultants.map((consultant) => (
+                <SelectItem key={consultant.id} value={consultant.id}>
+                  {consultant.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </motion.div>
   )
