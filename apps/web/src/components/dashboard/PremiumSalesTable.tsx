@@ -128,3 +128,5 @@ export function PremiumSalesTable({ data }: PremiumSalesTableProps) {
     </div>
   )
 }
+
+export default PremiumSalesTable

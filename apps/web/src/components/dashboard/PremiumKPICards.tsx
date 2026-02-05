@@ -122,3 +122,5 @@ export function PremiumKPICards({
     </div>
   )
 }
+
+export default PremiumKPICards

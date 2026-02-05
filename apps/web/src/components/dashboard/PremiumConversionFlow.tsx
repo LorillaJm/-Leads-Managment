@@ -159,3 +159,5 @@ export function PremiumConversionFlow({
     </div>
   )
 }
+
+export default PremiumConversionFlow

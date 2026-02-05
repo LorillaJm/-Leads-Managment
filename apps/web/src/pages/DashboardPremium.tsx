@@ -1,14 +1,13 @@
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton'
-import { PremiumKPICards } from '@/components/dashboard/PremiumKPICards'
-import { PremiumConversionFlow } from '@/components/dashboard/PremiumConversionFlow'
-import { PremiumSalesTable } from '@/components/dashboard/PremiumSalesTable'
+import { 
+  PremiumKPICards,
+  PremiumConversionFlow,
+  PremiumSalesTable 
+} from '@/components/dashboard/premium-exports'
 
 export function DashboardPremium() {
-  const [selectedMonths, setSelectedMonths] = useState<string[]>(['ALL'])
-
   const { data: statsData, isLoading } = useQuery({
     queryKey: ['dashboard-stats'],
     queryFn: () => api.getDashboardStats({}),
