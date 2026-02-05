@@ -5,6 +5,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { Layout } from './components/layout/Layout'
 import { Toaster } from './components/ui/toaster'
 import { Login } from './pages/Login'
+import { DashboardPremium } from './pages/DashboardPremium'
 import { DashboardNew } from './pages/DashboardNew'
 import { LeadsNew } from './pages/LeadsNew'
 import { LeadDetails } from './pages/LeadDetails'
@@ -30,19 +31,25 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <DashboardPremium />
+            </ProtectedRoute>
+          } />
           <Route
             path="/*"
             element={
               <ProtectedRoute>
                 <Layout>
                   <Routes>
-                    <Route path="/" element={<DashboardNew />} />
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/dashboard/old" element={<DashboardNew />} />
                     <Route path="/leads" element={<LeadsNew />} />
                     <Route path="/leads/:id" element={<LeadDetails />} />
                     <Route path="/closed-deals" element={<ClosedDeals />} />
                     <Route path="/performance" element={<Performance />} />
                     <Route path="/users" element={<Users />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
                   </Routes>
                 </Layout>
               </ProtectedRoute>
