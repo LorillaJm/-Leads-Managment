@@ -55,25 +55,58 @@ export function DashboardPremium() {
     ? (rankingsData as any).data
     : []
 
-  const salesTeamData = rankings.map((ranking: any) => ({
-    id: ranking.userId || ranking.id,
-    name: ranking.fullName || ranking.name || 'Unknown',
-    leads: ranking.totalLeads || 0,
-    prospects: ranking.totalProspects || 0,
-    testDrives: ranking.totalTestDrives || 0,
-    reservations: ranking.totalReservations || 0,
-    bankApplications: ranking.totalBankApplications || 0,
-    closedDeals: ranking.totalClosedDeals || 0,
-  }))
+  // Sample data for demonstration when API returns empty
+  const sampleSalesTeam = [
+    { id: '1', name: 'April Dream Galero', leads: 145, prospects: 89, testDrives: 42, reservations: 28, bankApplications: 35, closedDeals: 18 },
+    { id: '2', name: 'Meryl Rose Marterior', leads: 132, prospects: 76, testDrives: 38, reservations: 25, bankApplications: 31, closedDeals: 15 },
+    { id: '3', name: 'Mary Joy Lumapac', leads: 128, prospects: 71, testDrives: 35, reservations: 22, bankApplications: 28, closedDeals: 14 },
+    { id: '4', name: 'Ma. Angelica Canindo', leads: 118, prospects: 65, testDrives: 32, reservations: 20, bankApplications: 25, closedDeals: 12 },
+    { id: '5', name: 'Ron Edward Santos', leads: 112, prospects: 62, testDrives: 30, reservations: 19, bankApplications: 24, closedDeals: 11 },
+    { id: '6', name: 'Reynel Gallaza', leads: 105, prospects: 58, testDrives: 28, reservations: 18, bankApplications: 22, closedDeals: 10 },
+    { id: '7', name: 'Karlyn Joy Labiero', leads: 98, prospects: 54, testDrives: 26, reservations: 16, bankApplications: 20, closedDeals: 9 },
+    { id: '8', name: 'Joseph Besana', leads: 92, prospects: 51, testDrives: 24, reservations: 15, bankApplications: 19, closedDeals: 8 },
+    { id: '9', name: 'Kurt Russell Gimotea', leads: 85, prospects: 47, testDrives: 22, reservations: 14, bankApplications: 17, closedDeals: 7 },
+    { id: '10', name: 'Mary Angelie Francisco', leads: 78, prospects: 43, testDrives: 20, reservations: 12, bankApplications: 15, closedDeals: 6 },
+  ]
 
-  const totals = {
-    leads: stats.totalLeads || 0,
-    prospects: stats.totalProspects || 0,
-    testDrives: stats.totalTestDrives || 0,
-    reservations: stats.totalReservations || 0,
-    bankApplications: stats.totalBankApplications || 0,
-    closedDeals: stats.totalClosedDeals || 0,
+  const salesTeamData = rankings.length > 0 
+    ? rankings.map((ranking: any) => ({
+        id: ranking.userId || ranking.id,
+        name: ranking.fullName || ranking.name || 'Unknown',
+        leads: ranking.totalLeads || 0,
+        prospects: ranking.totalProspects || 0,
+        testDrives: ranking.totalTestDrives || 0,
+        reservations: ranking.totalReservations || 0,
+        bankApplications: ranking.totalBankApplications || 0,
+        closedDeals: ranking.totalClosedDeals || 0,
+      }))
+    : sampleSalesTeam
+
+  // Calculate totals from sales team data if API doesn't provide them
+  const calculateTotals = () => {
+    if (stats.totalLeads) {
+      return {
+        leads: stats.totalLeads || 0,
+        prospects: stats.totalProspects || 0,
+        testDrives: stats.totalTestDrives || 0,
+        reservations: stats.totalReservations || 0,
+        bankApplications: stats.totalBankApplications || 0,
+        closedDeals: stats.totalClosedDeals || 0,
+      }
+    }
+    
+    // Calculate from sales team data
+    return salesTeamData.reduce((acc: any, consultant: any) => ({
+      leads: acc.leads + consultant.leads,
+      prospects: acc.prospects + consultant.prospects,
+      testDrives: acc.testDrives + consultant.testDrives,
+      reservations: acc.reservations + consultant.reservations,
+      bankApplications: acc.bankApplications + consultant.bankApplications,
+      closedDeals: acc.closedDeals + consultant.closedDeals,
+    }), { leads: 0, prospects: 0, testDrives: 0, reservations: 0, bankApplications: 0, closedDeals: 0 })
   }
+
+  const totals = calculateTotals()
 
   const leadsToProspects = totals.leads > 0 
     ? Math.round((totals.prospects / totals.leads) * 100) 
