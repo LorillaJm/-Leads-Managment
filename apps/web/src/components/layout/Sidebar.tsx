@@ -5,6 +5,7 @@ import {
   Users, 
   CheckCircle2, 
   TrendingUp,
+  Trophy,
   Command,
   UserCog
 } from 'lucide-react'
@@ -16,6 +17,7 @@ const navigation = [
   { name: 'Leads', href: '/leads', icon: Users, adminOnly: false },
   { name: 'Closed Deals', href: '/closed-deals', icon: CheckCircle2, adminOnly: false },
   { name: 'Performance', href: '/performance', icon: TrendingUp, adminOnly: false },
+  { name: 'Leaderboard', href: '/leaderboard', icon: Trophy, adminOnly: false },
   { name: 'Users', href: '/users', icon: UserCog, adminOnly: true },
 ]
 

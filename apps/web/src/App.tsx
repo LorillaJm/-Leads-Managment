@@ -11,6 +11,7 @@ import { LeadsNew } from './pages/LeadsNew'
 import { LeadDetails } from './pages/LeadDetails'
 import { ClosedDeals } from './pages/ClosedDeals'
 import { Performance } from './pages/Performance'
+import { Leaderboard } from './pages/Leaderboard'
 import { Users } from './pages/Users'
 import { DeploymentInfo } from './pages/DeploymentInfo'
 
@@ -43,6 +44,7 @@ function App() {
                     <Route path="/leads/:id" element={<LeadDetails />} />
                     <Route path="/closed-deals" element={<ClosedDeals />} />
                     <Route path="/performance" element={<Performance />} />
+                    <Route path="/leaderboard" element={<Leaderboard />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>

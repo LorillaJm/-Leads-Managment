@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import { X, LayoutDashboard, Users, CheckCircle2, TrendingUp } from 'lucide-react'
+import { X, LayoutDashboard, Users, CheckCircle2, TrendingUp, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -9,6 +9,7 @@ const navigation = [
   { name: 'Leads', href: '/leads', icon: Users },
   { name: 'Closed Deals', href: '/closed-deals', icon: CheckCircle2 },
   { name: 'Performance', href: '/performance', icon: TrendingUp },
+  { name: 'Leaderboard', href: '/leaderboard', icon: Trophy },
 ]
 
 interface MobileNavProps {
